@@ -1,0 +1,40 @@
+#### Assign Variables ####
+
+# Data directories
+export nanopore_dir=/home/shared/8TB_HDD_02/shedurkin/SIFP-nanopore
+export output_dir_top=${nanopore_dir}/A-Group1/output/01-Library1-Flongle-FastQC
+export raw_fastqc_dir=${output_dir_top}/raw-fastqc
+export raw_reads_dir=${nanopore_dir}/A-Group1/data/01-Library1-Flongle-FastQC/raw-reads
+export raw_reads_url="https://gannet.fish.washington.edu/kdurkin1/SIFP_2025/Group1/Group1/Library1/20250812_1139_MD-101223_AYW935_f9a34344/fastq_pass/"
+export trimmed_fastqc_dir=${output_dir_top}/trimmed-fastqc
+export trimmed_reads_dir=${nanopore_dir}/A-Group1/data/01-Library1-Flongle-FastQC/trimmed-reads
+export trimmed_reads_url=""
+
+# Paths to programs
+export fastqc=/home/shared/FastQC-0.12.1/fastqc
+export multiqc=/home/sam/programs/mambaforge/bin/multiqc
+export flexbar=/home/shared/flexbar-3.5.0-linux/flexbar
+
+# Set FastQ filename patterns
+export fastq_pattern='*.fastq.gz'
+
+# Set number of CPUs to use
+export threads=20
+
+# Input/output files
+export raw_checksums=checksums.md5
+export trimmed_checksums=trimmed_fastq_checksums.md5
+
+## Inititalize arrays
+export fastq_array=()
+export raw_fastqs_array=()
+export names_array=()
+export trimmed_fastqs_array=()
+
+# Programs associative array
+declare -A programs_array
+programs_array=(
+[fastqc]="${fastqc}" \
+[multiqc]="${multiqc}" \
+[flexbar]="${flexbar}"
+)
