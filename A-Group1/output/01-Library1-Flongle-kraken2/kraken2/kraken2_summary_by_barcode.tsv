@@ -1,0 +1,1068 @@
+barcode	name	rank	mean_percent	total_reads
+barcode01	Agaricales	O	0.7749999999999999	2
+barcode01	Agaricineae	O1	0.7749999999999999	2
+barcode01	Agaricomycetes	C	0.7749999999999999	2
+barcode01	Agaricomycetidae	C1	0.7749999999999999	2
+barcode01	Agaricomycotina	P1	0.44757575757575757	44
+barcode01	Amniota	P9	0.386	28
+barcode01	Anthozoa	C	87	42853
+barcode01	Archaea	R2	0.106	5
+barcode01	Ascochyta	G	0.095	2
+barcode01	Ascochyta rabiei	S	0.095	2
+barcode01	Ascomycota	P	0.5205555555555555	99
+barcode01	Aspergillaceae	F	0.23714285714285716	7
+barcode01	Aspergillus	G	0.26333333333333336	6
+barcode01	Aspergillus luchuensis	S	0.255	2
+barcode01	Aspergillus subgen. Circumdati	G1	0.26333333333333336	6
+barcode01	Basidiomycota	P	0.42243243243243245	50
+barcode01	Bilateria	K2	0.386	28
+barcode01	Boreoeutheria	C3	0.386	28
+barcode01	Botrytis	G	0.252	5
+barcode01	Botrytis cinerea	S	0.252	5
+barcode01	Botrytis cinerea B05.10	S1	0.252	5
+barcode01	Candida	G	0.2975	9
+barcode01	Candida albicans	S	0.73	2
+barcode01	Candida albicans SC5314	S1	0.73	2
+barcode01	Candida dubliniensis	S	0.145	6
+barcode01	Candida dubliniensis CD36	S1	0.145	6
+barcode01	Candida/Lodderomyces clade	F1	0.35384615384615387	14
+barcode01	Catarrhini	O3	0.386	28
+barcode01	Chaetomiaceae	F	0.06	1
+barcode01	Chordata	P	0.386	28
+barcode01	Clavicipitaceae	F	0.255	5
+barcode01	Cnidaria	P	87	42853
+barcode01	Coccidioides	G	0.2	1
+barcode01	Coccidioides posadasii	S	0.2	1
+barcode01	Coccidioides posadasii str. Silveira	S1	0.2	1
+barcode01	Colletotrichum	G	0.14500000000000002	4
+barcode01	Colletotrichum acutatum species complex	G1	0.15	1
+barcode01	Colletotrichum destructivum	S	0.14500000000000002	2
+barcode01	Colletotrichum destructivum species complex	G1	0.14500000000000002	2
+barcode01	Colletotrichum lupini	S	0.15	1
+barcode01	Craniata	P1	0.386	28
+barcode01	Cryptococcaceae	F	0.435	41
+barcode01	Cryptococcus	G	0.0975	4
+barcode01	Cryptococcus deneoformans	S	0.13	1
+barcode01	Cryptococcus gattii species complex	G1	0.07	2
+barcode01	Cryptococcus neoformans	S	0.12	1
+barcode01	Cryptococcus neoformans H99	S1	0.12	1
+barcode01	Cryptococcus neoformans species complex	G1	0.125	2
+barcode01	Cutaneotrichosporon	G	0.17	1
+barcode01	Cutaneotrichosporon cavernicola	S	0.17	1
+barcode01	Debaryomycetaceae	F	0.35384615384615387	14
+barcode01	Deuterostomia	K3	0.386	28
+barcode01	Didymellaceae	F	0.095	2
+barcode01	Dikarya	K1	0.6359722222222223	156
+barcode01	Dipnotetrapodomorpha	P7	0.386	28
+barcode01	Dipodascales	O	0.44	1
+barcode01	Dipodascales incertae sedis	O1	0.44	1
+barcode01	Dipodascomycetes	C	0.44	1
+barcode01	Dothideomycetes	C	0.08333333333333333	3
+barcode01	Drechmeria	G	0.20333333333333334	11
+barcode01	Drechmeria coniospora	S	0.20333333333333334	11
+barcode01	Euarchontoglires	C4	0.386	28
+barcode01	Eukaryota	R2	87.40896551724138	43057
+barcode01	Eumetazoa	K1	87.06875862068965	42891
+barcode01	Eunicea	G	87	42853
+barcode01	Eunicea knighti	S	87	42853
+barcode01	Eurotiales	O	0.2425	9
+barcode01	Eurotiomycetes	C	0.23777777777777778	10
+barcode01	Eurotiomycetidae	C1	0.23777777777777778	10
+barcode01	Euteleostomi	P5	0.386	28
+barcode01	Eutheria	C2	0.386	28
+barcode01	Fungi	K	0.6583561643835616	159
+barcode01	Fungi incertae sedis	K1	1.135	3
+barcode01	Fusarium	G	0.23416666666666666	12
+barcode01	Fusarium falciforme	S	0.07	1
+barcode01	Fusarium fujikuroi	S	0.06	1
+barcode01	Fusarium fujikuroi IMI 58289	S1	0.06	1
+barcode01	Fusarium fujikuroi species complex	G1	0.06	1
+barcode01	Fusarium graminearum	S	0.125	2
+barcode01	Fusarium graminearum PH-1	S1	0.125	2
+barcode01	Fusarium keratoplasticum	S	0.34	2
+barcode01	Fusarium musae	S	0.06	1
+barcode01	Fusarium pseudograminearum	S	0.12	2
+barcode01	Fusarium pseudograminearum CS3096	S1	0.12	2
+barcode01	Fusarium sambucinum species complex	G1	0.1225	4
+barcode01	Fusarium solani species complex	G1	0.25	3
+barcode01	Glomeraceae	F	1.135	3
+barcode01	Glomerales	O	1.135	3
+barcode01	Glomerellaceae	F	0.14500000000000002	4
+barcode01	Glomerellales	O	0.14500000000000002	4
+barcode01	Glomeromycetes	C	1.135	3
+barcode01	Glomeromycotina	P1	1.135	3
+barcode01	Gnathostomata	P3	0.386	28
+barcode01	Haloarculaceae	F	0.09	1
+barcode01	Halobacteria	C	0.13	2
+barcode01	Halobacteriales	O	0.13	2
+barcode01	Halorhabdus	G	0.09	1
+barcode01	Halorhabdus utahensis	S	0.09	1
+barcode01	Halorhabdus utahensis DSM 12940	S1	0.09	1
+barcode01	Haplorrhini	O1	0.386	28
+barcode01	Helotiales	O	0.252	5
+barcode01	Hominidae	F	0.386	28
+barcode01	Homininae	F1	0.386	28
+barcode01	Hominoidea	O4	0.386	28
+barcode01	Homo	G	0.386	28
+barcode01	Homo sapiens	S	0.386	28
+barcode01	Hypocreaceae	F	0.745	2
+barcode01	Hypocreales	O	0.2914285714285714	34
+barcode01	Hypocreomycetidae	C1	0.291	38
+barcode01	Kwoniella	G	0.4688888888888889	37
+barcode01	Kwoniella botswanensis	S	0.50625	31
+barcode01	Kwoniella dejecticola	S	0.08	1
+barcode01	Kwoniella dejecticola CBS 10117	S1	0.08	1
+barcode01	Kwoniella europaea	S	0.1	1
+barcode01	Kwoniella europaea PYCC6329	S1	0.1	1
+barcode01	Kwoniella pini	S	0.09	1
+barcode01	Kwoniella pini CBS 10737	S1	0.09	1
+barcode01	Kwoniella shivajii	S	0.13	2
+barcode01	Leotiomycetes	C	0.252	5
+barcode01	Lodderomyces	G	0.444	5
+barcode01	Lodderomyces beijingensis	S	0.5800000000000001	3
+barcode01	Lodderomyces elongisporus	S	0.24	2
+barcode01	Malacalcyonacea	O	87	42853
+barcode01	Malassezia	G	0.12	1
+barcode01	Malassezia restricta	S	0.12	1
+barcode01	Malasseziaceae	F	0.12	1
+barcode01	Malasseziales	O	0.12	1
+barcode01	Malasseziomycetes	C	0.12	1
+barcode01	Mammalia	C	0.386	28
+barcode01	Metazoa	K	87.06875862068965	42891
+barcode01	Methanobacteria	C	0.1	1
+barcode01	Methanobacteriaceae	F	0.1	1
+barcode01	Methanobacteriales	O	0.1	1
+barcode01	Methanobacteriati	K	0.106	5
+barcode01	Methanobacteriota	P	0.106	5
+barcode01	Methanobacterium	G	0.1	1
+barcode01	Methanomada group	P1	0.10500000000000001	2
+barcode01	Methanomicrobia	C	0.06	1
+barcode01	Methanosarcina	G	0.06	1
+barcode01	Methanosarcina barkeri	S	0.06	1
+barcode01	Methanosarcinaceae	F	0.06	1
+barcode01	Methanosarcinales	O	0.06	1
+barcode01	Mucoromycota	P	1.135	3
+barcode01	Nakaseomyces	G	0.27	1
+barcode01	Nakaseomyces glabratus	S	0.27	1
+barcode01	Natronomonadaceae	F	0.17	1
+barcode01	Natronomonas	G	0.17	1
+barcode01	Natronomonas moolapensis	S	0.17	1
+barcode01	Natronomonas moolapensis 8.8.11	S1	0.17	1
+barcode01	Naumovozyma	G	0.22666666666666666	3
+barcode01	Naumovozyma castellii	S	0.47	1
+barcode01	Naumovozyma dairenensis	S	0.105	2
+barcode01	Naumovozyma dairenensis CBS 421	S1	0.105	2
+barcode01	Nectriaceae	F	0.23416666666666666	12
+barcode01	Neurospora	G	0.23	4
+barcode01	Neurospora crassa	S	0.23	4
+barcode01	Neurospora crassa OR74A	S1	0.23	4
+barcode01	Octocorallia	C1	87	42853
+barcode01	Ogataea	G	0.29	1
+barcode01	Ogataea parapolymorpha	S	0.29	1
+barcode01	Ogataea parapolymorpha DL-1	S1	0.29	1
+barcode01	Onygenaceae	F	0.2	1
+barcode01	Onygenales	O	0.2	1
+barcode01	Ophiocordycipitaceae	F	0.21923076923076923	15
+barcode01	Opisthokonta	R3	87.40896551724138	43057
+barcode01	Penicillium	G	0.08	1
+barcode01	Penicillium digitatum	S	0.08	1
+barcode01	Pezizomycotina	P2	0.39046511627906977	72
+barcode01	Pichiaceae	F	0.29	1
+barcode01	Pichiales	O	0.29	1
+barcode01	Pichiomycetes	C	0.34928571428571425	15
+barcode01	Pleosporaceae	F	0.06	1
+barcode01	Pleosporales	O	0.08333333333333333	3
+barcode01	Pleosporineae	O1	0.08333333333333333	3
+barcode01	Pleosporomycetidae	C1	0.08333333333333333	3
+barcode01	Plexauridae	F	87	42853
+barcode01	Pochonia	G	0.14500000000000002	2
+barcode01	Pochonia chlamydosporia	S	0.14500000000000002	2
+barcode01	Pochonia chlamydosporia 170	S1	0.14500000000000002	2
+barcode01	Podospora	G	0.1	1
+barcode01	Podosporaceae	F	0.1	1
+barcode01	Primates	O	0.386	28
+barcode01	Psilocybe	G	0.7749999999999999	2
+barcode01	Psilocybe cubensis	S	0.7749999999999999	2
+barcode01	Puccinia	G	0.12000000000000001	3
+barcode01	Puccinia striiformis	S	0.095	2
+barcode01	Puccinia striiformis f. sp. tritici	S1	0.095	2
+barcode01	Pucciniaceae	F	0.12000000000000001	3
+barcode01	Pucciniales	O	0.12000000000000001	3
+barcode01	Pucciniomycetes	C	0.12000000000000001	3
+barcode01	Pucciniomycotina	P1	0.12000000000000001	3
+barcode01	Purpureocillium	G	0.255	4
+barcode01	Purpureocillium takamizusanense	S	0.255	4
+barcode01	Pyrenophora	G	0.06	1
+barcode01	Pyrenophora tritici-repentis	S	0.06	1
+barcode01	Remersonia	G	0.345	2
+barcode01	Remersonia thermophila	S	0.345	2
+barcode01	Rhizophagus	G	1.135	3
+barcode01	Rhizophagus irregularis	S	1.135	3
+barcode01	Saccharomyces	G	2.56	1
+barcode01	Saccharomycetaceae	F	0.702	5
+barcode01	Saccharomycetales	O	0.702	5
+barcode01	Saccharomycetes	C	0.6133333333333333	6
+barcode01	Saccharomycodaceae	F	0.17	1
+barcode01	Saccharomycodales	O	0.17	1
+barcode01	Saccharomycodes	G	0.17	1
+barcode01	Saccharomycodes ludwigii	S	0.17	1
+barcode01	Saccharomycotina	P2	0.4505	22
+barcode01	Sarcopterygii	P6	0.386	28
+barcode01	Sclerotiniaceae	F	0.252	5
+barcode01	Serinales	O	0.35384615384615387	14
+barcode01	Simiiformes	O2	0.386	28
+barcode01	Sordaria	G	0.44	1
+barcode01	Sordaria macrospora	S	0.44	1
+barcode01	Sordariaceae	F	0.272	5
+barcode01	Sordariales	O	0.275	9
+barcode01	Sordariales incertae sedis	O1	0.345	2
+barcode01	Sordariomycetes	C	0.336	49
+barcode01	Sordariomycetidae	C1	0.275	9
+barcode01	Sporisorium	G	0.18	2
+barcode01	Sporisorium graminicola	S	0.18	2
+barcode01	Stenosarchaea group	P1	0.10666666666666667	3
+barcode01	Strophariaceae	F	0.7749999999999999	2
+barcode01	Talaromyces	G	0.135	2
+barcode01	Talaromyces rugulosus	S	0.135	2
+barcode01	Talaromyces sect. Islandici	G1	0.135	2
+barcode01	Teleostomi	P4	0.386	28
+barcode01	Tetrapoda	P8	0.386	28
+barcode01	Theria	C1	0.386	28
+barcode01	Thermothelomyces	G	0.06	1
+barcode01	Thermothelomyces thermophilus	S	0.06	1
+barcode01	Thermothelomyces thermophilus ATCC 42464	S1	0.06	1
+barcode01	Tremellales	O	0.435	41
+barcode01	Tremellomycetes	C	0.4264516129032258	42
+barcode01	Trichocomaceae	F	0.135	2
+barcode01	Trichoderma	G	0.745	2
+barcode01	Trichoderma asperellum	S	0.745	2
+barcode01	Trichosporonaceae	F	0.17	1
+barcode01	Trichosporonales	O	0.17	1
+barcode01	Ustilaginaceae	F	0.18	2
+barcode01	Ustilaginales	O	0.18	2
+barcode01	Ustilaginoidea	G	0.365	3
+barcode01	Ustilaginoidea virens	S	0.365	3
+barcode01	Ustilaginomycetes	C	0.18	2
+barcode01	Ustilaginomycotina	P1	0.16	3
+barcode01	Vertebrata	P2	0.386	28
+barcode01	Yarrowia	G	0.44	1
+barcode01	Yarrowia lipolytica	S	0.44	1
+barcode01	cellular organisms	R1	87.41262068965517	43062
+barcode01	dothideomyceta	P4	0.08333333333333333	3
+barcode01	leotiomyceta	P3	0.39046511627906977	72
+barcode01	root	R	87.41262068965517	43062
+barcode01	saccharomyceta	P1	0.5205555555555555	99
+barcode01	sordariomyceta	P4	0.3431578947368421	54
+barcode01	unclassified	U	12.85330985915493	6226
+barcode02	Agaricomycotina	P1	0.3	35
+barcode02	Amniota	P9	0.36375	42
+barcode02	Anthozoa	C	86.83317241379311	42707
+barcode02	Archaea	R2	0.155	2
+barcode02	Ascomycota	P	0.5289285714285714	94
+barcode02	Aspergillaceae	F	0.125	2
+barcode02	Aspergillus	G	0.125	2
+barcode02	Aspergillus flavus	S	0.06	1
+barcode02	Aspergillus luchuensis	S	0.19	1
+barcode02	Aspergillus subgen. Circumdati	G1	0.125	2
+barcode02	Australozyma	G	0.16	1
+barcode02	Australozyma saopauloensis	S	0.16	1
+barcode02	Basidiomycota	P	0.3069230769230769	39
+barcode02	Bilateria	K2	0.36375	42
+barcode02	Boreoeutheria	C3	0.36375	42
+barcode02	Botrytis	G	0.20500000000000002	2
+barcode02	Botrytis cinerea	S	0.20500000000000002	2
+barcode02	Botrytis cinerea B05.10	S1	0.20500000000000002	2
+barcode02	Candida	G	0.3566666666666667	3
+barcode02	Candida albicans	S	0.62	1
+barcode02	Candida albicans SC5314	S1	0.62	1
+barcode02	Candida dubliniensis	S	0.22499999999999998	2
+barcode02	Candida dubliniensis CD36	S1	0.22499999999999998	2
+barcode02	Candida/Lodderomyces clade	F1	0.2409090909090909	12
+barcode02	Catarrhini	O3	0.36375	42
+barcode02	Chordata	P	0.36375	42
+barcode02	Clavicipitaceae	F	0.14	2
+barcode02	Cnidaria	P	86.83317241379311	42707
+barcode02	Coccidioides	G	0.38	1
+barcode02	Coccidioides posadasii	S	0.38	1
+barcode02	Coccidioides posadasii str. Silveira	S1	0.38	1
+barcode02	Colletotrichum	G	0.178	6
+barcode02	Colletotrichum acutatum species complex	G1	0.11	1
+barcode02	Colletotrichum destructivum	S	0.08	2
+barcode02	Colletotrichum destructivum species complex	G1	0.156	5
+barcode02	Colletotrichum higginsianum	S	0.20666666666666667	3
+barcode02	Colletotrichum higginsianum IMI 349063	S1	0.20666666666666667	3
+barcode02	Colletotrichum lupini	S	0.11	1
+barcode02	Craniata	P1	0.36375	42
+barcode02	Cryptococcaceae	F	0.3	35
+barcode02	Cryptococcus	G	0.145	2
+barcode02	Cryptococcus deuterogattii	S	0.18	1
+barcode02	Cryptococcus deuterogattii R265	S1	0.18	1
+barcode02	Cryptococcus gattii species complex	G1	0.145	2
+barcode02	Debaryomycetaceae	F	0.25363636363636366	13
+barcode02	Deuterostomia	K3	0.36375	42
+barcode02	Dikarya	K1	0.5711428571428572	143
+barcode02	Dipnotetrapodomorpha	P7	0.36375	42
+barcode02	Dipodascales	O	0.67	1
+barcode02	Dipodascales incertae sedis	O1	0.67	1
+barcode02	Dipodascomycetes	C	0.67	1
+barcode02	Drechmeria	G	0.49833333333333335	13
+barcode02	Drechmeria coniospora	S	0.49833333333333335	13
+barcode02	Euarchontoglires	C4	0.36375	42
+barcode02	Eukaryota	R2	87.23737931034482	42914
+barcode02	Eumetazoa	K1	86.93531034482758	42762
+barcode02	Eunicea	G	86.83317241379311	42707
+barcode02	Eunicea knighti	S	86.83317241379311	42707
+barcode02	Eurotiales	O	0.21666666666666667	3
+barcode02	Eurotiomycetes	C	0.2575	4
+barcode02	Eurotiomycetidae	C1	0.2575	4
+barcode02	Euteleostomi	P5	0.36375	42
+barcode02	Eutheria	C2	0.36375	42
+barcode02	Fungi	K	0.5876056338028169	146
+barcode02	Fungi incertae sedis	K1	0.5766666666666667	3
+barcode02	Fusarium	G	0.2907142857142857	15
+barcode02	Fusarium fujikuroi	S	0.12	1
+barcode02	Fusarium fujikuroi IMI 58289	S1	0.12	1
+barcode02	Fusarium fujikuroi species complex	G1	0.12	1
+barcode02	Fusarium graminearum	S	0.06	1
+barcode02	Fusarium graminearum PH-1	S1	0.06	1
+barcode02	Fusarium musae	S	0.14	1
+barcode02	Fusarium oxysporum	S	0.725	2
+barcode02	Fusarium oxysporum Fo47	S1	0.725	2
+barcode02	Fusarium oxysporum species complex	G1	0.725	2
+barcode02	Fusarium pseudograminearum	S	0.24142857142857144	7
+barcode02	Fusarium pseudograminearum CS3096	S1	0.24142857142857144	7
+barcode02	Fusarium sambucinum species complex	G1	0.21875	8
+barcode02	Glomeraceae	F	0.5766666666666667	3
+barcode02	Glomerales	O	0.5766666666666667	3
+barcode02	Glomerellaceae	F	0.178	6
+barcode02	Glomerellales	O	0.178	6
+barcode02	Glomeromycetes	C	0.5766666666666667	3
+barcode02	Glomeromycotina	P1	0.5766666666666667	3
+barcode02	Gnathostomata	P3	0.36375	42
+barcode02	Haplorrhini	O1	0.36375	42
+barcode02	Helotiales	O	0.20500000000000002	2
+barcode02	Hominidae	F	0.36375	42
+barcode02	Homininae	F1	0.36375	42
+barcode02	Hominoidea	O4	0.36375	42
+barcode02	Homo	G	0.36375	42
+barcode02	Homo sapiens	S	0.36375	42
+barcode02	Hypocreaceae	F	0.68	1
+barcode02	Hypocreales	O	0.386	37
+barcode02	Hypocreomycetidae	C1	0.38666666666666666	47
+barcode02	Kazachstania	G	0.81	1
+barcode02	Kazachstania africana	S	0.81	1
+barcode02	Kazachstania africana CBS 2517	S1	0.81	1
+barcode02	Kluyveromyces	G	1.0033333333333334	3
+barcode02	Kluyveromyces marxianus	S	1.0033333333333334	3
+barcode02	Kluyveromyces marxianus DMKU3-1042	S1	1.0033333333333334	3
+barcode02	Kwoniella	G	0.3140909090909091	33
+barcode02	Kwoniella bestiolae	S	0.06	1
+barcode02	Kwoniella bestiolae CBS 10118	S1	0.06	1
+barcode02	Kwoniella botswanensis	S	0.27375	22
+barcode02	Kwoniella dejecticola	S	0.14	1
+barcode02	Kwoniella dejecticola CBS 10117	S1	0.14	1
+barcode02	Kwoniella dendrophila	S	0.11499999999999999	2
+barcode02	Kwoniella dendrophila CBS 6074	S1	0.11499999999999999	2
+barcode02	Kwoniella europaea	S	0.12	2
+barcode02	Kwoniella europaea PYCC6329	S1	0.12	2
+barcode02	Kwoniella pini	S	0.47	1
+barcode02	Kwoniella pini CBS 10737	S1	0.47	1
+barcode02	Kwoniella shandongensis	S	0.19	1
+barcode02	Kwoniella shivajii	S	0.08	1
+barcode02	Leotiomycetes	C	0.20500000000000002	2
+barcode02	Lodderomyces	G	0.1975	9
+barcode02	Lodderomyces beijingensis	S	0.17	4
+barcode02	Lodderomyces elongisporus	S	0.214	5
+barcode02	Magnaporthales	O	0.09666666666666668	3
+barcode02	Malacalcyonacea	O	86.83317241379311	42707
+barcode02	Mammalia	C	0.36375	42
+barcode02	Metazoa	K	86.93531034482758	42762
+barcode02	Methanobacteria	C	0.25	1
+barcode02	Methanobacteriaceae	F	0.25	1
+barcode02	Methanobacteriales	O	0.25	1
+barcode02	Methanobacteriati	K	0.25	1
+barcode02	Methanobacteriota	P	0.25	1
+barcode02	Methanobacterium	G	0.25	1
+barcode02	Methanobacterium lacus	S	0.25	1
+barcode02	Methanomada group	P1	0.25	1
+barcode02	Metschnikowiaceae	F	0.16	1
+barcode02	Mucoromycota	P	0.5766666666666667	3
+barcode02	Nectriaceae	F	0.2907142857142857	15
+barcode02	Neurospora	G	0.12	1
+barcode02	Neurospora crassa	S	0.12	1
+barcode02	Neurospora crassa OR74A	S1	0.12	1
+barcode02	Nitrosopumilaceae	F	0.06	1
+barcode02	Nitrosopumilales	O	0.06	1
+barcode02	Nitrosopumilus	G	0.06	1
+barcode02	Nitrosopumilus sp.	S	0.06	1
+barcode02	Nitrososphaeria	C	0.06	1
+barcode02	Nitrososphaerota	P	0.06	1
+barcode02	Octocorallia	C1	86.83317241379311	42707
+barcode02	Onygenaceae	F	0.38	1
+barcode02	Onygenales	O	0.38	1
+barcode02	Ophiocordycipitaceae	F	0.46461538461538465	14
+barcode02	Opisthokonta	R3	87.23737931034482	42914
+barcode02	Pezizomycotina	P2	0.40702127659574466	63
+barcode02	Pichia	G	0.11	1
+barcode02	Pichia kudriavzevii	S	0.11	1
+barcode02	Pichiaceae	F	0.11	1
+barcode02	Pichiales	O	0.11	1
+barcode02	Pichiomycetes	C	0.2353846153846154	15
+barcode02	Plexauridae	F	86.83317241379311	42707
+barcode02	Podospora	G	0.3	1
+barcode02	Podosporaceae	F	0.3	1
+barcode02	Primates	O	0.36375	42
+barcode02	Puccinia	G	0.21	3
+barcode02	Puccinia striiformis	S	0.21	3
+barcode02	Puccinia striiformis f. sp. tritici	S1	0.21	3
+barcode02	Pucciniaceae	F	0.21	3
+barcode02	Pucciniales	O	0.21	3
+barcode02	Pucciniomycetes	C	0.21	3
+barcode02	Pucciniomycotina	P1	0.21	3
+barcode02	Purpureocillium	G	0.06	1
+barcode02	Purpureocillium takamizusanense	S	0.06	1
+barcode02	Pyricularia	G	0.09666666666666668	3
+barcode02	Pyricularia grisea	S	0.095	2
+barcode02	Pyricularia oryzae	S	0.1	1
+barcode02	Pyricularia oryzae 70-15	S1	0.1	1
+barcode02	Pyriculariaceae	F	0.09666666666666668	3
+barcode02	Rhizophagus	G	0.5766666666666667	3
+barcode02	Rhizophagus irregularis	S	0.5766666666666667	3
+barcode02	Saccharomyces	G	0.07	1
+barcode02	Saccharomyces mikatae	S	0.07	1
+barcode02	Saccharomyces mikatae IFO 1815	S1	0.07	1
+barcode02	Saccharomycetaceae	F	0.778	5
+barcode02	Saccharomycetales	O	0.778	5
+barcode02	Saccharomycetes	C	0.7171428571428572	7
+barcode02	Saccharomycodaceae	F	0.07	1
+barcode02	Saccharomycodales	O	0.07	1
+barcode02	Saccharomycodes	G	0.07	1
+barcode02	Saccharomycodes ludwigii	S	0.07	1
+barcode02	Saccharomycotina	P2	0.4040909090909091	25
+barcode02	Sarcopterygii	P6	0.36375	42
+barcode02	Scheffersomyces	G	0.13	1
+barcode02	Scheffersomyces stipitis	S	0.13	1
+barcode02	Scheffersomyces stipitis CBS 6054	S1	0.13	1
+barcode02	Sclerotiniaceae	F	0.20500000000000002	2
+barcode02	Serinales	O	0.24583333333333335	14
+barcode02	Simiiformes	O2	0.36375	42
+barcode02	Sordariaceae	F	0.12	1
+barcode02	Sordariales	O	0.21	2
+barcode02	Sordariomycetes	C	0.3907317073170732	55
+barcode02	Sordariomycetidae	C1	0.14200000000000002	5
+barcode02	Talaromyces	G	0.4	1
+barcode02	Talaromyces marneffei	S	0.4	1
+barcode02	Talaromyces sect. Talaromyces	G1	0.4	1
+barcode02	Teleostomi	P4	0.36375	42
+barcode02	Tetrapoda	P8	0.36375	42
+barcode02	Theria	C1	0.36375	42
+barcode02	Thermoproteati	K	0.06	1
+barcode02	Tremellales	O	0.3	35
+barcode02	Tremellomycetes	C	0.3	35
+barcode02	Trichocomaceae	F	0.4	1
+barcode02	Trichoderma	G	0.68	1
+barcode02	Trichoderma atroviride	S	0.68	1
+barcode02	Ustilaginoidea	G	0.14	2
+barcode02	Ustilaginoidea virens	S	0.14	2
+barcode02	Vertebrata	P2	0.36375	42
+barcode02	Yarrowia	G	0.67	1
+barcode02	Yarrowia lipolytica	S	0.67	1
+barcode02	cellular organisms	R1	87.24006896551724	42917
+barcode02	leotiomyceta	P3	0.40702127659574466	63
+barcode02	root	R	87.24006896551724	42917
+barcode02	saccharomyceta	P1	0.5289285714285714	94
+barcode02	sordariomyceta	P4	0.41232558139534886	58
+barcode02	unclassified	U	12.848541666666666	6167
+barcode02	unclassified Nitrosopumilus	G1	0.06	1
+barcode03	Agaricales	O	0.08	1
+barcode03	Agaricineae	O1	0.08	1
+barcode03	Agaricomycetes	C	0.08	1
+barcode03	Agaricomycetidae	C1	0.08	1
+barcode03	Agaricomycotina	P1	0.46142857142857147	26
+barcode03	Amniota	P9	0.6071428571428571	38
+barcode03	Anthozoa	C	88.37062068965517	39252
+barcode03	Apansporoblastina	P1	0.13	1
+barcode03	Archaea	R2	0.25	1
+barcode03	Ascochyta	G	0.38	3
+barcode03	Ascochyta rabiei	S	0.38	3
+barcode03	Ascomycota	P	0.5194117647058824	64
+barcode03	Basidiomycota	P	0.46416666666666667	30
+barcode03	Bilateria	K2	0.6071428571428571	38
+barcode03	Boreoeutheria	C3	0.6071428571428571	38
+barcode03	Botrytis	G	0.245	4
+barcode03	Botrytis cinerea	S	0.245	4
+barcode03	Botrytis cinerea B05.10	S1	0.245	4
+barcode03	Candida	G	0.295	4
+barcode03	Candida dubliniensis	S	0.295	4
+barcode03	Candida dubliniensis CD36	S1	0.295	4
+barcode03	Candida/Lodderomyces clade	F1	0.28833333333333333	6
+barcode03	Catarrhini	O3	0.6071428571428571	38
+barcode03	Chordata	P	0.6071428571428571	38
+barcode03	Clavicipitaceae	F	1.19	1
+barcode03	Cnidaria	P	88.37062068965517	39252
+barcode03	Colletotrichum	G	0.2011111111111111	9
+barcode03	Colletotrichum acutatum species complex	G1	0.16	1
+barcode03	Colletotrichum destructivum	S	0.22749999999999998	4
+barcode03	Colletotrichum destructivum species complex	G1	0.20625	8
+barcode03	Colletotrichum higginsianum	S	0.13	3
+barcode03	Colletotrichum higginsianum IMI 349063	S1	0.13	3
+barcode03	Colletotrichum lupini	S	0.16	1
+barcode03	Craniata	P1	0.6071428571428571	38
+barcode03	Cryptococcaceae	F	0.45761904761904765	25
+barcode03	Cryptococcus	G	0.205	2
+barcode03	Cryptococcus gattii	S	0.11	1
+barcode03	Cryptococcus gattii WM276	S1	0.11	1
+barcode03	Cryptococcus gattii species complex	G1	0.205	2
+barcode03	Debaryomyces	G	0.13	1
+barcode03	Debaryomyces hansenii	S	0.13	1
+barcode03	Debaryomyces hansenii CBS767	S1	0.13	1
+barcode03	Debaryomycetaceae	F	0.26571428571428574	7
+barcode03	Deuterostomia	K3	0.6071428571428571	38
+barcode03	Didymellaceae	F	0.38	3
+barcode03	Dikarya	K1	0.6234920634920635	100
+barcode03	Dipnotetrapodomorpha	P7	0.6071428571428571	38
+barcode03	Dothideomycetes	C	0.585	4
+barcode03	Dothideomycetidae	C1	1.2	1
+barcode03	Drechmeria	G	0.21166666666666667	6
+barcode03	Drechmeria coniospora	S	0.21166666666666667	6
+barcode03	Euarchontoglires	C4	0.6071428571428571	38
+barcode03	Eukaryota	R2	88.80793103448276	39409
+barcode03	Eumetazoa	K1	88.51475862068965	39300
+barcode03	Eunicea	G	88.37062068965517	39252
+barcode03	Eunicea knighti	S	88.37062068965517	39252
+barcode03	Euteleostomi	P5	0.6071428571428571	38
+barcode03	Eutheria	C2	0.6071428571428571	38
+barcode03	Fungi	K	0.6320634920634921	103
+barcode03	Fungi incertae sedis	K1	0.18	3
+barcode03	Fusarium	G	0.26	6
+barcode03	Fusarium graminearum	S	0.14	1
+barcode03	Fusarium graminearum PH-1	S1	0.14	1
+barcode03	Fusarium oxysporum	S	0.67	1
+barcode03	Fusarium oxysporum Fo47	S1	0.67	1
+barcode03	Fusarium oxysporum species complex	G1	0.67	1
+barcode03	Fusarium poae	S	0.13	1
+barcode03	Fusarium pseudograminearum	S	0.20666666666666667	3
+barcode03	Fusarium pseudograminearum CS3096	S1	0.20666666666666667	3
+barcode03	Fusarium sambucinum species complex	G1	0.178	5
+barcode03	Glomeraceae	F	0.205	2
+barcode03	Glomerales	O	0.205	2
+barcode03	Glomerellaceae	F	0.2011111111111111	9
+barcode03	Glomerellales	O	0.2011111111111111	9
+barcode03	Glomeromycetes	C	0.205	2
+barcode03	Glomeromycotina	P1	0.205	2
+barcode03	Gnathostomata	P3	0.6071428571428571	38
+barcode03	Haplorrhini	O1	0.6071428571428571	38
+barcode03	Helotiales	O	0.245	4
+barcode03	Hominidae	F	0.6071428571428571	38
+barcode03	Homininae	F1	0.6071428571428571	38
+barcode03	Hominoidea	O4	0.6071428571428571	38
+barcode03	Homo	G	0.6071428571428571	38
+barcode03	Homo sapiens	S	0.6071428571428571	38
+barcode03	Hypocreaceae	F	0.255	2
+barcode03	Hypocreales	O	0.366	17
+barcode03	Hypocreomycetidae	C1	0.3173913043478261	26
+barcode03	Kluyveromyces	G	1.1	2
+barcode03	Kluyveromyces marxianus	S	1.1	2
+barcode03	Kluyveromyces marxianus DMKU3-1042	S1	1.1	2
+barcode03	Komagataella	G	0.09	1
+barcode03	Komagataella phaffii	S	0.09	1
+barcode03	Komagataella phaffii GS115	S1	0.09	1
+barcode03	Kwoniella	G	0.4605263157894737	22
+barcode03	Kwoniella botswanensis	S	0.4752941176470588	20
+barcode03	Kwoniella europaea	S	0.48	1
+barcode03	Kwoniella europaea PYCC6329	S1	0.48	1
+barcode03	Kwoniella shivajii	S	0.19	1
+barcode03	Leotiomycetes	C	0.245	4
+barcode03	Lodderomyces	G	0.275	2
+barcode03	Lodderomyces elongisporus	S	0.275	2
+barcode03	Magnaporthales	O	0.13	1
+barcode03	Malacalcyonacea	O	88.37062068965517	39252
+barcode03	Mammalia	C	0.6071428571428571	38
+barcode03	Metazoa	K	88.51475862068965	39300
+barcode03	Microsporidia	P	0.13	1
+barcode03	Mucoromycota	P	0.205	2
+barcode03	Mycosphaerellaceae	F	1.2	1
+barcode03	Mycosphaerellales	O	1.2	1
+barcode03	Naumovozyma	G	0.275	2
+barcode03	Naumovozyma castellii	S	0.39	1
+barcode03	Naumovozyma dairenensis	S	0.16	1
+barcode03	Naumovozyma dairenensis CBS 421	S1	0.16	1
+barcode03	Nectriaceae	F	0.26	6
+barcode03	Neurospora	G	0.15	3
+barcode03	Neurospora crassa	S	0.15	3
+barcode03	Neurospora crassa OR74A	S1	0.15	3
+barcode03	Nitrosopumilaceae	F	0.25	1
+barcode03	Nitrosopumilales	O	0.25	1
+barcode03	Nitrosopumilus	G	0.25	1
+barcode03	Nitrosopumilus sp. K4	S	0.25	1
+barcode03	Nitrososphaeria	C	0.25	1
+barcode03	Nitrososphaerota	P	0.25	1
+barcode03	Nosematidae	F	0.13	1
+barcode03	Octocorallia	C1	88.37062068965517	39252
+barcode03	Ophiocordycipitaceae	F	0.21166666666666667	6
+barcode03	Opisthokonta	R3	88.80793103448276	39409
+barcode03	Pezizomycotina	P2	0.3862857142857143	43
+barcode03	Pichiaceae	F	0.09	1
+barcode03	Pichiales	O	0.09	1
+barcode03	Pichiomycetes	C	0.24375	8
+barcode03	Pleosporales	O	0.38	3
+barcode03	Pleosporineae	O1	0.38	3
+barcode03	Pleosporomycetidae	C1	0.38	3
+barcode03	Plexauridae	F	88.37062068965517	39252
+barcode03	Primates	O	0.6071428571428571	38
+barcode03	Psilocybe	G	0.08	1
+barcode03	Psilocybe cubensis	S	0.08	1
+barcode03	Puccinia	G	0.3625	4
+barcode03	Puccinia striiformis	S	0.32666666666666666	3
+barcode03	Puccinia striiformis f. sp. tritici	S1	0.32666666666666666	3
+barcode03	Puccinia triticina	S	0.47	1
+barcode03	Pucciniaceae	F	0.3625	4
+barcode03	Pucciniales	O	0.3625	4
+barcode03	Pucciniomycetes	C	0.3625	4
+barcode03	Pucciniomycotina	P1	0.3625	4
+barcode03	Pyricularia	G	0.13	1
+barcode03	Pyricularia oryzae	S	0.13	1
+barcode03	Pyricularia oryzae 70-15	S1	0.13	1
+barcode03	Pyriculariaceae	F	0.13	1
+barcode03	Remersonia	G	0.78	1
+barcode03	Remersonia thermophila	S	0.78	1
+barcode03	Rhizophagus	G	0.205	2
+barcode03	Rhizophagus irregularis	S	0.205	2
+barcode03	Saccharomycetaceae	F	0.6875	4
+barcode03	Saccharomycetales	O	0.6875	4
+barcode03	Saccharomycetes	C	0.6875	4
+barcode03	Saccharomycotina	P2	0.3707692307692308	13
+barcode03	Sarcopterygii	P6	0.6071428571428571	38
+barcode03	Schizosaccharomyces	G	0.44	1
+barcode03	Schizosaccharomyces osmophilus	S	0.44	1
+barcode03	Schizosaccharomycetaceae	F	0.44	1
+barcode03	Schizosaccharomycetales	O	0.44	1
+barcode03	Schizosaccharomycetes	C	0.44	1
+barcode03	Sclerotiniaceae	F	0.245	4
+barcode03	Serinales	O	0.26571428571428574	7
+barcode03	Simiiformes	O2	0.6071428571428571	38
+barcode03	Sordaria	G	0.41	1
+barcode03	Sordaria macrospora	S	0.41	1
+barcode03	Sordariaceae	F	0.215	4
+barcode03	Sordariales	O	0.2966666666666667	6
+barcode03	Sordariales incertae sedis	O1	0.78	1
+barcode03	Sordariomycetes	C	0.34	35
+barcode03	Sordariomycetidae	C1	0.27285714285714285	7
+barcode03	Strophariaceae	F	0.08	1
+barcode03	Taphrinomycotina	P1	0.44	1
+barcode03	Teleostomi	P4	0.6071428571428571	38
+barcode03	Tetrapoda	P8	0.6071428571428571	38
+barcode03	Theria	C1	0.6071428571428571	38
+barcode03	Thermoproteati	K	0.25	1
+barcode03	Tremellales	O	0.45761904761904765	25
+barcode03	Tremellomycetes	C	0.45761904761904765	25
+barcode03	Trichoderma	G	0.255	2
+barcode03	Trichoderma asperellum	S	0.43	1
+barcode03	Trichoderma breve	S	0.08	1
+barcode03	Ustilaginoidea	G	1.19	1
+barcode03	Ustilaginoidea virens	S	1.19	1
+barcode03	Vairimorpha	G	0.13	1
+barcode03	Vairimorpha necatrix	S	0.13	1
+barcode03	Vertebrata	P2	0.6071428571428571	38
+barcode03	Zymoseptoria	G	1.2	1
+barcode03	Zymoseptoria tritici	S	1.2	1
+barcode03	Zymoseptoria tritici IPO323	S1	1.2	1
+barcode03	cellular organisms	R1	88.8096551724138	39410
+barcode03	dothideomyceta	P4	0.585	4
+barcode03	leotiomyceta	P3	0.3862857142857143	43
+barcode03	root	R	88.8096551724138	39410
+barcode03	saccharomyceta	P1	0.521	63
+barcode03	sordariomyceta	P4	0.349375	39
+barcode03	unclassified	U	11.346853146853146	4727
+barcode03	unclassified Nitrosopumilus	G1	0.25	1
+barcode04	Agaricales	O	0.2016666666666667	6
+barcode04	Agaricineae	O1	0.2625	4
+barcode04	Agaricomycetes	C	0.2016666666666667	6
+barcode04	Agaricomycetidae	C1	0.2016666666666667	6
+barcode04	Agaricomycotina	P1	0.29085714285714287	48
+barcode04	Alternaria	G	0.115	2
+barcode04	Alternaria dauci	S	0.115	2
+barcode04	Alternaria sect. Porri	G1	0.115	2
+barcode04	Amniota	P9	0.3554838709677419	42
+barcode04	Anthozoa	C	84.63958620689655	42608
+barcode04	Archaea	R2	0.09666666666666666	3
+barcode04	Ascochyta	G	0.13	1
+barcode04	Ascochyta rabiei	S	0.13	1
+barcode04	Ascomycota	P	0.5669090909090909	103
+barcode04	Aspergillaceae	F	0.5640000000000001	5
+barcode04	Aspergillus	G	0.6375000000000001	4
+barcode04	Aspergillus luchuensis	S	0.6375000000000001	4
+barcode04	Aspergillus subgen. Circumdati	G1	0.6375000000000001	4
+barcode04	Basidiomycota	P	0.31194444444444447	51
+barcode04	Bilateria	K2	0.3554838709677419	42
+barcode04	Boreoeutheria	C3	0.3554838709677419	42
+barcode04	Botrytis	G	2.143333333333333	3
+barcode04	Botrytis cinerea	S	2.143333333333333	3
+barcode04	Botrytis cinerea B05.10	S1	2.143333333333333	3
+barcode04	Candida	G	0.28400000000000003	5
+barcode04	Candida albicans	S	0.07	2
+barcode04	Candida albicans SC5314	S1	0.07	2
+barcode04	Candida orthopsilosis	S	0.4266666666666667	3
+barcode04	Candida orthopsilosis Co 90-125	S1	0.4266666666666667	3
+barcode04	Candida/Lodderomyces clade	F1	0.234	10
+barcode04	Candidozyma	G	0.05	1
+barcode04	Candidozyma auris	S	0.05	1
+barcode04	Catarrhini	O3	0.3554838709677419	42
+barcode04	Chaetomiaceae	F	0.245	2
+barcode04	Chordata	P	0.3554838709677419	42
+barcode04	Clavicipitaceae	F	0.43333333333333335	3
+barcode04	Cnidaria	P	84.63958620689655	42608
+barcode04	Coccidioides	G	0.08499999999999999	2
+barcode04	Coccidioides posadasii	S	0.08499999999999999	2
+barcode04	Coccidioides posadasii str. Silveira	S1	0.08499999999999999	2
+barcode04	Colletotrichum	G	0.25166666666666665	6
+barcode04	Colletotrichum acutatum species complex	G1	0.31	2
+barcode04	Colletotrichum destructivum	S	0.08499999999999999	2
+barcode04	Colletotrichum destructivum species complex	G1	0.2225	4
+barcode04	Colletotrichum higginsianum	S	0.36	2
+barcode04	Colletotrichum higginsianum IMI 349063	S1	0.36	2
+barcode04	Colletotrichum lupini	S	0.31	2
+barcode04	Craniata	P1	0.3554838709677419	42
+barcode04	Cryptococcaceae	F	0.28733333333333333	41
+barcode04	Cryptococcus	G	0.195	2
+barcode04	Cryptococcus deuterogattii	S	0.195	2
+barcode04	Cryptococcus deuterogattii R265	S1	0.195	2
+barcode04	Cryptococcus gattii species complex	G1	0.195	2
+barcode04	Cutaneotrichosporon	G	0.35	1
+barcode04	Cutaneotrichosporon cavernicola	S	0.35	1
+barcode04	Debaryomycetaceae	F	0.234	10
+barcode04	Deuterostomia	K3	0.3554838709677419	42
+barcode04	Didymellaceae	F	0.13	1
+barcode04	Dikarya	K1	0.6397222222222222	164
+barcode04	Dipnotetrapodomorpha	P7	0.3554838709677419	42
+barcode04	Dipodascales	O	0.06	1
+barcode04	Dipodascomycetes	C	0.06	1
+barcode04	Dothideomycetes	C	0.10750000000000001	4
+barcode04	Drechmeria	G	0.2557142857142857	20
+barcode04	Drechmeria coniospora	S	0.2557142857142857	20
+barcode04	Euarchontoglires	C4	0.3554838709677419	42
+barcode04	Eukaryota	R2	85.06627586206896	42838
+barcode04	Eumetazoa	K1	84.72786206896552	42659
+barcode04	Eunicea	G	84.63958620689655	42608
+barcode04	Eunicea knighti	S	84.63958620689655	42608
+barcode04	Eurotiales	O	0.5671428571428572	7
+barcode04	Eurotiomycetes	C	0.46	9
+barcode04	Eurotiomycetidae	C1	0.46	9
+barcode04	Euteleostomi	P5	0.3554838709677419	42
+barcode04	Eutheria	C2	0.3554838709677419	42
+barcode04	Fungi	K	0.6356756756756757	166
+barcode04	Fungi incertae sedis	K1	0.6	1
+barcode04	Fusarium	G	0.318	11
+barcode04	Fusarium falciforme	S	0.75	1
+barcode04	Fusarium fujikuroi	S	0.655	2
+barcode04	Fusarium fujikuroi IMI 58289	S1	0.655	2
+barcode04	Fusarium fujikuroi species complex	G1	0.46	3
+barcode04	Fusarium graminearum	S	0.095	2
+barcode04	Fusarium graminearum PH-1	S1	0.095	2
+barcode04	Fusarium musae	S	0.56	1
+barcode04	Fusarium oxysporum	S	0.09	2
+barcode04	Fusarium oxysporum Fo47	S1	0.06	1
+barcode04	Fusarium oxysporum f. sp. lycopersici	S1	0.12	1
+barcode04	Fusarium oxysporum f. sp. lycopersici 4287	S2	0.12	1
+barcode04	Fusarium oxysporum species complex	G1	0.09	2
+barcode04	Fusarium pseudograminearum	S	0.06	1
+barcode04	Fusarium pseudograminearum CS3096	S1	0.06	1
+barcode04	Fusarium sambucinum species complex	G1	0.08333333333333334	3
+barcode04	Fusarium solani species complex	G1	0.75	1
+barcode04	Fusarium verticillioides	S	0.07	1
+barcode04	Fusarium verticillioides 7600	S1	0.07	1
+barcode04	Glomeraceae	F	0.6	1
+barcode04	Glomerales	O	0.6	1
+barcode04	Glomerellaceae	F	0.25166666666666665	6
+barcode04	Glomerellales	O	0.25166666666666665	6
+barcode04	Glomeromycetes	C	0.6	1
+barcode04	Glomeromycotina	P1	0.6	1
+barcode04	Gnathostomata	P3	0.3554838709677419	42
+barcode04	Haplorrhini	O1	0.3554838709677419	42
+barcode04	Helotiales	O	2.143333333333333	3
+barcode04	Hominidae	F	0.3554838709677419	42
+barcode04	Homininae	F1	0.3554838709677419	42
+barcode04	Hominoidea	O4	0.3554838709677419	42
+barcode04	Homo	G	0.3554838709677419	42
+barcode04	Homo sapiens	S	0.3554838709677419	42
+barcode04	Hypocreales	O	0.31275862068965515	40
+barcode04	Hypocreomycetidae	C1	0.3209090909090909	46
+barcode04	Kwoniella	G	0.28785714285714287	37
+barcode04	Kwoniella bestiolae	S	1.02	1
+barcode04	Kwoniella bestiolae CBS 10118	S1	1.02	1
+barcode04	Kwoniella botswanensis	S	0.2625	30
+barcode04	Kwoniella europaea	S	0.11	1
+barcode04	Kwoniella europaea PYCC6329	S1	0.11	1
+barcode04	Kwoniella mangrovensis	S	0.13	1
+barcode04	Kwoniella mangroviensis CBS 8507	S1	0.13	1
+barcode04	Kwoniella pini	S	0.13	2
+barcode04	Kwoniella pini CBS 10737	S1	0.13	2
+barcode04	Kwoniella shandongensis	S	0.11	1
+barcode04	Leotiomycetes	C	2.143333333333333	3
+barcode04	Lodderomyces	G	0.184	5
+barcode04	Lodderomyces beijingensis	S	0.17666666666666667	3
+barcode04	Lodderomyces elongisporus	S	0.195	2
+barcode04	Magnaporthales	O	0.07	1
+barcode04	Malacalcyonacea	O	84.63958620689655	42608
+barcode04	Mammalia	C	0.3554838709677419	42
+barcode04	Marasmiaceae	F	0.08	2
+barcode04	Marasmiineae	O1	0.08	2
+barcode04	Marasmius	G	0.08	2
+barcode04	Marasmius oreades	S	0.08	2
+barcode04	Metazoa	K	84.72786206896552	42659
+barcode04	Methanobacteria	C	0.14	1
+barcode04	Methanobacteriaceae	F	0.14	1
+barcode04	Methanobacteriales	O	0.14	1
+barcode04	Methanobacteriati	K	0.1	2
+barcode04	Methanobacteriota	P	0.1	2
+barcode04	Methanobacterium	G	0.14	1
+barcode04	Methanobacterium lacus	S	0.14	1
+barcode04	Methanomada group	P1	0.14	1
+barcode04	Methanomicrobia	C	0.06	1
+barcode04	Metschnikowiaceae	F	0.05	1
+barcode04	Mucoromycota	P	0.6	1
+barcode04	Nakaseomyces	G	0.06	1
+barcode04	Nakaseomyces glabratus	S	0.06	1
+barcode04	Naumovozyma	G	0.36	4
+barcode04	Naumovozyma castellii	S	0.37333333333333335	3
+barcode04	Naumovozyma dairenensis	S	0.32	1
+barcode04	Naumovozyma dairenensis CBS 421	S1	0.32	1
+barcode04	Nectriaceae	F	0.318	11
+barcode04	Neurospora	G	0.184	5
+barcode04	Neurospora crassa	S	0.184	5
+barcode04	Neurospora crassa OR74A	S1	0.184	5
+barcode04	Nitrosopumilaceae	F	0.09	1
+barcode04	Nitrosopumilales	O	0.09	1
+barcode04	Nitrosopumilus	G	0.09	1
+barcode04	Nitrosopumilus sp. K4	S	0.09	1
+barcode04	Nitrososphaeria	C	0.09	1
+barcode04	Nitrososphaerota	P	0.09	1
+barcode04	Octocorallia	C1	84.63958620689655	42608
+barcode04	Onygenaceae	F	0.08499999999999999	2
+barcode04	Onygenales	O	0.08499999999999999	2
+barcode04	Ophiocordycipitaceae	F	0.25	21
+barcode04	Opisthokonta	R3	85.06627586206896	42838
+barcode04	Penicillium	G	0.27	1
+barcode04	Penicillium oxalicum	S	0.27	1
+barcode04	Pezizomycotina	P2	0.5429545454545455	76
+barcode04	Pichiomycetes	C	0.21727272727272728	11
+barcode04	Pleosporaceae	F	0.1	3
+barcode04	Pleosporales	O	0.10750000000000001	4
+barcode04	Pleosporineae	O1	0.10750000000000001	4
+barcode04	Pleosporomycetidae	C1	0.10750000000000001	4
+barcode04	Plexauridae	F	84.63958620689655	42608
+barcode04	Pochonia	G	0.43	1
+barcode04	Pochonia chlamydosporia	S	0.43	1
+barcode04	Pochonia chlamydosporia 170	S1	0.43	1
+barcode04	Podospora	G	0.27	1
+barcode04	Podospora bellae-mahoneyi	S	0.27	1
+barcode04	Podosporaceae	F	0.27	1
+barcode04	Primates	O	0.3554838709677419	42
+barcode04	Psilocybe	G	0.2625	4
+barcode04	Psilocybe cubensis	S	0.2625	4
+barcode04	Puccinia	G	0.475	2
+barcode04	Puccinia striiformis	S	0.475	2
+barcode04	Puccinia striiformis f. sp. tritici	S1	0.475	2
+barcode04	Pucciniaceae	F	0.475	2
+barcode04	Pucciniales	O	0.475	2
+barcode04	Pucciniomycetes	C	0.475	2
+barcode04	Pucciniomycotina	P1	0.475	2
+barcode04	Purpureocillium	G	0.17	1
+barcode04	Purpureocillium takamizusanense	S	0.17	1
+barcode04	Pyrenophora	G	0.07	1
+barcode04	Pyrenophora tritici-repentis	S	0.07	1
+barcode04	Pyricularia	G	0.07	1
+barcode04	Pyricularia oryzae	S	0.07	1
+barcode04	Pyricularia oryzae 70-15	S1	0.07	1
+barcode04	Pyriculariaceae	F	0.07	1
+barcode04	Remersonia	G	0.14	1
+barcode04	Remersonia thermophila	S	0.14	1
+barcode04	Rhizophagus	G	0.6	1
+barcode04	Rhizophagus irregularis	S	0.6	1
+barcode04	Saccharomyces	G	0.07	1
+barcode04	Saccharomyces cerevisiae	S	0.07	1
+barcode04	Saccharomyces cerevisiae S288C	S1	0.07	1
+barcode04	Saccharomycetaceae	F	0.47	8
+barcode04	Saccharomycetales	O	0.47	8
+barcode04	Saccharomycetes	C	0.47	8
+barcode04	Saccharomycotina	P2	0.34058823529411764	21
+barcode04	Sarcopterygii	P6	0.3554838709677419	42
+barcode04	Sclerotiniaceae	F	2.143333333333333	3
+barcode04	Serinales	O	0.21727272727272728	11
+barcode04	Simiiformes	O2	0.3554838709677419	42
+barcode04	Sordariaceae	F	0.184	5
+barcode04	Sordariales	O	0.20222222222222222	9
+barcode04	Sordariales incertae sedis	O1	0.14	1
+barcode04	Sordariomycetes	C	0.34054054054054056	58
+barcode04	Sordariomycetidae	C1	0.189	10
+barcode04	Sporisorium	G	0.09	1
+barcode04	Sporisorium graminicola	S	0.09	1
+barcode04	Stenosarchaea group	P1	0.06	1
+barcode04	Strophariaceae	F	0.2625	4
+barcode04	Sugiyamaella	G	0.06	1
+barcode04	Sugiyamaella lignohabitans	S	0.06	1
+barcode04	Talaromyces	G	0.575	2
+barcode04	Talaromyces rugulosus	S	0.575	2
+barcode04	Talaromyces sect. Islandici	G1	0.575	2
+barcode04	Teleostomi	P4	0.3554838709677419	42
+barcode04	Tetrapoda	P8	0.3554838709677419	42
+barcode04	Theria	C1	0.3554838709677419	42
+barcode04	Thermoproteati	K	0.09	1
+barcode04	Thermothelomyces	G	0.22	1
+barcode04	Thermothelomyces thermophilus	S	0.22	1
+barcode04	Thermothelomyces thermophilus ATCC 42464	S1	0.22	1
+barcode04	Thermothielavioides	G	0.27	1
+barcode04	Thermothielavioides terrestris	S	0.27	1
+barcode04	Thermothielavioides terrestris NRRL 8126	S1	0.27	1
+barcode04	Tremellales	O	0.28733333333333333	41
+barcode04	Tremellomycetes	C	0.28935483870967743	42
+barcode04	Trichocomaceae	F	0.575	2
+barcode04	Trichomonascaceae	F	0.06	1
+barcode04	Trichosporonaceae	F	0.35	1
+barcode04	Trichosporonales	O	0.35	1
+barcode04	Ustilaginaceae	F	0.09	1
+barcode04	Ustilaginales	O	0.09	1
+barcode04	Ustilaginoidea	G	0.435	2
+barcode04	Ustilaginoidea virens	S	0.435	2
+barcode04	Ustilaginomycetes	C	0.09	1
+barcode04	Ustilaginomycotina	P1	0.09	1
+barcode04	Vertebrata	P2	0.3554838709677419	42
+barcode04	Zygosaccharomyces	G	0.3	1
+barcode04	Zygosaccharomyces rouxii	S	0.3	1
+barcode04	cellular organisms	R1	85.06979310344828	42842
+barcode04	dothideomyceta	P4	0.10750000000000001	4
+barcode04	leotiomyceta	P3	0.5429545454545455	76
+barcode04	root	R	85.06979310344828	42842
+barcode04	saccharomyceta	P1	0.5669090909090909	103
+barcode04	sordariomyceta	P4	0.4882051282051282	61
+barcode04	unclassified	U	15.46342857142857	7640
+barcode04	unclassified Nitrosopumilus	G1	0.09	1
+NA	Agaricomycotina	P1	3.71	4
+NA	Amniota	P9	3.9971428571428573	17
+NA	Anthozoa	C	85.31340277777778	4883
+NA	Archaea	R2	1.64	1
+NA	Ascomycota	P	2.3535714285714286	16
+NA	Basidiomycota	P	3.574	5
+NA	Bilateria	K2	3.9971428571428573	17
+NA	Boreoeutheria	C3	3.9971428571428573	17
+NA	Botrytis	G	1.33	1
+NA	Botrytis cinerea	S	1.33	1
+NA	Botrytis cinerea B05.10	S1	1.33	1
+NA	Candida	G	1.25	1
+NA	Candida albicans	S	1.25	1
+NA	Candida albicans SC5314	S1	1.25	1
+NA	Candida/Lodderomyces clade	F1	1.69	2
+NA	Catarrhini	O3	3.9971428571428573	17
+NA	Chaetomiaceae	F	2.08	1
+NA	Chordata	P	3.9971428571428573	17
+NA	Clavicipitaceae	F	4	1
+NA	Cnidaria	P	85.31340277777778	4883
+NA	Craniata	P1	3.9971428571428573	17
+NA	Cryptococcaceae	F	3.71	4
+NA	Debaryomycetaceae	F	1.69	2
+NA	Deuterostomia	K3	3.9971428571428573	17
+NA	Dikarya	K1	2.885263157894737	22
+NA	Dipnotetrapodomorpha	P7	3.9971428571428573	17
+NA	Dipodascales	O	0.96	1
+NA	Dipodascales incertae sedis	O1	0.96	1
+NA	Dipodascomycetes	C	0.96	1
+NA	Drechmeria	G	2.235	2
+NA	Drechmeria coniospora	S	2.235	2
+NA	Euarchontoglires	C4	3.9971428571428573	17
+NA	Eukaryota	R2	86.103125	4924
+NA	Eumetazoa	K1	85.701875	4900
+NA	Eunicea	G	85.31340277777778	4883
+NA	Eunicea knighti	S	85.31340277777778	4883
+NA	Eurotiales	O	1.82	1
+NA	Eurotiomycetes	C	1.82	1
+NA	Eurotiomycetidae	C1	1.82	1
+NA	Euteleostomi	P5	3.9971428571428573	17
+NA	Eutheria	C2	3.9971428571428573	17
+NA	Fungi	K	2.885263157894737	22
+NA	Fusarium	G	3.67	2
+NA	Fusarium graminearum	S	5.26	1
+NA	Fusarium graminearum PH-1	S1	5.26	1
+NA	Fusarium pseudograminearum	S	2.08	1
+NA	Fusarium pseudograminearum CS3096	S1	2.08	1
+NA	Fusarium sambucinum species complex	G1	3.67	2
+NA	Gnathostomata	P3	3.9971428571428573	17
+NA	Haplorrhini	O1	3.9971428571428573	17
+NA	Helotiales	O	1.33	1
+NA	Hominidae	F	3.9971428571428573	17
+NA	Homininae	F1	3.9971428571428573	17
+NA	Hominoidea	O4	3.9971428571428573	17
+NA	Homo	G	3.9971428571428573	17
+NA	Homo sapiens	S	3.9971428571428573	17
+NA	Hypocreaceae	F	2.08	1
+NA	Hypocreales	O	3.58	6
+NA	Hypocreomycetidae	C1	3.58	6
+NA	Kwoniella	G	3.71	4
+NA	Kwoniella botswanensis	S	3.71	4
+NA	Leotiomycetes	C	1.33	1
+NA	Lodderomyces	G	2.13	1
+NA	Lodderomyces elongisporus	S	2.13	1
+NA	Malacalcyonacea	O	85.31340277777778	4883
+NA	Mammalia	C	3.9971428571428573	17
+NA	Metarhizium	G	4	1
+NA	Metarhizium brunneum	S	4	1
+NA	Metazoa	K	85.701875	4900
+NA	Methanobacteriati	K	1.64	1
+NA	Methanobacteriota	P	1.64	1
+NA	Methanomicrobia	C	1.64	1
+NA	Methanosarcina	G	1.64	1
+NA	Methanosarcina flavescens	S	1.64	1
+NA	Methanosarcinaceae	F	1.64	1
+NA	Methanosarcinales	O	1.64	1
+NA	Nectriaceae	F	3.67	2
+NA	Neurospora	G	3.85	1
+NA	Neurospora crassa	S	3.85	1
+NA	Neurospora crassa OR74A	S1	3.85	1
+NA	Octocorallia	C1	85.31340277777778	4883
+NA	Ophiocordycipitaceae	F	2.235	2
+NA	Opisthokonta	R3	86.103125	4924
+NA	Pezizomycotina	P2	2.600909090909091	13
+NA	Pichiomycetes	C	1.69	2
+NA	Plexauridae	F	85.31340277777778	4883
+NA	Primates	O	3.9971428571428573	17
+NA	Puccinia	G	3.03	1
+NA	Puccinia striiformis	S	3.03	1
+NA	Puccinia striiformis f. sp. tritici	S1	3.03	1
+NA	Pucciniaceae	F	3.03	1
+NA	Pucciniales	O	3.03	1
+NA	Pucciniomycetes	C	3.03	1
+NA	Pucciniomycotina	P1	3.03	1
+NA	Saccharomycotina	P2	1.4466666666666665	3
+NA	Sarcopterygii	P6	3.9971428571428573	17
+NA	Sclerotiniaceae	F	1.33	1
+NA	Serinales	O	1.69	2
+NA	Simiiformes	O2	3.9971428571428573	17
+NA	Sordaria	G	0.49	1
+NA	Sordaria macrospora	S	0.49	1
+NA	Sordariaceae	F	2.17	2
+NA	Sordariales	O	2.14	3
+NA	Sordariomycetes	C	2.828888888888889	11
+NA	Sordariomycetidae	C1	2.14	3
+NA	Stenosarchaea group	P1	1.64	1
+NA	Talaromyces	G	1.82	1
+NA	Talaromyces marneffei	S	1.82	1
+NA	Talaromyces sect. Talaromyces	G1	1.82	1
+NA	Teleostomi	P4	3.9971428571428573	17
+NA	Tetrapoda	P8	3.9971428571428573	17
+NA	Theria	C1	3.9971428571428573	17
+NA	Thermothelomyces	G	2.08	1
+NA	Thermothelomyces thermophilus	S	2.08	1
+NA	Thermothelomyces thermophilus ATCC 42464	S1	2.08	1
+NA	Tremellales	O	3.71	4
+NA	Tremellomycetes	C	3.71	4
+NA	Trichocomaceae	F	1.82	1
+NA	Trichoderma	G	2.08	1
+NA	Trichoderma atroviride	S	2.08	1
+NA	Vertebrata	P2	3.9971428571428573	17
+NA	Yarrowia	G	0.96	1
+NA	Yarrowia lipolytica	S	0.96	1
+NA	cellular organisms	R1	86.1145138888889	4925
+NA	leotiomyceta	P3	2.600909090909091	13
+NA	root	R	86.1145138888889	4925
+NA	saccharomyceta	P1	2.3535714285714286	16
+NA	sordariomyceta	P4	2.679	12
+NA	unclassified	U	15.785789473684211	820

@@ -3,4 +3,16 @@
 .RData
 .Ruserdata
 
-A-Group1/data/*
+*.fastq.gz
+*.pod5
+
+data/GCA*
+data/kraken_db_k2/
+
+A-Group1/data/01-Library1-Flongle-kraken2/raw-reads/*.fastq.gz
+A-Group1/output/01-Library1-Flongle-kraken2/trimmed-reads/*.fastq.gz
+A-Group1/output/01-Library1-Flongle-kraken2/kraken2/*_report.txt
+
+B-Group2/data/01-Library2-MinION-kraken2/raw-reads/*.fastq.gz
+B-Group2/output/01-Library2-MinION-kraken2/trimmed-reads/*.fastq.gz
+B-Group2/output/01-Library2-MinION-kraken2/kraken2/*_report.txt

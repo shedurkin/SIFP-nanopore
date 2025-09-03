@@ -7,7 +7,7 @@ export raw_fastqc_dir=${output_dir_top}/raw-fastqc
 export raw_reads_dir=${nanopore_dir}/A-Group1/data/01-Library1-Flongle-FastQC/raw-reads
 export raw_reads_url="https://gannet.fish.washington.edu/kdurkin1/SIFP_2025/Group1/Group1/Library1/20250812_1139_MD-101223_AYW935_f9a34344/fastq_pass/"
 export trimmed_fastqc_dir=${output_dir_top}/trimmed-fastqc
-export trimmed_reads_dir=${nanopore_dir}/A-Group1/data/01-Library1-Flongle-FastQC/trimmed-reads
+export trimmed_reads_dir=${nanopore_dir}/A-Group1/output/01-Library1-Flongle-FastQC/trimmed-reads
 export trimmed_reads_url=""
 
 # Paths to programs

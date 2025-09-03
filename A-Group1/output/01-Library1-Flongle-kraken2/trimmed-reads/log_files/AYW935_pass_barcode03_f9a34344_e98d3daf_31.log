@@ -1,0 +1,5 @@
+[2025-08-29 17:11:47.973] [info] Running: "trim" "/home/shared/8TB_HDD_02/shedurkin/SIFP-nanopore/A-Group1/data/01-Library1-Flongle-FastQC/raw-reads/barcode03/AYW935_pass_barcode03_f9a34344_e98d3daf_31.fastq.gz" "--emit-fastq"
+[2025-08-29 17:11:47.974] [info]  - Note: FASTQ output is not recommended as not all data can be preserved.
+[2025-08-29 17:11:47.976] [info] > starting adapter/primer trimming
+> Output records written: 540> Output records written: 540[2025-08-29 17:11:48.076] [info] > Simplex reads basecalled: 540
+[2025-08-29 17:11:48.076] [info] > finished adapter/primer trimming
