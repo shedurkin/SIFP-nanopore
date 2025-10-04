@@ -1,0 +1,198 @@
+name	rank	mean_percent	total_reads
+Agaricomycotina	P1	0.6131578947368421	21
+Akanthomyces	G	7.945	42
+Akanthomyces muscarius	S	7.945	42
+Amniota	P9	0.9046428571428572	31
+Anthozoa	C	71.58495268138802	23924
+Archaea	R2	0.13	2
+Ascomycota	P	3.692222222222222	125
+Basidiomycota	P	0.6131578947368421	21
+Bilateria	K2	0.9046428571428572	31
+Boreoeutheria	C3	0.9046428571428572	31
+Botrytis	G	0.26	2
+Botrytis cinerea	S	0.26	2
+Botrytis cinerea B05.10	S1	0.26	2
+Candida	G	0.48	3
+Candida dubliniensis	S	0.87	1
+Candida dubliniensis CD36	S1	0.87	1
+Candida orthopsilosis	S	0.285	2
+Candida orthopsilosis Co 90-125	S1	0.285	2
+Candida/Lodderomyces clade	F1	0.43	8
+Candidozyma	G	0.13	1
+Candidozyma auris	S	0.13	1
+Catarrhini	O3	0.9046428571428572	31
+Chordata	P	0.9046428571428572	31
+Clavicipitaceae	F	0.605	2
+Cnidaria	P	71.58495268138802	23924
+Colletotrichum	G	0.49636363636363634	11
+Colletotrichum acutatum species complex	G1	0.11	1
+Colletotrichum destructivum	S	0.2833333333333333	3
+Colletotrichum destructivum species complex	G1	0.535	10
+Colletotrichum higginsianum	S	0.3433333333333333	6
+Colletotrichum higginsianum IMI 349063	S1	0.3433333333333333	6
+Colletotrichum lupini	S	0.11	1
+Cordycipitaceae	F	7.945	42
+Craniata	P1	0.9046428571428572	31
+Cryptococcaceae	F	0.6131578947368421	21
+Cryptococcus	G	1.3166666666666667	3
+Cryptococcus deuterogattii	S	1.805	2
+Cryptococcus deuterogattii R265	S1	1.805	2
+Cryptococcus gattii species complex	G1	1.3166666666666667	3
+Debaryomycetaceae	F	0.43	8
+Deuterostomia	K3	0.9046428571428572	31
+Dikarya	K1	3.3197619047619047	151
+Dipnotetrapodomorpha	P7	0.9046428571428572	31
+Dipodascales	O	0.29	1
+Dipodascomycetes	C	0.29	1
+Dothideomycetes	C	0.2633333333333333	3
+Dothideomycetidae	C1	0.295	2
+Drechmeria	G	0.26142857142857145	7
+Drechmeria coniospora	S	0.26142857142857145	7
+Euarchontoglires	C4	0.9046428571428572	31
+Eukaryota	R2	72.43003144654088	24135
+Eumetazoa	K1	71.6706309148265	23961
+Eunicea	G	71.58495268138802	23924
+Eunicea knighti	S	71.58495268138802	23924
+Eurotiales	O	0.12	1
+Eurotiomycetes	C	0.12	1
+Eurotiomycetidae	C1	0.12	1
+Euteleostomi	P5	0.9046428571428572	31
+Eutheria	C2	0.9046428571428572	31
+Fulvia	G	0.295	2
+Fulvia fulva	S	0.295	2
+Fungi	K	3.3208333333333333	152
+Fungi incertae sedis	K1	0.09	1
+Fusarium	G	0.38875	8
+Fusarium fujikuroi	S	0.235	4
+Fusarium fujikuroi IMI 58289	S1	0.235	4
+Fusarium fujikuroi species complex	G1	0.235	4
+Fusarium graminearum	S	0.75	1
+Fusarium graminearum PH-1	S1	0.75	1
+Fusarium keratoplasticum	S	0.275	2
+Fusarium sambucinum species complex	G1	0.81	2
+Fusarium solani species complex	G1	0.275	2
+Glomeraceae	F	0.09	1
+Glomerales	O	0.09	1
+Glomerellaceae	F	0.49636363636363634	11
+Glomerellales	O	0.49636363636363634	11
+Glomeromycetes	C	0.09	1
+Glomeromycotina	P1	0.09	1
+Gnathostomata	P3	0.9046428571428572	31
+Haloarculaceae	F	0.13	1
+Halobacteria	C	0.13	2
+Halobacteriales	O	0.13	2
+Haplorrhini	O1	0.9046428571428572	31
+Helotiales	O	0.26	2
+Henningerozyma	G	0.665	2
+Henningerozyma blattae	S	0.665	2
+Henningerozyma blattae CBS 6284	S1	0.665	2
+Hominidae	F	0.9046428571428572	31
+Homininae	F1	0.9046428571428572	31
+Hominoidea	O4	0.9046428571428572	31
+Homo	G	0.9046428571428572	31
+Homo sapiens	S	0.9046428571428572	31
+Hypocreaceae	F	1.645	6
+Hypocreales	O	4.97	68
+Hypocreomycetidae	C1	4.462884615384615	81
+Kluyveromyces	G	0.135	2
+Kluyveromyces lactis	S	0.11	1
+Kluyveromyces marxianus	S	0.16	1
+Kluyveromyces marxianus DMKU3-1042	S1	0.16	1
+Kwoniella	G	0.474375	17
+Kwoniella botswanensis	S	0.48333333333333334	13
+Kwoniella dejecticola	S	0.55	1
+Kwoniella dejecticola CBS 10117	S1	0.55	1
+Kwoniella mangrovensis	S	0.12	1
+Kwoniella mangroviensis CBS 8507	S1	0.12	1
+Kwoniella shivajii	S	0.5	1
+Leotiomycetes	C	0.26	2
+Lodderomyces	G	0.4	5
+Lodderomyces beijingensis	S	0.3175	4
+Lodderomyces elongisporus	S	0.73	1
+Magnaporthales	O	1.45	1
+Malacalcyonacea	O	71.58495268138802	23924
+Mammalia	C	0.9046428571428572	31
+Metarhizium	G	0.605	2
+Metarhizium brunneum	S	0.605	2
+Metazoa	K	71.6706309148265	23961
+Methanobacteriati	K	0.13	2
+Methanobacteriota	P	0.13	2
+Metschnikowiaceae	F	0.13	1
+Mucoromycota	P	0.09	1
+Mycosphaerellaceae	F	0.295	2
+Mycosphaerellales	O	0.295	2
+Nakaseomyces	G	0.12	1
+Nakaseomyces glabratus	S	0.12	1
+Naumovozyma	G	0.155	2
+Naumovozyma castellii	S	0.19	1
+Naumovozyma dairenensis	S	0.12	1
+Naumovozyma dairenensis CBS 421	S1	0.12	1
+Nectriaceae	F	0.38875	8
+Neurospora	G	3.106	5
+Neurospora crassa	S	3.106	5
+Neurospora crassa OR74A	S1	3.106	5
+Octocorallia	C1	71.58495268138802	23924
+Ophiocordycipitaceae	F	0.29125	8
+Opisthokonta	R3	72.43003144654088	24135
+Pezizomycotina	P2	4.160645161290322	104
+Pichiomycetes	C	0.39666666666666667	9
+Pleosporaceae	F	0.2	1
+Pleosporales	O	0.2	1
+Pleosporineae	O1	0.2	1
+Pleosporomycetidae	C1	0.2	1
+Plexauridae	F	71.58495268138802	23924
+Podospora	G	1.45	1
+Podosporaceae	F	1.45	1
+Primates	O	0.9046428571428572	31
+Purpureocillium	G	0.5	1
+Purpureocillium takamizusanense	S	0.5	1
+Pyrenophora	G	0.2	1
+Pyrenophora tritici-repentis	S	0.2	1
+Pyricularia	G	1.45	1
+Pyricularia grisea	S	1.45	1
+Pyriculariaceae	F	1.45	1
+Remersonia	G	1.285	2
+Remersonia thermophila	S	1.285	2
+Rhizophagus	G	0.09	1
+Rhizophagus irregularis	S	0.09	1
+Saccharomycetaceae	F	0.3383333333333333	7
+Saccharomycetales	O	0.3383333333333333	7
+Saccharomycetes	C	0.3383333333333333	7
+Saccharomycotina	P2	0.39555555555555555	20
+Salinibaculum	G	0.13	1
+Salinibaculum marinum	S	0.13	1
+Sarcopterygii	P6	0.9046428571428572	31
+Sclerotiniaceae	F	0.26	2
+Serinales	O	0.39666666666666667	9
+Simiiformes	O2	0.9046428571428572	31
+Sordaria	G	0.47	1
+Sordaria macrospora	S	0.47	1
+Sordariaceae	F	2.6666666666666665	6
+Sordariales	O	2.0309999999999997	10
+Sordariales incertae sedis	O1	1.285	2
+Sordariomycetes	C	4.205409836065574	98
+Sordariomycetidae	C1	1.978181818181818	11
+Stenosarchaea group	P1	0.13	2
+Sugiyamaella	G	0.29	1
+Sugiyamaella lignohabitans	S	0.29	1
+Talaromyces	G	0.12	1
+Talaromyces rugulosus	S	0.12	1
+Talaromyces sect. Islandici	G1	0.12	1
+Teleostomi	P4	0.9046428571428572	31
+Tetrapoda	P8	0.9046428571428572	31
+Theria	C1	0.9046428571428572	31
+Tremellales	O	0.6131578947368421	21
+Tremellomycetes	C	0.6131578947368421	21
+Trichocomaceae	F	0.12	1
+Trichoderma	G	1.645	6
+Trichoderma asperellum	S	0.5733333333333334	3
+Trichoderma atroviride	S	2.716666666666667	3
+Trichomonascaceae	F	0.29	1
+Vertebrata	P2	0.9046428571428572	31
+cellular organisms	R1	72.44396226415094	24138
+dothideomyceta	P4	0.2633333333333333	3
+leotiomyceta	P3	4.160645161290322	104
+root	R	72.44396226415094	24138
+saccharomyceta	P1	3.692222222222222	125
+sordariomyceta	P4	4.213934426229508	100
+unclassified	U	38.61860927152318	10169

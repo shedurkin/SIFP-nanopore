@@ -2,12 +2,12 @@
 
 # Data directories
 export nanopore_dir=/home/shared/8TB_HDD_02/shedurkin/SIFP-nanopore
-export output_dir_top=${nanopore_dir}/B-Group2/output/03-G2-Library3-Flongle-kraken2
+export output_dir_top=${nanopore_dir}/D-Group4/output/01-G4-Library1-Flongle-kraken2
 export raw_fastqc_dir=${output_dir_top}/raw-fastqc
-export raw_reads_dir=${nanopore_dir}/B-Group2/data/03-G2-Library3-Flongle-kraken2/raw-reads
-export raw_reads_url="https://gannet.fish.washington.edu/kdurkin1/SIFP_2025/Group2_Flongle/Library3/20250901_1604_MD-101223_AYK963_af91d677/fastq_pass/"
+export raw_reads_dir=${nanopore_dir}/D-Group4/data/01-G4-Library1-Flongle-kraken2/raw-reads
+export raw_reads_url="https://gannet.fish.washington.edu/kdurkin1/SIFP_2025/Group4_Flongle/Library1/20250904_2022_MN47571_AXT657_1336ce16/fastq_pass/"
 export trimmed_fastqc_dir=${output_dir_top}/trimmed-fastqc
-export trimmed_reads_dir=${nanopore_dir}/B-Group2/output/03-G2-Library3-Flongle-kraken2/trimmed-reads
+export trimmed_reads_dir=${nanopore_dir}/D-Group4/output/01-G4-Library1-Flongle-kraken2/trimmed-reads
 export trimmed_reads_url=""
 
 # Paths to programs

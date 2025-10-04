@@ -1,0 +1,43 @@
+---
+title: "01-summarize-MinION-runs"
+author: "Kathleen Durkin"
+date: "2025-09-29"
+always_allow_html: true
+output: 
+  github_document:
+    toc: true
+    toc_depth: 3
+    number_sections: true
+    html_preview: true 
+  bookdown::html_document2:
+    theme: cosmo
+    toc: true
+    toc_float: true
+    number_sections: true
+    code_folding: show
+    code_download: true
+---
+
+```{r setup, include=FALSE}
+library(knitr)
+knitr::opts_chunk$set(
+  echo = TRUE,         # Display code chunks
+  eval = FALSE,        # Evaluate code chunks
+  warning = FALSE,     # Hide warnings
+  message = FALSE,     # Hide messages
+  comment = ""         # Prevents appending '##' to beginning of lines in code output
+)
+```
+
+High-level summary of all 5 MinION sequencing runs:
+
+- Group 1, Library 4 (modern specimens)
+
+- Group 2, Library 2 (1960s specimens)
+
+- Group 2, Library 3 (1960s specimens)
+
+- Group 4, Library 1 (late 1800s specimens)
+
+- Group 4, Library 2 (late 1800s specimens)
+

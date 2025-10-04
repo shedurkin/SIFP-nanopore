@@ -1,71 +1,62 @@
----
-title: "01-Library1-Flongle-kraken2"
-author: "Kathleen Durkin"
-date: "2025-08-29"
-always_allow_html: true
-output: 
-  github_document:
-    toc: true
-    toc_depth: 3
-    number_sections: true
-    html_preview: true 
-  bookdown::html_document2:
-    theme: cosmo
-    toc: true
-    toc_float: true
-    number_sections: true
-    code_folding: show
-    code_download: true
----
+01-G1-Library1-Flongle-kraken2
+================
+Kathleen Durkin
+2025-08-29
 
-```{r setup, include=FALSE}
-library(knitr)
-knitr::opts_chunk$set(
-  echo = TRUE,         # Display code chunks
-  eval = FALSE,        # Evaluate code chunks
-  warning = FALSE,     # Hide warnings
-  message = FALSE,     # Hide messages
-  comment = ""         # Prevents appending '##' to beginning of lines in code output
-)
-```
+- <a href="#1-create-a-bash-variables-file"
+  id="toc-1-create-a-bash-variables-file">1 Create a Bash variables
+  file</a>
+- <a href="#2-download-genome" id="toc-2-download-genome">2 Download
+  genome</a>
+- <a href="#3-raw-reads" id="toc-3-raw-reads">3 Raw reads</a>
+  - <a href="#31-download-raw-rna-seq-reads"
+    id="toc-31-download-raw-rna-seq-reads">3.1 Download raw RNA-seq
+    reads</a>
+  - <a href="#32-verify-raw-read-checksums"
+    id="toc-32-verify-raw-read-checksums">3.2 Verify raw read checksums</a>
+  - <a href="#33-nanofilt-to-filter-based-on-quality-and-length"
+    id="toc-33-nanofilt-to-filter-based-on-quality-and-length">3.3 Nanofilt
+    to filter based on quality and length</a>
+  - <a href="#34-nanoplot-to-qc-trimmedfiltered-reads"
+    id="toc-34-nanoplot-to-qc-trimmedfiltered-reads">3.4 Nanoplot to QC
+    trimmed+filtered reads</a>
+  - <a href="#35-kraken2" id="toc-35-kraken2">3.5 Kraken2</a>
 
-Code for trimming and QCing single-end Nanopore sequencing data. This sequencing run was multiplexed (multiple samples sequenced in single run), and reads have already been demultiplexed -- assigned and sorted by barcode into subfolders (barcode01, barcode02, etc.). Note, however, that barcode and adapter sequences are still present on the raw reads, and will need to be trimmed. 
-
+Code for trimming and QCing single-end Nanopore sequencing data. This
+sequencing run was multiplexed (multiple samples sequenced in single
+run), and reads have already been demultiplexed – assigned and sorted by
+barcode into subfolders (barcode01, barcode02, etc.). Note, however,
+that barcode and adapter sequences are still present on the raw reads,
+and will need to be trimmed.
 
 Inputs:
 
-- Nanopore gDNA sequencing, single-end gzipped FastQs (e.g. `*.fastq.gz`)
+- Nanopore gDNA sequencing, single-end gzipped FastQs
+  (e.g. `*.fastq.gz`)
 
 Outputs:
 
-- [`FastQC`](https://www.bioinformatics.babraham.ac.uk/projects/fastqc/) HTML reports for raw and trimmed reads.
+------------------------------------------------------------------------
 
-- [`MultiQC`](https://multiqc.info/) HTML summaries of [`FastQC`](https://www.bioinformatics.babraham.ac.uk/projects/fastqc/) for raw and trimmed reads.
+# 1 Create a Bash variables file
 
-[Raw reads](https://gannet.fish.washington.edu/kdurkin1/SIFP_2025/Group1/Group1/Library1/20250812_1139_MD-101223_AYW935_f9a34344/fastq_pass/)
-[Sequencing report](https://gannet.fish.washington.edu/kdurkin1/SIFP_2025/Group1/Group1/Library1/20250812_1139_MD-101223_AYW935_f9a34344/report_AYW935_20250812_1140_f9a34344.html)
+This allows usage of Bash variables (e.g. paths to common directories)
+across R Markdown chunks.
 
-[Trimming details](https://robertslab.github.io/sams-notebook/posts/2023/2023-05-19-FastQ-QC-and-Trimming---E5-Coral-RNA-seq-Data-for-A.pulchra-P.evermanni-and-P.meandrina-Using-FastQC-fastp-and-MultiQC-on-Mox/)
-
----
-
-# Create a Bash variables file
-
-This allows usage of Bash variables (e.g. paths to common directories) across R Markdown chunks.
-```{r save-bash-variables-to-rvars-file, engine='bash', eval=TRUE}
+``` bash
 {
 echo "#### Assign Variables ####"
 echo ""
 
 echo "# Data directories"
 echo 'export nanopore_dir=/home/shared/8TB_HDD_02/shedurkin/SIFP-nanopore'
-echo 'export output_dir_top=${nanopore_dir}/A-Group1/output/01-Library1-Flongle-kraken2'
+echo 'export output_dir_top=${nanopore_dir}/A-Group1/output/01-G1-Library1-Flongle-kraken2'
 echo 'export raw_fastqc_dir=${output_dir_top}/raw-fastqc'
-echo 'export raw_reads_dir=${nanopore_dir}/A-Group1/data/01-Library1-Flongle-kraken2/raw-reads'
-echo 'export raw_reads_url="https://gannet.fish.washington.edu/kdurkin1/SIFP_2025/Group1/Group1/Library1/20250812_1139_MD-101223_AYW935_f9a34344/fastq_pass/"'
+echo 'export raw_reads_dir=${nanopore_dir}/A-Group1/data/01-G1-Library1-Flongle-kraken2/raw-reads'
+echo 'export raw_reads_url="https://gannet.fish.washington.edu/kdurkin1/SIFP_2025/Group1_Flongle/Group1/Library1/20250812_1139_MD-101223_AYW935_f9a34344/fastq_pass/"'
 
 echo 'export trimmed_fastqc_dir=${output_dir_top}/trimmed-fastqc'
-echo 'export trimmed_reads_dir=${nanopore_dir}/A-Group1/output/01-Library1-Flongle-kraken2/trimmed-reads'
+echo 'export trimmed_reads_dir=${nanopore_dir}/A-Group1/output/01-G1-Library1-Flongle-kraken2/trimmed-reads'
 echo 'export trimmed_reads_url=""'
 echo ""
 
@@ -109,10 +100,52 @@ echo ")"
 cat .bashvars
 ```
 
-# Download genome
+    #### Assign Variables ####
+
+    # Data directories
+    export nanopore_dir=/home/shared/8TB_HDD_02/shedurkin/SIFP-nanopore
+    export output_dir_top=${nanopore_dir}/A-Group1/output/01-G1-Library1-Flongle-kraken2
+    export raw_fastqc_dir=${output_dir_top}/raw-fastqc
+    export raw_reads_dir=${nanopore_dir}/A-Group1/data/01-G1-Library1-Flongle-kraken2/raw-reads
+    export raw_reads_url="https://gannet.fish.washington.edu/kdurkin1/SIFP_2025/Group1_Flongle/Group1/Library1/20250812_1139_MD-101223_AYW935_f9a34344/fastq_pass/"
+    export trimmed_fastqc_dir=${output_dir_top}/trimmed-fastqc
+    export trimmed_reads_dir=${nanopore_dir}/A-Group1/output/01-G1-Library1-Flongle-kraken2/trimmed-reads
+    export trimmed_reads_url=""
+
+    # Paths to programs
+    export fastqc=/home/shared/FastQC-0.12.1/fastqc
+    export multiqc=/home/sam/programs/mambaforge/bin/multiqc
+    export flexbar=/home/shared/flexbar-3.5.0-linux/flexbar
+
+    # Set FastQ filename patterns
+    export fastq_pattern='*.fastq.gz'
+
+    # Set number of CPUs to use
+    export threads=20
+
+    # Input/output files
+    export raw_checksums=checksums.md5
+    export trimmed_checksums=trimmed_fastq_checksums.md5
+
+    ## Inititalize arrays
+    export fastq_array=()
+    export raw_fastqs_array=()
+    export names_array=()
+    export trimmed_fastqs_array=()
+
+    # Programs associative array
+    declare -A programs_array
+    programs_array=(
+    [fastqc]="${fastqc}" \
+    [multiqc]="${multiqc}" \
+    [flexbar]="${flexbar}"
+    )
+
+# 2 Download genome
 
 Download E. knighti genome from NCBI (if necessary)
-```{r, engine='bash', eval=FALSE}
+
+``` bash
 source .bashvars
 
 cd $nanopore_dir/data
@@ -125,20 +158,24 @@ wget -r -np -nH \
   https://ftp.ncbi.nlm.nih.gov/genomes/all/GCA/965/233/905/GCA_965233905.1_jaEunKnig1.1/
   
 gunzip $nanopore_dir/data/GCA_965233905.1_jaEunKnig1.1/GCA_965233905.1_jaEunKnig1.1_genomic.fna.gz
-
 ```
 
+# 3 Raw reads
 
-# Raw reads
-## Download raw RNA-seq reads
+## 3.1 Download raw RNA-seq reads
 
-Reads are downloaded from: https://gannet.fish.washington.edu/kdurkin1/SIFP_2025/Group1/Group1/Library1/20250812_1139_MD-101223_AYW935_f9a34344/fastq_pass/
+Reads are downloaded from:
+<https://gannet.fish.washington.edu/kdurkin1/SIFP_2025/Group1_Flongle/Group1/Library1/20250812_1139_MD-101223_AYW935_f9a34344/fastq_pass/>
 
-Note that this directory contains multiple subdirectories, each representing one barcode (specimen) and containing the fastq.gz files associated with that barcode
+Note that this directory contains multiple subdirectories, each
+representing one barcode (specimen) and containing the fastq.gz files
+associated with that barcode
 
-The `--cut-dirs 7` command cuts the preceding directory structure (i.e. `nightingales/P_evermanni/30-789513166/`) so that we just end up with the reads.
+The `--cut-dirs 7` command cuts the preceding directory structure
+(i.e. `nightingales/P_evermanni/30-789513166/`) so that we just end up
+with the reads.
 
-```{r download-raw-reads, engine='bash'}
+``` bash
 # Load bash variables into memory
 source .bashvars
 
@@ -154,15 +191,23 @@ wget \
 --accept ${fastq_pattern} ${raw_reads_url}
 ```
 
-```{r check-raw-reads, engine='bash', eval=TRUE}
+``` bash
 # Load bash variables into memory
 source .bashvars
 
 ls -lh "${raw_reads_dir}"
 ```
 
-## Verify raw read checksums
-```{r verify-raw-read-checksums, engine='bash'}
+    total 92K
+    drwxr-xr-x 2 shedurkin labmembers 16K Aug 29 12:43 barcode01
+    drwxr-xr-x 2 shedurkin labmembers 16K Aug 29 12:43 barcode02
+    drwxr-xr-x 2 shedurkin labmembers 20K Aug 29 12:43 barcode03
+    drwxr-xr-x 2 shedurkin labmembers 16K Aug 29 12:43 barcode04
+    drwxr-xr-x 2 shedurkin labmembers 20K Aug 29 12:43 unclassified
+
+## 3.2 Verify raw read checksums
+
+``` bash
 # Load bash variables into memory
 source .bashvars
 
@@ -193,9 +238,10 @@ find $(pwd) -type d | while read -r DIR; do
 done
 ```
 
-Note: ran conda stuff directly from terminal, since code chunks don't let you respond to prompts
+Note: ran conda stuff directly from terminal, since code chunks don’t
+let you respond to prompts
 
-```{r, engine='bash', eval=FALSE}
+``` bash
 # Create and activate a conda environment
 conda create -n nanopore_env2 python=3.11
 conda activate nanopore_env2
@@ -211,12 +257,12 @@ conda install -n base -c conda-forge mamba
 mamba create -n dorado_env -c hcc -c bioconda -c conda-forge dorado
 
 conda install nanofilt nanoplot pycoqc kraken2 krona
-
 ```
 
-Trim adapters and barcodes -- Dorado will automatically detect the Nanopore adapter sequences
+Trim adapters and barcodes – Dorado will automatically detect the
+Nanopore adapter sequences
 
-```{r, engine='bash', eval=FALSE}
+``` bash
 
 
 #for fq in $raw_reads_dir/*/$fastq_pattern; do
@@ -238,18 +284,20 @@ mkdir -p $trimmed_reads_dir/log_files
 mv $trimmed_reads_dir/*.log $trimmed_reads_dir/log_files
 ```
 
+## 3.3 Nanofilt to filter based on quality and length
 
-## Nanofilt to filter based on quality and length
+## 3.4 Nanoplot to QC trimmed+filtered reads
 
-## Nanoplot to QC trimmed+filtered reads
+## 3.5 Kraken2
 
-## Kraken2
+Kraken2 is a metagenomics classifier that will tell me the taxonomical
+sources of my reads – this is a quuick way to check for level of fungal
+contamination in my sequencing data
 
-Kraken2 is a metagenomics classifier that will tell me the taxonomical sources of my reads -- this is a quuick way to check for level of fungal contamination in my sequencing data
+Build kraken2 database if necessary – this is time consuming, so *DON’T*
+re-build if you already have a kraken db
 
-
-Build kraken2 database if necessary -- this is time consuming, so *DON'T* re-build if you already have a kraken db
-```{r, engine='bash', eval=FALSE}
+``` bash
 
 kraken2-build --standard --threads 12 --db $nanopore_dir/A-Group1/data/kraken_db
 
@@ -274,7 +322,8 @@ k2 build --db $nanopore_dir/data/kraken_db_k2 --threads 32 --masker-threads 16
 ```
 
 run Kraken2
-```{r, engine='bash', eval=FALSE}
+
+``` bash
 
 # Make output directory if necessary
 mkdir -p $output_dir_top/kraken2
@@ -288,22 +337,21 @@ do
         --output $output_dir_top/kraken2/${base}_output.txt \
         "$fq"
 done
-
 ```
-
 
 Summarize the kraken output reports
 
-```{r}
+``` r
 # Load libraries
 library(dplyr)
 library(stringr)
 library(readr)
 library(purrr)
 library(tidyr)
+library(ggplot2)
 
 # ---- USER SETTINGS ----
-input_dir <- "../output/01-Library1-Flongle-kraken2/kraken2"   # change this
+input_dir <- "../output/01-G1-Library1-Flongle-kraken2/kraken2"   # change this
 output_file <- "kraken2_summary.tsv"
 
 # Get all report files
@@ -340,32 +388,40 @@ summary_all <- all_reports %>%
 write_tsv(summary_by_barcode, file.path(input_dir, "kraken2_summary_by_barcode.tsv"))
 write_tsv(summary_all, file.path(input_dir, "kraken2_summary_all.tsv"))
 
-# ---- OPTIONAL: simple plot ----
-library(ggplot2)
 
-top_taxa_barcode <- summary_by_barcode %>%
-  filter(rank == "P" | rank == "U") %>%
+
+
+# Plot top taxa by barcode
+
+# Kingdom
+top_kingdom_barcode <- summary_by_barcode %>%
+  filter(rank == "K" | rank == "U") %>%    # Select IDs at the kingdom (K) level (or "unclassified" (U))
   arrange(desc(total_reads)) %>%
   slice_head(n = 20)
 
-# getting weird, cairo-related errors when I try to generate plots in the markdown, but only seems to affect png/jpg. Writing directly to a pdf circumvents the issue
-pdf(paste0(input_dir, "/top_taxa_barcode.pdf"), width = 6, height = 4)
-
-ggplot(top_taxa_barcode, aes(x = reorder(name, -mean_percent), y = mean_percent)) +
+ggplot(top_kingdom_barcode, aes(x = reorder(name, -mean_percent), y = mean_percent)) +
   geom_col(aes(fill = barcode)) +
   facet_grid(~barcode) +
-  labs(x = "Taxon", y = "Mean % Reads", title = "Top taxa across all barcodes") +
+  labs(x = "Taxon", y = "Mean % Reads", title = "Top kingdoms across all barcodes") +
   theme_minimal() +
   theme(axis.text.x = element_text(angle = 45, hjust = 1))
-
-dev.off()
-
-
-
-ggsave(file.path(input_dir, "kraken2_top_taxa.png"),
-       plot = p, width = 6, height = 4, dpi = 300)
 ```
 
-```{r, echo=FALSE, out.width='80%'}
-knitr::include_graphics(paste0(input_dir, "/top_taxa_barcode.pdf"))
+![](01-G1-Library1-Flongle-kraken2_files/figure-gfm/unnamed-chunk-6-1.png)<!-- -->
+
+``` r
+# Phylum
+top_phylum_barcode <- summary_by_barcode %>%
+  filter(rank == "P" | rank == "U") %>%    # Select IDs at the phylum (P) level (or "unclassified" (U))
+  arrange(desc(total_reads)) %>%
+  slice_head(n = 30)
+
+ggplot(top_phylum_barcode, aes(x = reorder(name, -mean_percent), y = mean_percent)) +
+  geom_col(aes(fill = barcode)) +
+  facet_grid(~barcode) +
+  labs(x = "Taxon", y = "Mean % Reads", title = "Top phyla across all barcodes") +
+  theme_minimal() +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1))
 ```
+
+![](01-G1-Library1-Flongle-kraken2_files/figure-gfm/unnamed-chunk-6-2.png)<!-- -->

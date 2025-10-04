@@ -1,0 +1,177 @@
+name	rank	mean_percent	total_reads
+Agaricomycotina	P1	0.5411111111111111	11
+Alternaria	G	2.94	1
+Alternaria dauci	S	2.94	1
+Alternaria sect. Porri	G1	2.94	1
+Amniota	P9	2.9892307692307694	33
+Anthozoa	C	75.77740740740741	21633
+Apansporoblastina	P1	2.44	1
+Archaea	R2	1.125	2
+Ascomycota	P	1.7463829787234042	59
+Aspergillaceae	F	1.1133333333333333	6
+Aspergillus	G	1.008	5
+Aspergillus fumigatus	S	0.08	1
+Aspergillus fumigatus Af293	S1	0.08	1
+Aspergillus luchuensis	S	1.16	2
+Aspergillus nidulans	S	0.47	1
+Aspergillus nidulans FGSC A4	S1	0.47	1
+Aspergillus subgen. Circumdati	G1	1.4966666666666666	3
+Aspergillus subgen. Fumigati	G1	0.08	1
+Aspergillus subgen. Nidulantes	G1	0.47	1
+Basidiomycota	P	0.5945454545454546	14
+Bilateria	K2	2.9892307692307694	33
+Boreoeutheria	C3	2.9892307692307694	33
+Brettanomyces	G	0.7949999999999999	2
+Brettanomyces bruxellensis	S	1.01	1
+Candida	G	0.575	4
+Candida dubliniensis	S	1.005	2
+Candida dubliniensis CD36	S1	1.005	2
+Candida orthopsilosis	S	0.14500000000000002	2
+Candida orthopsilosis Co 90-125	S1	0.14500000000000002	2
+Candida/Lodderomyces clade	F1	1.53	8
+Catarrhini	O3	2.9892307692307694	33
+Chaetomiaceae	F	0.65	1
+Chordata	P	2.9892307692307694	33
+Cnidaria	P	75.77740740740741	21633
+Colletotrichum	G	1.7916666666666667	6
+Colletotrichum destructivum	S	0.61	3
+Colletotrichum destructivum species complex	G1	1.7916666666666667	6
+Colletotrichum higginsianum	S	2.973333333333333	3
+Colletotrichum higginsianum IMI 349063	S1	2.973333333333333	3
+Craniata	P1	2.9892307692307694	33
+Cryptococcaceae	F	0.5411111111111111	11
+Debaryomycetaceae	F	1.53	8
+Deuterostomia	K3	2.9892307692307694	33
+Dikarya	K1	1.661851851851852	75
+Dipnotetrapodomorpha	P7	2.9892307692307694	33
+Dothideomycetes	C	1.72	2
+Dothideomycetidae	C1	0.5	1
+Drechmeria	G	1.2875	8
+Drechmeria coniospora	S	1.2875	8
+Encephalitozoon	G	2.44	1
+Euarchontoglires	C4	2.9892307692307694	33
+Eukaryota	R2	76.29632478632479	21757
+Eumetazoa	K1	76.0128774928775	21670
+Eunicea	G	75.77740740740741	21633
+Eunicea knighti	S	75.77740740740741	21633
+Eurotiales	O	1.0814285714285714	7
+Eurotiomycetes	C	1.0814285714285714	7
+Eurotiomycetidae	C1	1.0814285714285714	7
+Euteleostomi	P5	2.9892307692307694	33
+Eutheria	C2	2.9892307692307694	33
+Fulvia	G	0.5	1
+Fulvia fulva	S	0.5	1
+Fungi	K	1.6544642857142857	77
+Fungi incertae sedis	K1	2.44	1
+Fusarium	G	0.99	2
+Fusarium fujikuroi	S	1.82	1
+Fusarium fujikuroi IMI 58289	S1	1.82	1
+Fusarium fujikuroi species complex	G1	1.82	1
+Fusarium graminearum	S	0.16	1
+Fusarium graminearum PH-1	S1	0.16	1
+Fusarium sambucinum species complex	G1	0.16	1
+Glomerellaceae	F	1.7916666666666667	6
+Glomerellales	O	1.7916666666666667	6
+Gnathostomata	P3	2.9892307692307694	33
+Halobacteria	C	0.98	1
+Halobacteriales	O	0.98	1
+Haplorrhini	O1	2.9892307692307694	33
+Hominidae	F	2.9892307692307694	33
+Homininae	F1	2.9892307692307694	33
+Hominoidea	O4	2.9892307692307694	33
+Homo	G	2.9892307692307694	33
+Homo sapiens	S	2.9892307692307694	33
+Hypocreaceae	F	1.6724999999999999	8
+Hypocreales	O	1.5154545454545454	22
+Hypocreomycetidae	C1	1.632962962962963	28
+Kwoniella	G	0.5411111111111111	11
+Kwoniella botswanensis	S	0.6557142857142857	9
+Kwoniella dejecticola	S	0.13	1
+Kwoniella dejecticola CBS 10117	S1	0.13	1
+Kwoniella newhampshirensis	S	0.15	1
+Lodderomyces	G	2.1025	4
+Lodderomyces beijingensis	S	0.7749999999999999	2
+Lodderomyces elongisporus	S	3.4299999999999997	2
+Magnaporthales	O	0.33	1
+Malacalcyonacea	O	75.77740740740741	21633
+Mammalia	C	2.9892307692307694	33
+Metazoa	K	76.0128774928775	21670
+Methanobacteriati	K	1.125	2
+Methanobacteriota	P	1.125	2
+Methanochimaera	G	1.27	1
+Methanochimaera problematica	S	1.27	1
+Methanomicrobia	C	1.27	1
+Methanomicrobiaceae	F	1.27	1
+Methanomicrobiales	O	1.27	1
+Microsporidia	P	2.44	1
+Mycosphaerellaceae	F	0.5	1
+Mycosphaerellales	O	0.5	1
+Natrialba	G	0.98	1
+Natrialba magadii	S	0.98	1
+Natrialba magadii ATCC 43099	S1	0.98	1
+Natrialbaceae	F	0.98	1
+Nectriaceae	F	0.99	2
+Neurospora	G	0.36	1
+Neurospora crassa	S	0.36	1
+Neurospora crassa OR74A	S1	0.36	1
+Octocorallia	C1	75.77740740740741	21633
+Ophiocordycipitaceae	F	1.264	10
+Opisthokonta	R3	76.29632478632479	21757
+Penicillium	G	1.64	1
+Penicillium oxalicum	S	1.64	1
+Pezizomycotina	P2	1.6367567567567567	44
+Pichiaceae	F	0.7949999999999999	2
+Pichiales	O	0.7949999999999999	2
+Pichiomycetes	C	1.3666666666666667	10
+Pleosporaceae	F	2.94	1
+Pleosporales	O	2.94	1
+Pleosporineae	O1	2.94	1
+Pleosporomycetidae	C1	2.94	1
+Plexauridae	F	75.77740740740741	21633
+Primates	O	2.9892307692307694	33
+Puccinia	G	0.5566666666666666	3
+Puccinia striiformis	S	0.305	2
+Puccinia striiformis f. sp. tritici	S1	0.305	2
+Puccinia triticina	S	1.06	1
+Pucciniaceae	F	0.5566666666666666	3
+Pucciniales	O	0.5566666666666666	3
+Pucciniomycetes	C	0.5566666666666666	3
+Pucciniomycotina	P1	0.5566666666666666	3
+Purpureocillium	G	1.17	2
+Purpureocillium takamizusanense	S	1.17	2
+Pyricularia	G	0.33	1
+Pyricularia pennisetigena	S	0.33	1
+Pyriculariaceae	F	0.33	1
+Saccharomycotina	P2	1.3666666666666667	10
+Sarcopterygii	P6	2.9892307692307694	33
+Serinales	O	1.53	8
+Simiiformes	O2	2.9892307692307694	33
+Sordariaceae	F	0.36	1
+Sordariales	O	0.505	2
+Sordariomycetes	C	1.5012121212121212	35
+Sordariomycetidae	C1	0.44666666666666666	3
+Stenosarchaea group	P1	1.125	2
+Talaromyces	G	0.89	1
+Talaromyces rugulosus	S	0.89	1
+Talaromyces sect. Islandici	G1	0.89	1
+Teleostomi	P4	2.9892307692307694	33
+Tetrapoda	P8	2.9892307692307694	33
+Theria	C1	2.9892307692307694	33
+Thermothelomyces	G	0.65	1
+Thermothelomyces thermophilus	S	0.65	1
+Thermothelomyces thermophilus ATCC 42464	S1	0.65	1
+Tremellales	O	0.5411111111111111	11
+Tremellomycetes	C	0.5411111111111111	11
+Trichocomaceae	F	0.89	1
+Trichoderma	G	1.6724999999999999	8
+Trichoderma asperellum	S	0.985	2
+Trichoderma atroviride	S	1.9016666666666666	6
+Unikaryonidae	F	2.44	1
+Vertebrata	P2	2.9892307692307694	33
+cellular organisms	R1	76.33535612535613	21762
+dothideomyceta	P4	1.72	2
+leotiomyceta	P3	1.6367567567567567	44
+root	R	76.33535612535613	21762
+saccharomyceta	P1	1.7463829787234042	59
+sordariomyceta	P4	1.5012121212121212	35
+unclassified	U	27.038167701863355	6856
