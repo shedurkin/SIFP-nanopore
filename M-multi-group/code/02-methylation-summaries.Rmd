@@ -1,0 +1,306 @@
+---
+title: "02-methylation-summaries"
+author: "Kathleen Durkin"
+date: "2025-10-27"
+always_allow_html: true
+output: 
+  github_document:
+    toc: true
+    toc_depth: 3
+    number_sections: true
+    html_preview: true 
+  bookdown::html_document2:
+    theme: cosmo
+    toc: true
+    toc_float: true
+    number_sections: true
+    code_folding: show
+    code_download: true
+---
+
+```{r setup, include=FALSE}
+library(knitr)
+knitr::opts_chunk$set(
+  echo = TRUE,         # Display code chunks
+  eval = FALSE,        # Evaluate code chunks
+  warning = FALSE,     # Hide warnings
+  message = FALSE,     # Hide messages
+  comment = ""         # Prevents appending '##' to beginning of lines in code output
+)
+```
+
+
+# Create a Bash variables file
+
+This allows usage of Bash variables (e.g. paths to common directories) across R Markdown chunks.
+```{r save-bash-variables-to-rvars-file, engine='bash', eval=TRUE}
+{
+echo "#### Assign Variables ####"
+echo ""
+
+echo "# Data directories"
+echo 'export nanopore_dir=/home/shared/8TB_HDD_02/shedurkin/SIFP-nanopore'
+echo 'export output_dir_top=${nanopore_dir}/M-multi-group/output/02-methylation-summaries'
+echo 'export data_dir_top=${nanopore_dir}/M-multi-group/data/02-methylation-summaries'
+
+echo "# Paths to programs"
+echo 'export modkit=/home/shared/dist_modkit_v0.5.1_8fa79e3/modkit'
+echo 'export samtools=/home/shared/samtools-1.12/samtools'
+echo 'export conda=/home/shared/8TB_HDD_02/shedurkin/.local/share/r-miniconda/bin/conda'
+echo ""
+
+echo "# Set number of CPUs to use"
+echo 'export threads=20'
+echo ""
+
+echo "# Input/output files"
+echo 'export raw_checksums=checksums.md5'
+echo 'export trimmed_checksums=trimmed_fastq_checksums.md5'
+echo ""
+} > .bashvars
+
+cat .bashvars
+```
+
+
+# Download BAM files
+
+### Group 1, Library 4, MinION
+
+Barcodes 12, 13, and 14
+```{bash}
+source .bashvars
+
+wget \
+--directory-prefix ${data_dir_top}/bam_pass/G1L4_MinION \
+--recursive \
+--no-check-certificate \
+--continue \
+--cut-dirs 6 \
+--no-host-directories \
+--no-parent \
+--quiet \
+--accept *.bam \
+https://gannet.fish.washington.edu/kdurkin1/SIFP_2025/Group1_MinION/Library4/20250819_1337_MD-101223_FBD09922_51407a5d/bam_pass
+```
+
+
+
+### Group 4, Library 1, MinION
+
+Barcodes 27, 28, 29
+
+Note that G4L1 MinION ended up split into 2 nanopore runs, due to erroring out between washes
+```{bash}
+source .bashvars
+
+wget \
+--directory-prefix ${data_dir_top}/bam_pass/G4L1_MinION \
+--recursive \
+--no-check-certificate \
+--continue \
+--cut-dirs 6 \
+--no-host-directories \
+--no-parent \
+--quiet \
+--accept *.bam \
+https://gannet.fish.washington.edu/kdurkin1/SIFP_2025/Group4_MinION/Library1/20250905_1158_MD-101223_FBD08455_b87a1f92/bam_pass
+
+wget \
+--directory-prefix ${data_dir_top}/bam_pass/G4L1_MinION_wash3 \
+--recursive \
+--no-check-certificate \
+--continue \
+--cut-dirs 6 \
+--no-host-directories \
+--no-parent \
+--quiet \
+--accept *.bam \
+https://gannet.fish.washington.edu/kdurkin1/SIFP_2025/Group4_MinION/Library1_wash3/20250907_1505_MD-101223_FBD08455_50a8f15e/bam_pass
+
+```
+
+### Group 4, Library 2, MinION
+
+Barcodes 30, 31, 32
+```{bash}
+source .bashvars
+
+wget \
+--directory-prefix ${data_dir_top}/bam_pass/G4L2_MinION \
+--recursive \
+--no-check-certificate \
+--continue \
+--cut-dirs 6 \
+--no-host-directories \
+--no-parent \
+--quiet \
+--accept *.bam \
+https://gannet.fish.washington.edu/kdurkin1/SIFP_2025/Group4_MinION/Library2/20250909_1146_MN47571_FBD36396_e03e7ede/bam_pass
+
+```
+
+
+
+
+# Methylation summaries from original BAM files
+
+Using BAM files output from sequencing runs, *not* from recalling the pod5 files
+
+## modkit
+
+### Group 1, Library 4, MinION
+
+Try merging all bam files for each barcode to obtain unified summaries
+```{r, engine='bash', eval=TRUE}
+source .bashvars
+
+### Barcode 12 ###
+mergedbam=${output_dir_top}/G1L4_MinION_barcode12_merged.bam
+# Merge all bam files from the given barcode into one
+$samtools merge -u $mergedbam ${data_dir_top}/bam_pass/G1L4_MinION/barcode12/*.bam
+# Total number of reads included in the merged file
+$samtools view -c $mergedbam
+# Sample reads and summarize methylation
+$modkit summary --num-reads 100000 $mergedbam > ${output_dir_top}/G1L4_MinION_barcode12_modkit_summary.txt
+# Delete merged bam file (space-saving)
+rm $mergedbam
+
+### Barcode 13 ###
+mergedbam=${output_dir_top}/G1L4_MinION_barcode13_merged.bam
+$samtools merge -u $mergedbam ${data_dir_top}/bam_pass/G1L4_MinION/barcode13/*.bam
+$samtools view -c $mergedbam
+$modkit summary --num-reads 100000 $mergedbam > ${output_dir_top}/G1L4_MinION_barcode13_modkit_summary.txt
+rm $mergedbam
+
+### Barcode 14 ###
+mergedbam=${output_dir_top}/G1L4_MinION_barcode14_merged.bam
+$samtools merge -u $mergedbam ${data_dir_top}/bam_pass/G1L4_MinION/barcode14/*.bam
+$samtools view -c $mergedbam
+$modkit summary --num-reads 100000 $mergedbam > ${output_dir_top}/G1L4_MinION_barcode14_modkit_summary.txt
+rm $mergedbam
+
+```
+
+```{r, engine='bash', eval=TRUE}
+source .bashvars
+
+cat ${output_dir_top}/G1L4_MinION_barcode12_modkit_summary.txt
+cat ${output_dir_top}/G1L4_MinION_barcode13_modkit_summary.txt
+cat ${output_dir_top}/G1L4_MinION_barcode14_modkit_summary.txt
+```
+
+### Group 4, Library 1, MinION
+
+Try merging all bam files for each barcode to obtain unified summaries
+```{r, engine='bash', eval=TRUE}
+source .bashvars
+
+### Barcode 27 ###
+mergedbam1=${output_dir_top}/prewash3_G4L1_MinION_barcode27_merged.bam
+mergedbam2=${output_dir_top}/wash3_G4L1_MinION_barcode27_merged.bam
+mergedbam=${output_dir_top}/G4L1_MinION_barcode27_merged.bam
+# Merge all bam files from the given barcode into one
+$samtools merge -u $mergedbam1 ${data_dir_top}/bam_pass/G4L1_MinION/barcode27/*.bam
+$samtools merge -u $mergedbam2 ${data_dir_top}/bam_pass/G4L1_MinION_wash3/barcode27/*.bam
+$samtools merge -u $mergedbam ${output_dir_top}/*G4L1_MinION_barcode27_merged.bam
+# Total number of reads included in the merged file
+$samtools view -c $mergedbam
+# Sample reads and summarize methylation
+$modkit summary --num-reads 100000 $mergedbam > ${output_dir_top}/G4L1_MinION_barcode27_modkit_summary.txt
+# Delete merged bam file (space-saving)
+rm $mergedbam1
+rm $mergedbam2
+rm $mergedbam
+
+### Barcode 28 ###
+mergedbam1=${output_dir_top}/prewash3_G4L1_MinION_barcode28_merged.bam
+mergedbam2=${output_dir_top}/wash3_G4L1_MinION_barcode28_merged.bam
+mergedbam=${output_dir_top}/G4L1_MinION_barcode28_merged.bam
+$samtools merge -u $mergedbam1 ${data_dir_top}/bam_pass/G4L1_MinION/barcode28/*.bam
+$samtools merge -u $mergedbam2 ${data_dir_top}/bam_pass/G4L1_MinION_wash3/barcode28/*.bam
+$samtools merge -u $mergedbam ${output_dir_top}/*G4L1_MinION_barcode28_merged.bam
+$samtools view -c $mergedbam
+$modkit summary --num-reads 100000 $mergedbam > ${output_dir_top}/G4L1_MinION_barcode28_modkit_summary.txt
+rm $mergedbam1
+rm $mergedbam2
+rm $mergedbam
+
+### Barcode 29 ###
+mergedbam1=${output_dir_top}/prewash3_G4L1_MinION_barcode29_merged.bam
+mergedbam2=${output_dir_top}/wash3_G4L1_MinION_barcode29_merged.bam
+mergedbam=${output_dir_top}/G4L1_MinION_barcode29_merged.bam
+$samtools merge -u $mergedbam1 ${data_dir_top}/bam_pass/G4L1_MinION/barcode29/*.bam
+$samtools merge -u $mergedbam2 ${data_dir_top}/bam_pass/G4L1_MinION_wash3/barcode29/*.bam
+$samtools merge -u $mergedbam ${output_dir_top}/*G4L1_MinION_barcode29_merged.bam
+$samtools view -c $mergedbam
+$modkit summary --num-reads 100000 $mergedbam > ${output_dir_top}/G4L1_MinION_barcode29_modkit_summary.txt
+rm $mergedbam1
+rm $mergedbam2
+rm $mergedbam
+
+```
+
+```{r, engine='bash', eval=TRUE}
+source .bashvars
+
+cat ${output_dir_top}/G4L1_MinION_barcode27_modkit_summary.txt
+cat ${output_dir_top}/G4L1_MinION_barcode28_modkit_summary.txt
+cat ${output_dir_top}/G4L1_MinION_barcode29_modkit_summary.txt
+```
+
+### Group 4, Library 2, MinION
+
+Try merging all bam files for each barcode to obtain unified summaries
+```{r, engine='bash', eval=TRUE}
+source .bashvars
+
+### Barcode 30 ###
+mergedbam=${output_dir_top}/G4L2_MinION_barcode30_merged.bam
+# Merge all bam files from the given barcode into one
+$samtools merge -u $mergedbam ${data_dir_top}/bam_pass/G4L2_MinION/barcode30/*.bam
+# Total number of reads included in the merged file
+$samtools view -c $mergedbam
+# Sample reads and summarize methylation
+$modkit summary --num-reads 100000 $mergedbam > ${output_dir_top}/G4L2_MinION_barcode30_modkit_summary.txt
+# Delete merged bam file (space-saving)
+rm $mergedbam
+
+### Barcode 31 ###
+mergedbam=${output_dir_top}/G4L2_MinION_barcode31_merged.bam
+$samtools merge -u $mergedbam ${data_dir_top}/bam_pass/G4L2_MinION/barcode31/*.bam
+$samtools view -c $mergedbam
+$modkit summary --num-reads 100000 $mergedbam > ${output_dir_top}/G4L2_MinION_barcode31_modkit_summary.txt
+rm $mergedbam
+
+### Barcode 32 ###
+mergedbam=${output_dir_top}/G4L2_MinION_barcode32_merged.bam
+$samtools merge -u $mergedbam ${data_dir_top}/bam_pass/G4L2_MinION/barcode32/*.bam
+$samtools view -c $mergedbam
+$modkit summary --num-reads 100000 $mergedbam > ${output_dir_top}/G4L2_MinION_barcode32_modkit_summary.txt
+rm $mergedbam
+
+```
+
+```{r, engine='bash', eval=TRUE}
+source .bashvars
+
+cat ${output_dir_top}/G4L2_MinION_barcode30_modkit_summary.txt
+cat ${output_dir_top}/G4L2_MinION_barcode31_modkit_summary.txt
+cat ${output_dir_top}/G4L2_MinION_barcode32_modkit_summary.txt
+```
+
+# Summary
+
+These are super interesting! In the Group 4 (oldest) sequences, there are notable levels of 6mA methylation (indicated by base A with code a), in fact the 6mA methylation level (`pass_frac`) is higher than the 5mC cytosine methylation (base C, code m). I'm very skeptical of this, since 6mA is very uncommon in eukaryotes, but it hasn't been evaluated much in Cnidarians. 
+
+It seems most likely that the high 6mA levels are the result of either contamination (eg. present in contaminant fungi) or an artifact of age-related degradation. I can't actually tell right now whether the modern samples (Group 1) have any 6mA methylation, because that sequencing was done before the MinKnow software update that allowed for real-time 6mA modification calling during sequencing. The Group 1 stuff was only sequenced with 5mC modification calling. 
+
+I'm also curious why Group 1 shows notable 5hmC levels, but 5hmC is *not* present in either of the Group 4 runs. I believe all of the sequencing runs were performed with softare that is 5hmC-sensitive, so if its present in one run I'd expect to find it in others...
+
+Finally, in the Group 4 runs, which used the updated basecaller software, there are also codes for Cytosine with the `21839` modification code. According to the Nanopore `Dorado` basecaller [documentation](https://software-docs.nanoporetech.com/dorado/latest/basecaller/mods/), this modification code indicates 4mC (N(4)-methylcytosine). 4mC is believed to be essentially absent outside of prokaryotes (with a few very rare exceptions, associated with horizontal gene transfer from a prokaryote). As such, it seems *extremely* likely that the occurance of 4mC in the older samples is spurious. 
+
+I'll have to re-basecall everything with the updated models, including adapter/barcode trimming and and genome alignment, before proceeding with methylation summaries.
+
+
+

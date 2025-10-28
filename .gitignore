@@ -5,6 +5,8 @@
 
 *.fastq.gz
 *.pod5
+*.bam
+*.sam
 */kraken2/*_output.txt
 */kraken2/*_report.txt
 
