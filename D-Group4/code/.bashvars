@@ -2,15 +2,12 @@
 
 # Data directories
 export nanopore_dir=/home/shared/8TB_HDD_02/shedurkin/SIFP-nanopore
-export output_dir_top=${nanopore_dir}/D-Group4/output/02-G4-Library1-Flongle-Dorado-recall
-export data_dir_top=${nanopore_dir}/D-Group4/data/02-G4-Library1-Flongle-Dorado-recall
+export output_dir_top=${nanopore_dir}/D-Group4/output/03-G4-Library1-MinION-Dorado-recall
+export data_dir_top=${nanopore_dir}/D-Group4/data/03-G4-Library1-MinION-Dorado-recall
 export raw_pod5_dir=${data_dir_top}/pod5_pass
-export raw_pod5_url="https://gannet.fish.washington.edu/kdurkin1/SIFP_2025/Group4_Flongle/Library1/20250904_2022_MN47571_AXT657_1336ce16/pod5_pass/"
-export dorado_models_dir=${nanopore_dir}/dorado-models
+export raw_pod5_url1="https://gannet.fish.washington.edu/kdurkin1/SIFP_2025/Group4_MinION/Library1/20250905_1158_MD-101223_FBD08455_b87a1f92/pod5_pass/"
+export raw_pod5_url2="https://gannet.fish.washington.edu/kdurkin1/SIFP_2025/Group4_MinION/Library1_wash3/20250907_1505_MD-101223_FBD08455_50a8f15e/pod5_pass/"
 export genome_dir=${nanopore_dir}/data/GCA_965233905.1_jaEunKnig1.1/
-export trimmed_fastqc_dir=${output_dir_top}/trimmed-fastqc
-export trimmed_reads_dir=${nanopore_dir}/D-Group4/output/02-G4-Library1-Flongle-Dorado-recall/trimmed-reads
-export trimmed_reads_url=""
 
 # Paths to programs
 export modkit=/home/shared/dist_modkit_v0.5.1_8fa79e3/modkit
