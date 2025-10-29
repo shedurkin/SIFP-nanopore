@@ -1,0 +1,5 @@
+2025-10-27 23:27:53.542] [info] > Finished in (ms): 16608627
+[2025-10-27 23:27:53.542] [info] > Simplex reads basecalled: 49003
+[2025-10-27 23:27:53.542] [info] > Simplex reads filtered: 87
+[2025-10-27 23:27:53.542] [info] > Basecalled @ Samples/s: 2.474241e+04
+[2025-10-27 23:27:53.542] [info] > 49146 reads demuxed @ classifications/s: 2.959065e+00

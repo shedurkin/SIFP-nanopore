@@ -2,21 +2,23 @@
 
 # Data directories
 export nanopore_dir=/home/shared/8TB_HDD_02/shedurkin/SIFP-nanopore
-export output_dir_top=${nanopore_dir}/D-Group4/output/01-G4-Library1-Flongle-kraken2
-export raw_fastqc_dir=${output_dir_top}/raw-fastqc
-export raw_reads_dir=${nanopore_dir}/D-Group4/data/01-G4-Library1-Flongle-kraken2/raw-reads
-export raw_reads_url="https://gannet.fish.washington.edu/kdurkin1/SIFP_2025/Group4_Flongle/Library1/20250904_2022_MN47571_AXT657_1336ce16/fastq_pass/"
+export output_dir_top=${nanopore_dir}/D-Group4/output/02-G4-Library1-Flongle-Dorado-recall
+export data_dir_top=${nanopore_dir}/D-Group4/data/02-G4-Library1-Flongle-Dorado-recall
+export raw_pod5_dir=${data_dir_top}/pod5_pass
+export raw_pod5_url="https://gannet.fish.washington.edu/kdurkin1/SIFP_2025/Group4_Flongle/Library1/20250904_2022_MN47571_AXT657_1336ce16/pod5_pass/"
+export dorado_models_dir=${nanopore_dir}/dorado-models
+export genome_dir=${nanopore_dir}/data/GCA_965233905.1_jaEunKnig1.1/
 export trimmed_fastqc_dir=${output_dir_top}/trimmed-fastqc
-export trimmed_reads_dir=${nanopore_dir}/D-Group4/output/01-G4-Library1-Flongle-kraken2/trimmed-reads
+export trimmed_reads_dir=${nanopore_dir}/D-Group4/output/02-G4-Library1-Flongle-Dorado-recall/trimmed-reads
 export trimmed_reads_url=""
 
 # Paths to programs
-export fastqc=/home/shared/FastQC-0.12.1/fastqc
-export multiqc=/home/sam/programs/mambaforge/bin/multiqc
-export flexbar=/home/shared/flexbar-3.5.0-linux/flexbar
+export modkit=/home/shared/dist_modkit_v0.5.1_8fa79e3/modkit
+export samtools=/home/shared/samtools-1.12/samtools
+export dorado=/home/shared/dorado-1.2.0-linux-x64/bin/dorado
 
 # Set FastQ filename patterns
-export fastq_pattern='*.fastq.gz'
+export pod5_pattern='*.pod5'
 
 # Set number of CPUs to use
 export threads=20
@@ -25,16 +27,3 @@ export threads=20
 export raw_checksums=checksums.md5
 export trimmed_checksums=trimmed_fastq_checksums.md5
 
-## Inititalize arrays
-export fastq_array=()
-export raw_fastqs_array=()
-export names_array=()
-export trimmed_fastqs_array=()
-
-# Programs associative array
-declare -A programs_array
-programs_array=(
-[fastqc]="${fastqc}" \
-[multiqc]="${multiqc}" \
-[flexbar]="${flexbar}"
-)
