@@ -1,9 +1,9 @@
 #### Assign Variables ####
 
 # Data directories
-export nanopore_dir=/home/shared/8TB_HDD_02/shedurkin/SIFP-nanopore
-export output_dir_top=${nanopore_dir}/D-Group4/output/03-G4-Library1-MinION-Dorado-recall
-export data_dir_top=${nanopore_dir}/D-Group4/data/03-G4-Library1-MinION-Dorado-recall
+export nanopore_dir=/gscratch/srlab/kdurkin1/SIFP-nanopore
+export output_dir_top=${nanopore_dir}/D-Group4/output/03.01-G4-Library1-MinION-Dorado-recall-GPU
+export data_dir_top=${nanopore_dir}/D-Group4/data/03.01-G4-Library1-MinION-Dorado-recall-GPU
 export raw_pod5_dir=${data_dir_top}/pod5_pass
 export raw_pod5_url1="https://gannet.fish.washington.edu/kdurkin1/SIFP_2025/Group4_MinION/Library1/20250905_1158_MD-101223_FBD08455_b87a1f92/pod5_pass/"
 export raw_pod5_url2="https://gannet.fish.washington.edu/kdurkin1/SIFP_2025/Group4_MinION/Library1_wash3/20250907_1505_MD-101223_FBD08455_50a8f15e/pod5_pass/"
