@@ -1,0 +1,10 @@
+[2025-10-30 08:58:00.128] [info] Running: "basecaller" "hac" "-r" "/gscratch/srlab/kdurkin1/SIFP-nanopore/B-Group2/data/04.01-G2-Library2-MinION-Dorado-recall-GPU//" "--kit-name" "SQK-NBD114-96" "--trim" "all" "--reference" "/gscratch/srlab/kdurkin1/SIFP-nanopore/data/GCA_965233905.1_jaEunKnig1.1/GCA_965233905.1_jaEunKnig1.1_genomic.fna" "--modified-bases" "5mCG_5hmCG" "6mA" "--device" "auto"
+[2025-10-30 08:58:40.624] [info]  - downloading dna_r10.4.1_e8.2_400bps_hac@v5.2.0 with httplib
+[2025-10-30 08:58:41.415] [info]  - downloading dna_r10.4.1_e8.2_400bps_hac@v5.2.0_5mCG_5hmCG@v2 with httplib
+[2025-10-30 08:58:42.154] [info]  - downloading dna_r10.4.1_e8.2_400bps_hac@v5.2.0_6mA@v1 with httplib
+[2025-10-30 08:58:42.906] [info] > Creating basecall pipeline
+[2025-10-30 08:58:45.131] [info] Using CUDA devices:
+[2025-10-30 08:58:45.131] [info] cuda:0 - NVIDIA GeForce RTX 2080 Ti
+[2025-10-30 08:58:48.273] [info] Calculating optimized batch size for GPU "NVIDIA GeForce RTX 2080 Ti" and model dna_r10.4.1_e8.2_400bps_hac@v5.2.0. Full benchmarking will run for this device, which may take some time.
+[2025-10-30 08:58:52.629] [info] cuda:0 using chunk size 9996, batch size 512
+[2025-10-30 08:58:53.434] [info] cuda:0 using chunk size 4998, batch size 1088

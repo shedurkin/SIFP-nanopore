@@ -6,7 +6,7 @@
 #SBATCH --partition=ckpt
 ## Resources
 ## GPU
-#SBATCH --gres=gpu:p100:1
+#SBATCH --gres=gpu:2080ti:1
 ## Nodes
 #SBATCH --nodes=1
 ## Walltime (days-hours:minutes:seconds format)
@@ -33,15 +33,16 @@
 wd=$(pwd)
 
 # Programs array
-declare -A programs_array
-programs_array=(
-[dorado]="apptainer exec /gscratch/srlab/containers/srlab-R4.4-bioinformatics-container-3886a1c.sif dorado"
-)
+# declare -A programs_array
+# programs_array=(
+# [dorado]="apptainer exec --nv --bind /gscratch /gscratch/srlab/containers/srlab-R4.4-bioinformatics-container-3886a1c.sif dorado"
+# )
+
 
 # Establish variables for more readable code
 
 # Input files directory
-raw_pod5_dir=/gscratch/srlab/kdurkin1/SIFP-nanopore/D-Group4/data/03.01-G4-Library1-MinION-Dorado-recall-GPU/pod5_pass
+raw_pod5_dir=/gscratch/srlab/kdurkin1/SIFP-nanopore/D-Group4/data/03.01-G4-Library1-MinION-Dorado-recall-GPU/
 output_dir=/gscratch/srlab/kdurkin1/SIFP-nanopore/D-Group4/output/03.01-G4-Library1-MinION-Dorado-recall-GPU/
 genome_file=/gscratch/srlab/kdurkin1/SIFP-nanopore/data/GCA_965233905.1_jaEunKnig1.1/GCA_965233905.1_jaEunKnig1.1_genomic.fna
 
@@ -68,21 +69,24 @@ records_per_fastq=0
 # Exit script if any command fails
 set -e
 
-# Load Python Mox module for Python module availability
-module load intel-python3_2017
-
 # Load CUDA GPU module
-module load cuda/10.1.105_418.39
+module load cuda/12.9.1
 
-$dorado basecaller \
+apptainer exec \
+--nv \
+--home "$PWD" \
+--bind /mmfs1/home/ \
+--bind /gscratch \
+/gscratch/srlab/containers/srlab-R4.4-bioinformatics-container-3886a1c.sif \
+dorado basecaller \
 hac \
 -r ${raw_pod5_dir}/ \
---kit-name ${kit} \
+--kit-name SQK-NBD114-96 \
 --trim 'all' \
 --reference ${genome_file} \
 --modified-bases 5mCG_5hmCG 6mA \
 --device ${GPU_devices} \
-> ${output_dir}/${flow_cell_id}_pass_recalled.bam
+> ${output_dir}/FBD08455_pass_recalled.bam
 
 
 ###################################################################################

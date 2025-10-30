@@ -2,17 +2,11 @@
 
 # Data directories
 export nanopore_dir=/gscratch/srlab/kdurkin1/SIFP-nanopore
-export output_dir_top=${nanopore_dir}/D-Group4/output/03.01-G4-Library1-MinION-Dorado-recall-GPU
-export data_dir_top=${nanopore_dir}/D-Group4/data/03.01-G4-Library1-MinION-Dorado-recall-GPU
+export output_dir_top=${nanopore_dir}/D-Group4/output/04.01-G4-Library2-MinION-Dorado-recall-GPU
+export data_dir_top=${nanopore_dir}/D-Group4/data/04.01-G4-Library2-MinION-Dorado-recall-GPU
 export raw_pod5_dir=${data_dir_top}/pod5_pass
-export raw_pod5_url1="https://gannet.fish.washington.edu/kdurkin1/SIFP_2025/Group4_MinION/Library1/20250905_1158_MD-101223_FBD08455_b87a1f92/pod5_pass/"
-export raw_pod5_url2="https://gannet.fish.washington.edu/kdurkin1/SIFP_2025/Group4_MinION/Library1_wash3/20250907_1505_MD-101223_FBD08455_50a8f15e/pod5_pass/"
+export raw_pod5_url="https://gannet.fish.washington.edu/kdurkin1/SIFP_2025/Group4_MinION/Library2/20250909_1146_MN47571_FBD36396_e03e7ede/pod5_pass/"
 export genome_dir=${nanopore_dir}/data/GCA_965233905.1_jaEunKnig1.1/
-
-# Paths to programs
-export modkit=/home/shared/dist_modkit_v0.5.1_8fa79e3/modkit
-export samtools=/home/shared/samtools-1.12/samtools
-export dorado=/home/shared/dorado-1.2.0-linux-x64/bin/dorado
 
 # Set FastQ filename patterns
 export pod5_pattern='*.pod5'

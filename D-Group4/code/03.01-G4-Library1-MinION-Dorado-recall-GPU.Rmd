@@ -169,4 +169,4 @@ To run the script, run the below command from Klone terminal:
 sbatch 03.01_G4L1_MinION_Dorado.sh
 ```
 
-Started job 2025/10/29 at ~2:30pm. Job ID 30534314. Currently a queue for `ckpt`, but expected to begin running in a few hours
+Job ID 30542902, finished in 1hr 26min, using a single 2080ti GPU
