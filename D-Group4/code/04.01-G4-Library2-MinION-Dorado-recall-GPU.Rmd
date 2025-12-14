@@ -1,0 +1,159 @@
+---
+title: "04.01-G4-Library2-MinION-Dorado-recall-GPU"
+author: "Kathleen Durkin"
+date: "2025-10-29"
+always_allow_html: true
+output: 
+  github_document:
+    toc: true
+    toc_depth: 3
+    number_sections: true
+    html_preview: true 
+  bookdown::html_document2:
+    theme: cosmo
+    toc: true
+    toc_float: true
+    number_sections: true
+    code_folding: show
+    code_download: true
+---
+
+```{r setup, include=FALSE}
+library(knitr)
+knitr::opts_chunk$set(
+  echo = TRUE,         # Display code chunks
+  eval = FALSE,        # Evaluate code chunks
+  warning = FALSE,     # Hide warnings
+  message = FALSE,     # Hide messages
+  comment = ""         # Prevents appending '##' to beginning of lines in code output
+)
+```
+
+I've been trialing Dorado basecalling to get my raw pod5 files to basecalled, demultiplexed, trimmed, and aligned BAM files, However, this is very computationally intensive and is taking hours to process 50-200Mb of output using CPUs along. `Dorado` is, however, optemized to run on GPUs, which would significantly cut run time!
+
+I'm going to try using a Hyak GPU to run Dorado basecalling, using [Sam's previous work](https://robertslab.github.io/sams-notebook/posts/2020/2020-09-04-Data-Wrangling---NanoPore-Fast5-Conversion-to-FastQ-of-C.bairdi-6129_403_26-on-Mox-with-GPU-Node/index.html) and the [Dorado basecaller documentation](https://software-docs.nanoporetech.com/dorado/latest/basecaller/basecall_overview/) as reference. 
+
+```{r setup, include=FALSE}
+library(knitr)
+knitr::opts_chunk$set(
+  echo = TRUE,         # Display code chunks
+  eval = FALSE,        # Evaluate code chunks
+  warning = FALSE,     # Hide warnings
+  message = FALSE,     # Hide messages
+  comment = ""         # Prevents appending '##' to beginning of lines in code output
+)
+```
+
+
+# Create a Bash variables file
+
+This allows usage of Bash variables (e.g. paths to common directories) across R Markdown chunks.
+```{r save-bash-variables-to-rvars-file, engine='bash', eval=TRUE}
+{
+echo "#### Assign Variables ####"
+echo ""
+
+echo "# Data directories"
+echo 'export nanopore_dir=/gscratch/srlab/kdurkin1/SIFP-nanopore'
+echo 'export output_dir_top=${nanopore_dir}/D-Group4/output/04.01-G4-Library2-MinION-Dorado-recall-GPU'
+echo 'export data_dir_top=${nanopore_dir}/D-Group4/data/04.01-G4-Library2-MinION-Dorado-recall-GPU'
+echo 'export raw_pod5_dir=${data_dir_top}/pod5_pass'
+echo 'export raw_pod5_url="https://gannet.fish.washington.edu/kdurkin1/SIFP_2025/Group4_MinION/Library2/20250909_1146_MN47571_FBD36396_e03e7ede/pod5_pass/"'
+echo 'export genome_dir=${nanopore_dir}/data/GCA_965233905.1_jaEunKnig1.1/'
+
+echo ""
+
+
+echo "# Set FastQ filename patterns"
+echo "export pod5_pattern='*.pod5'"
+echo ""
+
+echo "# Set number of CPUs to use"
+echo 'export threads=20'
+echo ""
+
+echo "# Input/output files"
+echo 'export raw_checksums=checksums.md5'
+echo 'export trimmed_checksums=trimmed_fastq_checksums.md5'
+echo ""
+} > .bashvars
+
+cat .bashvars
+```
+
+
+# Raw reads
+## Download raw pod5 files
+
+Reads are downloaded from: 
+https://gannet.fish.washington.edu/kdurkin1/SIFP_2025/Group4_MinION/Library2/20250909_1146_MN47571_FBD36396_e03e7ede/pod5_pass/
+
+Note that this directory contains multiple subdirectories, each representing one barcode (specimen) and containing the pod5 files associated with that barcode
+
+The `--cut-dirs 7` command cuts the preceding directory structure (i.e. `nightingales/P_evermanni/30-789513166/`) so that we just end up with the reads.
+
+```{r download-raw-reads, engine='bash', eval=FALSE}
+# Load bash variables into memory
+source .bashvars
+
+wget \
+--directory-prefix ${raw_pod5_dir} \
+--recursive \
+--no-check-certificate \
+--continue \
+--cut-dirs 6 \
+--no-host-directories \
+--no-parent \
+--quiet \
+--accept ${pod5_pattern} ${raw_pod5_url}
+```
+
+```{r check-raw-reads, engine='bash', eval=TRUE}
+# Load bash variables into memory
+source .bashvars
+
+ls -lh "${raw_pod5_dir}"
+```
+
+## Verify raw read checksums
+```{r verify-raw-read-checksums, engine='bash', eval=FALSE}
+# Load bash variables into memory
+source .bashvars
+
+wget \
+--directory-prefix ${raw_pod5_dir} \
+--recursive \
+--no-check-certificate \
+--continue \
+--cut-dirs 6 \
+--no-host-directories \
+--no-parent \
+--quiet \
+--accept 'checksums.md5' ${raw_pod5_url}
+
+cd "${raw_pod5_dir}"
+
+# Recursively verify checksums in all subdirectories
+find $(pwd) -type d | while read -r DIR; do
+    # Check if checksums.md5 exists in this directory
+    if [[ -f "$DIR/checksums.md5" ]]; then
+        echo "Verifying checksums in $DIR"
+        (
+            cd "$DIR" || exit 1
+            md5sum -c checksums.md5
+        )
+        echo ""
+    fi
+done
+```
+
+# SLURM script
+
+I've taken the SLURM script Sam made to run Guppy using `ckpt` GPU resources and modified it to use the dorado basecaller (available on Klone in the contatiner `/gscratch/srlab/containers/srlab-R4.4-bioinformatics-container-3886a1c.sif`). The modified script is saved in this directory under the name `04.01_G4L2_MinION_Dorado.sh`.
+
+To run the script, run the below command from Klone terminal:
+```{bash}
+sbatch 04.01_G4L2_MinION_Dorado.sh
+```
+
+Job ID 30550488

@@ -1,22 +1,16 @@
 #### Assign Variables ####
 
 # Data directories
-export nanopore_dir=/home/shared/8TB_HDD_02/shedurkin/SIFP-nanopore
-export output_dir_top=${nanopore_dir}/B-Group2/output/03-G2-Library3-Flongle-kraken2
-export raw_fastqc_dir=${output_dir_top}/raw-fastqc
-export raw_reads_dir=${nanopore_dir}/B-Group2/data/03-G2-Library3-Flongle-kraken2/raw-reads
-export raw_reads_url="https://gannet.fish.washington.edu/kdurkin1/SIFP_2025/Group2_Flongle/Library3/20250901_1604_MD-101223_AYK963_af91d677/fastq_pass/"
-export trimmed_fastqc_dir=${output_dir_top}/trimmed-fastqc
-export trimmed_reads_dir=${nanopore_dir}/B-Group2/output/03-G2-Library3-Flongle-kraken2/trimmed-reads
-export trimmed_reads_url=""
-
-# Paths to programs
-export fastqc=/home/shared/FastQC-0.12.1/fastqc
-export multiqc=/home/sam/programs/mambaforge/bin/multiqc
-export flexbar=/home/shared/flexbar-3.5.0-linux/flexbar
+export nanopore_dir=/gscratch/srlab/kdurkin1/SIFP-nanopore
+export output_dir_top=${nanopore_dir}/B-Group2/output/05.01-G2-Library3-MinION-Dorado-recall-GPU
+export data_dir_top=${nanopore_dir}/B-Group2/data/05.01-G2-Library3-MinION-Dorado-recall-GPU
+export raw_pod5_dir=${data_dir_top}/pod5_pass
+export raw_pod5_url1="https://gannet.fish.washington.edu/kdurkin1/SIFP_2025/Group2_MinION/Group2_Library3_MK1B_sequencer/20250902_1444_MN47571_FBD42232_1580300f/pod5_pass/"
+export raw_pod5_url2="https://gannet.fish.washington.edu/kdurkin1/SIFP_2025/Group2_MinION/Group2_Library3_MK1B_after_wash2/20250903_2102_MN47571_FBD42232_3fa04fa7/pod5_pass/"
+export genome_dir=${nanopore_dir}/data/GCA_965233905.1_jaEunKnig1.1/
 
 # Set FastQ filename patterns
-export fastq_pattern='*.fastq.gz'
+export pod5_pattern='*.pod5'
 
 # Set number of CPUs to use
 export threads=20
@@ -25,16 +19,3 @@ export threads=20
 export raw_checksums=checksums.md5
 export trimmed_checksums=trimmed_fastq_checksums.md5
 
-## Inititalize arrays
-export fastq_array=()
-export raw_fastqs_array=()
-export names_array=()
-export trimmed_fastqs_array=()
-
-# Programs associative array
-declare -A programs_array
-programs_array=(
-[fastqc]="${fastqc}" \
-[multiqc]="${multiqc}" \
-[flexbar]="${flexbar}"
-)
