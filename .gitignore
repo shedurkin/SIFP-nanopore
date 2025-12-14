@@ -10,6 +10,7 @@
 *.temp_dorado_model*
 */kraken2/*_output.txt
 */kraken2/*_report.txt
+*/depth_summary*
 
 data/GCA*
 data/kraken_db_k2/

@@ -29,6 +29,13 @@ knitr::opts_chunk$set(
 )
 ```
 
+```{r}
+library(ggplot2)
+library(tidyr)
+library(tidyverse)
+library(dplyr)
+```
+
 
 # Create a Bash variables file
 
@@ -135,7 +142,7 @@ done
 ```
 
 
-# Trimming and Demultiplexing
+# Dorado basecaller
 
 We want to demultiplex and trim adapter and barcode sequences
 
@@ -173,6 +180,7 @@ hac \
 
 ```
 
+# BAM processing
 
 Separate out mapped reads, and separate by barcode
 
@@ -182,50 +190,173 @@ source .bashvars
 cd ${output_dir_top}
 
 # Alignment summary
-$samtools flagstat AYL248_recalled.bam > alignment_summary.txt
-head alignment_summary.txt
-
-echo ""
-
-# Summarize by barcode
-$samtools view AYL248_recalled.bam | \
-awk '{for(i=12;i<=NF;i++) if($i ~ /^BC:Z:/) {print substr($i,6)}}' | \
-sort | uniq -c | sort -nr
-
+$samtools flagstat -O tsv AYL248_recalled.bam > AYL248_recalled_summary.tsv
+cat AYL248_recalled_summary.tsv
 ```
+
+From the samtools `flagstat` summary we see a high alignment rate (89.68%), which is great! The vast majority of reads confidently come from *Eunicea*. There are, however, a lot of "secondary" and "supplementary" reads. "Secondary" indicates secondary alignments, i.e. alternative mapping locations of the same read. "Supplementary" indicates supplementary alignments, or parts of a read that align *discontinuously* (possibly chimeric, split, large structural variants, etc.). The true number of reads present in my sample is just the *primary* alignments (total - secondary - supplementary = 134052-77531-7462 = 49,059 reads). This is a rather annoying artifact of Dorado using a multimapper inder the hood, where a single read can be mapped to multiple possible loci (one primary and 0 or more secondary). For downstream work, we only want to be using the "real" reads, not duplicate records of secondary/supplementary alignments, so we need to filter those out of the BAM. We also need to sort them
 
 ```{bash}
 source .bashvars
 
 cd ${output_dir_top}
 
-# Separate out mapped reads
-$samtools view -b -F 4 AYL248_recalled.bam > AYL248_recalled_mapped.bam
+# Remove unmapped reads (bit decimal 4), secondary alignments (bit decimal 256) and supplementary alignments (bit decimal 2048)
+$samtools view -b -F 2308 AYL248_recalled.bam |\
+$samtools sort -o AYL248_recalled_mapped.bam
 
 # Separate by barcode
-samtools view -h AYL248_recalled_mapped.bam | awk '/^@/ || /BC:Z:SQK-NBD114-96_barcode12/' | samtools view -b > AYL248_recalled_mapped_barcode12.bam
-samtools view -h AYL248_recalled_mapped.bam | awk '/^@/ || /BC:Z:SQK-NBD114-96_barcode13/' | samtools view -b > AYL248_recalled_mapped_barcode13.bam
-samtools view -h AYL248_recalled_mapped.bam | awk '/^@/ || /BC:Z:SQK-NBD114-96_barcode14/' | samtools view -b > AYL248_recalled_mapped_barcode14.bam
+$samtools view -h AYL248_recalled_mapped.bam |\
+awk '/^@/ || /BC:Z:SQK-NBD114-96_barcode12/' |\
+$samtools view -b |\
+$samtools sort -o AYL248_recalled_mapped_barcode12.bam
+
+$samtools view -h AYL248_recalled_mapped.bam |\
+awk '/^@/ || /BC:Z:SQK-NBD114-96_barcode13/' |\
+$samtools view -b |\
+$samtools sort -o AYL248_recalled_mapped_barcode13.bam
+
+$samtools view -h AYL248_recalled_mapped.bam |\
+awk '/^@/ || /BC:Z:SQK-NBD114-96_barcode14/' |\
+$samtools view -b |\
+$samtools sort -o AYL248_recalled_mapped_barcode14.bam
 
 
 ```
 
-## modkit
+Index
+```{bash}
+source .bashvars
+cd ${output_dir_top}
+
+$samtools index AYL248_recalled_mapped.bam
+$samtools index AYL248_recalled_mapped_barcode12.bam
+$samtools index AYL248_recalled_mapped_barcode13.bam
+$samtools index AYL248_recalled_mapped_barcode14.bam
+
+```
+
+
+# Summary stats
 
 ```{r, engine='bash', eval=TRUE}
 source .bashvars
-$samtools view -c ${output_dir_top}/AYL248_recalled.bam
-$samtools view -c ${output_dir_top}/AYL248_recalled_mapped.bam
 
-$modkit summary -n 100000 ${output_dir_top}/AYL248_recalled.bam
-$modkit summary -n 100000 ${output_dir_top}/AYL248_recalled_mapped.bam
+cd ${output_dir_top}
+
+# Alignment summary
+$samtools flagstat -O tsv AYL248_recalled_mapped.bam > flagstat_summary_AYL248_recalled_mapped.tsv
+cat flagstat_summary_AYL248_recalled_mapped.tsv
+
+echo ""
+
+# Summarize by barcode
+$samtools view AYL248_recalled_mapped.bam | \
+awk '{for(i=12;i<=NF;i++) if($i ~ /^BC:Z:/) {print substr($i,6)}}' | \
+sort | uniq -c | sort -nr
+```
+
+So the actual alignment rate (# of mapped primary alignments/# of total primary alignments) is actually 35,226/49,059 = 71.8%. This is still a pretty good alignment rate! 
+
+There's also a bit of a discrepancy among the barcodes. Barcodes 12 and 13 each have 9-10k reads, while Barcode 14 has almost 15k.
+
+Note also that the sum of reads with different barcodes is slightly less than our total of 35226 mapped primary reads. This is because reads that were not successfully demultiplexed were not assigned a barcode tag.
+
+## modkit modification summaries
+
+Summarize modifications
+```{r, engine='bash', eval=TRUE}
+source .bashvars
+
+$modkit summary ${output_dir_top}/AYL248_recalled_mapped.bam
+```
+
+In mapped, primary-alignment reads, we observe negligible 6mA (~0.5%), low/negligible 5hmCG (~1%), and moderately-low 5mCG (~5%)
+
+Now let's check by barcode (individual)
+
+```{r, engine='bash', eval=TRUE}
+source .bashvars
+
+cd ${output_dir_top}
+
+$modkit summary --tsv AYL248_recalled_mapped_barcode12.bam > modkit_summary_AYL248_barcode12.tsv
+
+echo ""
+
+$modkit summary --tsv AYL248_recalled_mapped_barcode13.bam > modkit_summary_AYL248_barcode13.tsv
+
+echo ""
+
+$modkit summary --tsv AYL248_recalled_mapped_barcode14.bam > modkit_summary_AYL248_barcode14.tsv
+```
+
+Barplot of above modkit summaries
+```{r, eval=TRUE}
+
+files <- c(
+  "../output/05-G1-Library4-Flongle-Dorado-recall/modkit_summary_AYL248_barcode12.tsv",
+  "../output/05-G1-Library4-Flongle-Dorado-recall/modkit_summary_AYL248_barcode13.tsv",
+  "../output/05-G1-Library4-Flongle-Dorado-recall/modkit_summary_AYL248_barcode14.tsv"
+)
+
+# Assign sample names (in same order as files)
+sample_names <- c("barcode12", "barcode13", "barcode14")
+
+# parse summaries
+parse_modkit_summary <- function(file, sample_name) {
+  df <- read.table(file, sep = "\t", header = FALSE, stringsAsFactors = FALSE)
+  
+  # Extract values (use pattern matching on the first column)
+  get_val <- function(pattern) {
+    as.numeric(df$V2[grep(pattern, df$V1)])
+  }
+  
+  tibble(
+    Sample = sample_name,
+    `5mC`  = get_val("^C_pass_frac_modified_m") * 100,
+    `5hmC` = get_val("^C_pass_frac_modified_h") * 100,
+    `6mA`  = get_val("^A_pass_frac_modified_a") * 100
+  )
+}
+
+# combine and convert to long format (for ggplotting)
+mod_data <- map2_dfr(files, sample_names, parse_modkit_summary)
+
+mod_long <- mod_data %>%
+  pivot_longer(cols = c(`5mC`, `5hmC`, `6mA`),
+               names_to = "Modification",
+               values_to = "Percent")
+
+# plot
+ggplot(mod_long, aes(x = Sample, y = Percent, fill = Modification)) +
+  geom_bar(stat = "identity", width=0.5, position = position_dodge(width = 0.5)) +
+  geom_text(aes(label = sprintf("%.1f", Percent)),     # format to one decimal place
+            position = position_dodge(width = 0.5), 
+            vjust = -0.5, size = 4) +                  # adjust spacing & text size
+  labs(
+    title = "Modified Base Composition per Sample (trimmed, mapped reads)",
+    y = "% Modified Bases (Pass Fraction)",
+    x = NULL
+  )
 
 ```
 
-In both unmapped and mapped reads, we observe negligible 6mA (~0.5%) and low 5hmCG (~1%). 5mCG is low in both, but differs somewhat from unmapped (~7%) to mapped (~4%)
+## genome coverage summaries
 
+```{r, engine='bash', eval=TRUE}
+source .bashvars
+cd ${output_dir_top}
 
+# conda create -n myenv
+conda activate mosdepth_env
+conda config --add channels bioconda
+conda config --add channels conda-forge
+conda config --add channels defaults
+conda install -c bioconda mosdepth
+mosdepth --version
 
+```
 
 
 

@@ -224,7 +224,8 @@ hac \
 
 Started above basecalling run 2025/10/28, ~7:30pm.
 At 2025/10/29 12:00pm, ~15% complete
-
+Mistakenly stopped at 6:30pm 10/29 (~1day in, ~25% done)
+Restarting 6:30pm 10/29
 
 
 
