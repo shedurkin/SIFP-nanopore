@@ -1,0 +1,462 @@
+---
+title: "03-nobones-plotting"
+author: "Kathleen Durkin"
+date: "2025-12-14"
+always_allow_html: true
+output: 
+  github_document:
+    toc: true
+    toc_depth: 3
+    number_sections: true
+    html_preview: true 
+  bookdown::html_document2:
+    theme: cosmo
+    toc: true
+    toc_float: true
+    number_sections: true
+    code_folding: show
+    code_download: true
+---
+
+
+Plot modifications by specimen age
+
+```{r}
+library(tidyverse)
+library(knitr)
+library(kableExtra)
+library(patchwork)  # for combining plots
+```
+
+```{r}
+
+# ===== STEP 1: Find all modkit summary files =====
+modkit_files <- list.files(
+  path = "../../", 
+  pattern = "modkit_summary_.*\\.tsv$",
+  recursive = TRUE,
+  full.names = TRUE
+)
+
+cat("Found", length(modkit_files), "modkit summary files\n")
+
+# ===== STEP 2: Read and parse all files =====
+# Read each file and extract modification data
+modkit_data <- map_dfr(modkit_files, function(filepath) {
+  # Read as tab-delimited key-value pairs
+  data <- read_tsv(filepath, col_names = c("key", "value"), show_col_types = FALSE)
+  
+  # Convert to wide format
+  data_wide <- data %>%
+    pivot_wider(names_from = key, values_from = value)
+  
+  # Extract barcode from filename
+  barcode <- str_extract(basename(filepath), "\\d+(?=\\.tsv)")
+  
+  # Extract modification percentages
+  data_wide %>%
+    mutate(
+      barcode = as.numeric(barcode),
+      # Cytosine modifications
+      C_5mC_pct = as.numeric(C_pass_frac_modified_m) * 100,
+      C_5hmC_pct = as.numeric(C_pass_frac_modified_h) * 100,
+      C_unmod_pct = as.numeric(C_pass_frac_unmodified) * 100,
+      # Adenine modifications
+      A_6mA_pct = as.numeric(A_pass_frac_modified_a) * 100,
+      A_unmod_pct = as.numeric(A_pass_frac_unmodified) * 100
+    ) %>%
+    select(barcode, ends_with("_pct"))
+})
+
+
+```
+
+
+## Load and Merge All Metadata
+
+```{r merge-all-metadata}
+# 1. Load sequencing composition (barcode -> catalog number, year, group/library)
+composition <- read_csv("../../data/E_tourneforti_sequencing_composition.csv", 
+                       show_col_types = FALSE)
+
+# 2. Load sample metadata (catalog number -> DIN, other DNA quality metrics)
+samples <- read_csv("../../data/E_tourneforti_E_tourneforti_samples.csv",
+                   show_col_types = FALSE) %>%
+  select(Catalog.Number, Year.Collected, Tapestation.DIN, 
+         Tapestation.Conc.ngul, Tapestation.Perc.300up)
+samples$Catalog.Number <- as.double(gsub("USNM ", "", samples$Catalog.Number))
+
+# 3. Load sequencing summaries (group/library -> N50)
+seq_summaries <- read_csv("../../data/E_tourneforti_sequencing_summaries.csv",
+                         show_col_types = FALSE) %>%
+  select(Group, Library, Estimated.N50.b, Estimated.Bases.Gb, 
+         Reads.Generated.M, Sequencer)
+seq_summaries$Group <- paste0("Group_", seq_summaries$Group)
+seq_summaries$Library <- paste0("Library_", seq_summaries$Library)
+
+# 4. Join all metadata together
+metadata <- composition %>%
+  # First join with samples to get DIN
+  left_join(samples, by = "Catalog.Number") %>%
+  # Then join with sequencing summaries to get N50
+  left_join(seq_summaries, by = c("Group", "Library"))
+
+# 5. Join with modkit data
+plot_data <- modkit_data %>%
+  left_join(metadata, by = c("barcode" = "Barcode")) %>%
+  arrange(Year.Collected.x) %>%
+  # Use Year.Collected from composition file (Year.Collected.x)
+  mutate(Year.Collected = Year.Collected.x) %>%
+  select(-Year.Collected.x, -Year.Collected.y)
+
+# Display merged data table
+plot_data %>%
+  select(barcode, Year.Collected, Catalog.Number, 
+         C_5mC_pct, C_5hmC_pct, A_6mA_pct, 
+         Tapestation.DIN, Estimated.N50.b) %>%
+  kable(digits = 2, caption = "Modification percentages with DIN and N50") %>%
+  kable_styling(bootstrap_options = c("striped", "hover", "condensed"),
+                font_size = 11) %>%
+  scroll_box(width = "100%", height = "400px")
+```
+
+## Reshape Data for Plotting
+
+```{r reshape-data}
+plot_data_long <- plot_data %>%
+  pivot_longer(
+    cols = ends_with("_pct"),
+    names_to = "modification",
+    values_to = "percentage"
+  ) %>%
+  filter(!is.na(percentage)) %>%
+  separate(modification, into = c("base", "mod_type", "pct"), sep = "_") %>%
+  select(-pct) %>%
+  mutate(
+    mod_label = case_when(
+      mod_type == "5mC" ~ "5mC (methylcytosine)",
+      mod_type == "5hmC" ~ "5hmC (hydroxymethylcytosine)", 
+      mod_type == "6mA" ~ "6mA (methyladenine)",
+      mod_type == "unmod" ~ "Unmodified",
+      TRUE ~ mod_type
+    ),
+    full_label = paste0(base, " - ", mod_label),
+    # Create age categories
+    age_category = case_when(
+      Year.Collected >= 2000 ~ "Modern (<25 years)",
+      Year.Collected >= 1960 ~ "Mid-age (1960s)",
+      TRUE ~ "Historic (>100 years)"
+    )
+  )
+```
+
+# Modifications vs. Sample Age
+
+```{r plot-by-age, fig.height=9}
+p_age <- plot_data_long %>%
+  filter(mod_type != "unmod") %>%
+  ggplot(aes(x = Year.Collected, y = percentage, color = base)) +
+  geom_point(size = 3.5, alpha = 0.8) +
+  geom_smooth(method = "lm", se = TRUE, alpha = 0.2, linewidth = 1) +
+  facet_wrap(~mod_label, scales = "free_y", ncol = 1) +
+  scale_color_manual(
+    values = c("C" = "#E41A1C", "A" = "#377EB8"),
+    name = "Base"
+  ) +
+  labs(
+    title = "DNA Modifications by Sample Age",
+    subtitle = "Linear regression with 95% confidence interval",
+    x = "Year Collected",
+    y = "Percentage (%)"
+  ) +
+  theme_bw(base_size = 12) +
+  theme(
+    legend.position = "bottom",
+    strip.text = element_text(face = "bold", size = 11),
+    plot.title = element_text(face = "bold", size = 14)
+  )
+
+print(p_age)
+```
+
+# Modifications vs. DNA Integrity (DIN)
+
+The DNA Integrity Number (DIN) is a measure of DNA quality from TapeStation analysis. Higher DIN values indicate better DNA integrity.
+
+```{r plot-by-din, fig.height=9}
+p_din <- plot_data_long %>%
+  filter(mod_type != "unmod", !is.na(Tapestation.DIN)) %>%
+  ggplot(aes(x = Tapestation.DIN, y = percentage, color = age_category)) +
+  geom_point(size = 3.5, alpha = 0.8) +
+  geom_smooth(method = "lm", se = TRUE, alpha = 0.2, linewidth = 1) +
+  facet_wrap(~mod_label, scales = "free_y", ncol = 1) +
+  scale_color_brewer(palette = "Set1", name = "Age Category") +
+  labs(
+    title = "DNA Modifications vs. DNA Integrity (DIN)",
+    subtitle = "Linear regression with 95% confidence interval",
+    x = "DNA Integrity Number (DIN)",
+    y = "Percentage (%)"
+  ) +
+  theme_bw(base_size = 12) +
+  theme(
+    legend.position = "bottom",
+    strip.text = element_text(face = "bold", size = 11),
+    plot.title = element_text(face = "bold", size = 14)
+  )
+
+print(p_din)
+```
+
+# Modifications vs. Sequencing N50
+
+N50 is a measure of read length quality - the length at which 50% of bases are in reads of that length or longer.
+
+```{r plot-by-n50, fig.height=9}
+p_n50 <- plot_data_long %>%
+  filter(mod_type != "unmod", !is.na(Estimated.N50.b)) %>%
+  ggplot(aes(x = Estimated.N50.b, y = percentage, color = age_category)) +
+  geom_point(size = 3.5, alpha = 0.8) +
+  geom_smooth(method = "lm", se = TRUE, alpha = 0.2, linewidth = 1) +
+  facet_wrap(~mod_label, scales = "free_y", ncol = 1) +
+  scale_color_brewer(palette = "Set1", name = "Age Category") +
+  labs(
+    title = "DNA Modifications vs. Sequencing N50",
+    subtitle = "Linear regression with 95% confidence interval",
+    x = "N50 (bases)",
+    y = "Percentage (%)"
+  ) +
+  theme_bw(base_size = 12) +
+  theme(
+    legend.position = "bottom",
+    strip.text = element_text(face = "bold", size = 11),
+    plot.title = element_text(face = "bold", size = 14)
+  )
+
+print(p_n50)
+```
+
+# Combined Comparison Plots
+
+## 5mC across all three variables
+
+```{r combined-5mc, fig.height=4, fig.width=12}
+p_5mc_age <- plot_data_long %>%
+  filter(mod_type == "5mC") %>%
+  ggplot(aes(x = Year.Collected, y = percentage)) +
+  geom_point(size = 3, alpha = 0.7, color = "#E41A1C") +
+  geom_smooth(method = "lm", se = TRUE, color = "#E41A1C") +
+  labs(title = "5mC vs. Age", x = "Year Collected", y = "5mC (%)") +
+  theme_bw()
+
+p_5mc_din <- plot_data_long %>%
+  filter(mod_type == "5mC", !is.na(Tapestation.DIN)) %>%
+  ggplot(aes(x = Tapestation.DIN, y = percentage)) +
+  geom_point(size = 3, alpha = 0.7, color = "#E41A1C") +
+  geom_smooth(method = "lm", se = TRUE, color = "#E41A1C") +
+  labs(title = "5mC vs. DIN", x = "DIN", y = "5mC (%)") +
+  theme_bw()
+
+p_5mc_n50 <- plot_data_long %>%
+  filter(mod_type == "5mC", !is.na(Estimated.N50.b)) %>%
+  ggplot(aes(x = Estimated.N50.b, y = percentage)) +
+  geom_point(size = 3, alpha = 0.7, color = "#E41A1C") +
+  geom_smooth(method = "lm", se = TRUE, color = "#E41A1C") +
+  labs(title = "5mC vs. N50", x = "N50 (bases)", y = "5mC (%)") +
+  theme_bw()
+
+p_5mc_age + p_5mc_din + p_5mc_n50
+```
+
+## 5hmC across all three variables
+
+```{r combined-5hmc, fig.height=4, fig.width=12}
+
+p_5hmc_age <- plot_data_long %>%
+  filter(mod_type == "5hmC") %>%
+  ggplot(aes(x = Year.Collected, y = percentage)) +
+  geom_point(size = 3, alpha = 0.7, color = "#E41A1C") +
+  geom_smooth(method = "lm", se = TRUE, color = "#E41A1C") +
+  labs(title = "5mC vs. Age", x = "Year Collected", y = "5hmC (%)") +
+  theme_bw()
+
+p_5hmc_din <- plot_data_long %>%
+  filter(mod_type == "5hmC", !is.na(Tapestation.DIN)) %>%
+  ggplot(aes(x = Tapestation.DIN, y = percentage)) +
+  geom_point(size = 3, alpha = 0.7, color = "#E41A1C") +
+  geom_smooth(method = "lm", se = TRUE, color = "#E41A1C") +
+  labs(title = "5hmC vs. DIN", x = "DIN", y = "5hmC (%)") +
+  theme_bw()
+
+p_5hmc_n50 <- plot_data_long %>%
+  filter(mod_type == "5hmC", !is.na(Estimated.N50.b)) %>%
+  ggplot(aes(x = Estimated.N50.b, y = percentage)) +
+  geom_point(size = 3, alpha = 0.7, color = "#E41A1C") +
+  geom_smooth(method = "lm", se = TRUE, color = "#E41A1C") +
+  labs(title = "5hmC vs. N50", x = "N50 (bases)", y = "5hmC (%)") +
+  theme_bw()
+
+p_5hmc_age + p_5hmc_din + p_5hmc_n50
+```
+
+
+
+## 6mA across all three variables
+
+```{r combined-6ma, fig.height=4, fig.width=12}
+p_6ma_age <- plot_data_long %>%
+  filter(mod_type == "6mA") %>%
+  ggplot(aes(x = Year.Collected, y = percentage)) +
+  geom_point(size = 3, alpha = 0.7, color = "#377EB8") +
+  geom_smooth(method = "lm", se = TRUE, color = "#377EB8") +
+  labs(title = "6mA vs. Age", x = "Year Collected", y = "6mA (%)") +
+  theme_bw()
+
+p_6ma_din <- plot_data_long %>%
+  filter(mod_type == "6mA", !is.na(Tapestation.DIN)) %>%
+  ggplot(aes(x = Tapestation.DIN, y = percentage)) +
+  geom_point(size = 3, alpha = 0.7, color = "#377EB8") +
+  geom_smooth(method = "lm", se = TRUE, color = "#377EB8") +
+  labs(title = "6mA vs. DIN", x = "DIN", y = "6mA (%)") +
+  theme_bw()
+
+p_6ma_n50 <- plot_data_long %>%
+  filter(mod_type == "6mA", !is.na(Estimated.N50.b)) %>%
+  ggplot(aes(x = Estimated.N50.b, y = percentage)) +
+  geom_point(size = 3, alpha = 0.7, color = "#377EB8") +
+  geom_smooth(method = "lm", se = TRUE, color = "#377EB8") +
+  labs(title = "6mA vs. N50", x = "N50 (bases)", y = "6mA (%)") +
+  theme_bw()
+
+p_6ma_age + p_6ma_din + p_6ma_n50
+```
+
+# Correlation Analysis
+
+## Correlations with Year Collected
+
+```{r cor-age}
+cor_age <- plot_data_long %>%
+  filter(mod_type != "unmod") %>%
+  group_by(mod_label) %>%
+  summarise(
+    r = cor(Year.Collected, percentage, use = "complete.obs"),
+    p_value = cor.test(Year.Collected, percentage)$p.value,
+    n = n(),
+    .groups = "drop"
+  ) %>%
+  mutate(
+    significance = case_when(
+      p_value < 0.0001 ~ "****",
+      p_value < 0.001 ~ "***",
+      p_value < 0.01 ~ "**",
+      p_value < 0.05 ~ "*",
+      TRUE ~ "ns"
+    )
+  )
+
+cor_age %>%
+  kable(digits = 4, caption = "Correlation with Year Collected",
+        col.names = c("Modification", "r", "P-value", "N", "Sig.")) %>%
+  kable_styling(bootstrap_options = c("striped", "hover"))
+```
+
+## Correlations with DIN
+
+```{r cor-din}
+cor_din <- plot_data_long %>%
+  filter(mod_type != "unmod", !is.na(Tapestation.DIN)) %>%
+  group_by(mod_label) %>%
+  summarise(
+    r = cor(Tapestation.DIN, percentage, use = "complete.obs"),
+    p_value = cor.test(Tapestation.DIN, percentage)$p.value,
+    n = n(),
+    .groups = "drop"
+  ) %>%
+  mutate(
+    significance = case_when(
+      p_value < 0.0001 ~ "****",
+      p_value < 0.001 ~ "***",
+      p_value < 0.01 ~ "**",
+      p_value < 0.05 ~ "*",
+      TRUE ~ "ns"
+    )
+  )
+
+cor_din %>%
+  kable(digits = 4, caption = "Correlation with DIN",
+        col.names = c("Modification", "r", "P-value", "N", "Sig.")) %>%
+  kable_styling(bootstrap_options = c("striped", "hover"))
+```
+
+## Correlations with N50
+
+```{r cor-n50}
+cor_n50 <- plot_data_long %>%
+  filter(mod_type != "unmod", !is.na(Estimated.N50.b)) %>%
+  group_by(mod_label) %>%
+  summarise(
+    r = cor(Estimated.N50.b, percentage, use = "complete.obs"),
+    p_value = cor.test(Estimated.N50.b, percentage)$p.value,
+    n = n(),
+    .groups = "drop"
+  ) %>%
+  mutate(
+    significance = case_when(
+      p_value < 0.0001 ~ "****",
+      p_value < 0.001 ~ "***",
+      p_value < 0.01 ~ "**",
+      p_value < 0.05 ~ "*",
+      TRUE ~ "ns"
+    )
+  )
+
+cor_n50 %>%
+  kable(digits = 4, caption = "Correlation with N50",
+        col.names = c("Modification", "r", "P-value", "N", "Sig.")) %>%
+  kable_styling(bootstrap_options = c("striped", "hover"))
+```
+
+# Summary Statistics by Age Category
+
+```{r summary-by-age-cat}
+summary_by_age <- plot_data_long %>%
+  filter(mod_type != "unmod") %>%
+  group_by(age_category, mod_label) %>%
+  summarise(
+    n = n(),
+    mean_pct = mean(percentage, na.rm = TRUE),
+    sd_pct = sd(percentage, na.rm = TRUE),
+    mean_din = mean(Tapestation.DIN, na.rm = TRUE),
+    mean_n50 = mean(Estimated.N50.b, na.rm = TRUE),
+    .groups = "drop"
+  ) %>%
+  arrange(age_category, desc(mean_pct))
+
+summary_by_age %>%
+  kable(digits = 2, 
+        caption = "Summary statistics by age category",
+        col.names = c("Age Category", "Modification", "N", 
+                      "Mean %", "SD %", "Mean DIN", "Mean N50")) %>%
+  kable_styling(bootstrap_options = c("striped", "hover")) %>%
+  collapse_rows(columns = 1, valign = "top")
+```
+
+# Interpretation Notes
+
+## Key Findings
+
+- **5mC (methylcytosine)**: Standard DNA methylation mark in eukaryotes
+- **5hmC (hydroxymethylcytosine)**: Oxidation product of 5mC, potentially unstable in old samples
+- **6mA (N6-methyladenine)**: Uncommon in eukaryotes, may indicate:
+  - Contamination (bacterial/fungal DNA)
+  - Age-related degradation artifacts
+  - Sequencing/basecalling artifacts in degraded DNA
+
+## Relationships to consider
+
+- **Age effects**: Are modifications changing with sample age?
+- **DIN effects**: Does DNA integrity affect apparent modification levels?
+- **N50 effects**: Does sequencing quality correlate with modification detection?
+
+High 6mA levels in older, lower-quality samples warrant careful interpretation.
+
