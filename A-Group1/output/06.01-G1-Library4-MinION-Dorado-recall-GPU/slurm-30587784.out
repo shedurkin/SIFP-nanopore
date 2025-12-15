@@ -1,0 +1,16 @@
+[2025-10-31 06:29:12.245] [info] Running: "basecaller" "hac" "-r" "/gscratch/srlab/kdurkin1/SIFP-nanopore/A-Group1/data/06.01-G1-Library4-MinION-Dorado-recall-GPU//" "--kit-name" "SQK-NBD114-96" "--trim" "all" "--reference" "/gscratch/srlab/kdurkin1/SIFP-nanopore/data/GCA_965233905.1_jaEunKnig1.1/GCA_965233905.1_jaEunKnig1.1_genomic.fna" "--modified-bases" "5mCG_5hmCG" "6mA" "--device" "auto"
+[2025-10-31 06:29:55.789] [info]  - downloading dna_r10.4.1_e8.2_400bps_hac@v5.2.0 with httplib
+[2025-10-31 06:29:56.496] [info]  - downloading dna_r10.4.1_e8.2_400bps_hac@v5.2.0_5mCG_5hmCG@v2 with httplib
+[2025-10-31 06:29:57.250] [info]  - downloading dna_r10.4.1_e8.2_400bps_hac@v5.2.0_6mA@v1 with httplib
+[2025-10-31 06:29:58.048] [info] > Creating basecall pipeline
+[2025-10-31 06:30:01.715] [info] Using CUDA devices:
+[2025-10-31 06:30:01.716] [info] cuda:0 - NVIDIA A40
+[2025-10-31 06:30:05.371] [info] Calculating optimized batch size for GPU "NVIDIA A40" and model dna_r10.4.1_e8.2_400bps_hac@v5.2.0. Full benchmarking will run for this device, which may take some time.
+[2025-10-31 06:30:59.556] [info] cuda:0 using chunk size 9996, batch size 5376
+[2025-10-31 06:31:00.813] [info] cuda:0 using chunk size 4998, batch size 7168
+[2025-10-31 13:25:30.067] [info] > Finished in (ms): 24845885
+[2025-10-31 13:25:30.067] [info] > Simplex reads basecalled: 8930605
+[2025-10-31 13:25:30.067] [info] > Simplex reads filtered: 16011
+[2025-10-31 13:25:30.067] [info] > Basecalled @ Samples/s: 3.081049e+06
+[2025-10-31 13:25:30.067] [info] > 8971928 reads demuxed @ classifications/s: 3.611032e+02
+[2025-10-31 13:25:30.140] [info] > Finished

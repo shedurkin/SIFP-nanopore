@@ -1,2 +1,0 @@
-[2025-10-30 08:46:32.638] [info] Running: "basecaller" "hac" "-r" "/gscratch/srlab/kdurkin1/SIFP-nanopore/D-Group4/data/06.01-G1-Library4-MinION-Dorado-recall-GPU//" "--kit-name" "SQK-NBD114-96" "--trim" "all" "--reference" "/gscratch/srlab/kdurkin1/SIFP-nanopore/data/GCA_965233905.1_jaEunKnig1.1/GCA_965233905.1_jaEunKnig1.1_genomic.fna" "--modified-bases" "5mCG_5hmCG" "6mA" "--device" "auto"
-[2025-10-30 08:46:32.718] [error] Failed to resolve basecaller models: No signal data to determine sequencing chemistry.

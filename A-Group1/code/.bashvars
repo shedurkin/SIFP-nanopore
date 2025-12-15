@@ -10,7 +10,7 @@ export dorado_models_dir=${nanopore_dir}/dorado-models
 export genome_dir=${nanopore_dir}/data/GCA_965233905.1_jaEunKnig1.1/
 # Paths to programs
 export modkit=/home/shared/dist_modkit_v0.5.1_8fa79e3/modkit
-export samtools=/home/shared/samtools-1.12/samtools
+export samtools=/srlab/programs/samtools-1.20/samtools
 export dorado=/home/shared/dorado-1.2.0-linux-x64/bin/dorado
 
 # Set pod5 filename patterns

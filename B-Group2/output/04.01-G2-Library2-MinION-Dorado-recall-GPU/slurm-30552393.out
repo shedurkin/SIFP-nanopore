@@ -8,3 +8,9 @@
 [2025-10-30 08:58:48.273] [info] Calculating optimized batch size for GPU "NVIDIA GeForce RTX 2080 Ti" and model dna_r10.4.1_e8.2_400bps_hac@v5.2.0. Full benchmarking will run for this device, which may take some time.
 [2025-10-30 08:58:52.629] [info] cuda:0 using chunk size 9996, batch size 512
 [2025-10-30 08:58:53.434] [info] cuda:0 using chunk size 4998, batch size 1088
+[2025-10-30 12:23:36.904] [info] > Finished in (ms): 12264316
+[2025-10-30 12:23:36.906] [info] > Simplex reads basecalled: 3905184
+[2025-10-30 12:23:36.906] [info] > Simplex reads filtered: 14294
+[2025-10-30 12:23:36.906] [info] > Basecalled @ Samples/s: 1.946958e+06
+[2025-10-30 12:23:36.906] [info] > 3928722 reads demuxed @ classifications/s: 3.203376e+02
+[2025-10-30 12:23:36.939] [info] > Finished

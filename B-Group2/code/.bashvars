@@ -8,7 +8,7 @@ export raw_pod5_dir=${data_dir_top}/pod5_pass
 export raw_pod5_url1="https://gannet.fish.washington.edu/kdurkin1/SIFP_2025/Group2_MinION/Group2_Library3_MK1B_sequencer/20250902_1444_MN47571_FBD42232_1580300f/pod5_pass/"
 export raw_pod5_url2="https://gannet.fish.washington.edu/kdurkin1/SIFP_2025/Group2_MinION/Group2_Library3_MK1B_after_wash2/20250903_2102_MN47571_FBD42232_3fa04fa7/pod5_pass/"
 export genome_dir=${nanopore_dir}/data/GCA_965233905.1_jaEunKnig1.1/
-
+export samtools=/srlab/programs/samtools-1.20/samtools
 # Set FastQ filename patterns
 export pod5_pattern='*.pod5'
 

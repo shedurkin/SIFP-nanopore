@@ -6,6 +6,7 @@
 *.fastq.gz
 *.pod5
 *.bam
+*.bam.bai
 *.sam
 *.temp_dorado_model*
 */kraken2/*_output.txt

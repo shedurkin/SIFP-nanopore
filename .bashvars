@@ -1,19 +1,15 @@
 #### Assign Variables ####
 
 # Data directories
-export nanopore_dir=/home/shared/8TB_HDD_02/shedurkin/SIFP-nanopore
-export output_dir_top=${nanopore_dir}/A-Group1/output/05-G1-Library4-Flongle-Dorado-recall
-export data_dir_top=${nanopore_dir}/A-Group1/data/05-G1-Library4-Flongle-Dorado-recall
-export raw_pod5_dir=${data_dir_top}/pod5
-export raw_pod5_url="https://gannet.fish.washington.edu/kdurkin1/SIFP_2025/Group1_Flongle/Group1/Library4/20250818_1549_MD-101223_AYL248_54e75371/pod5/"
-export dorado_models_dir=${nanopore_dir}/dorado-models
+export nanopore_dir=/gscratch/srlab/kdurkin1/SIFP-nanopore
+export output_dir_top=${nanopore_dir}/B-Group2/output/05.01-G2-Library3-MinION-Dorado-recall-GPU
+export data_dir_top=${nanopore_dir}/B-Group2/data/05.01-G2-Library3-MinION-Dorado-recall-GPU
+export raw_pod5_dir=${data_dir_top}/pod5_pass
+export raw_pod5_url1="https://gannet.fish.washington.edu/kdurkin1/SIFP_2025/Group2_MinION/Group2_Library3_MK1B_sequencer/20250902_1444_MN47571_FBD42232_1580300f/pod5_pass/"
+export raw_pod5_url2="https://gannet.fish.washington.edu/kdurkin1/SIFP_2025/Group2_MinION/Group2_Library3_MK1B_after_wash2/20250903_2102_MN47571_FBD42232_3fa04fa7/pod5_pass/"
 export genome_dir=${nanopore_dir}/data/GCA_965233905.1_jaEunKnig1.1/
-# Paths to programs
-export modkit=/home/shared/dist_modkit_v0.5.1_8fa79e3/modkit
-export samtools=/home/shared/samtools-1.12/samtools
-export dorado=/home/shared/dorado-1.2.0-linux-x64/bin/dorado
-
-# Set pod5 filename patterns
+export samtools=/srlab/programs/samtools-1.20/samtools
+# Set FastQ filename patterns
 export pod5_pattern='*.pod5'
 
 # Set number of CPUs to use

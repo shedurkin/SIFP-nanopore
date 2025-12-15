@@ -1,0 +1,25 @@
+#### Assign Variables ####
+
+# Data directories
+export nanopore_dir=/gscratch/srlab/kdurkin1/SIFP-nanopore
+export output_dir_top=${nanopore_dir}/A-Group1/output/06.01-G1-Library4-MinION-Dorado-recall-GPU
+export data_dir_top=${nanopore_dir}/A-Group1/data/06.01-G1-Library4-MinION-Dorado-recall-GPU
+export raw_pod5_dir=${data_dir_top}/pod5_pass
+export raw_pod5_url="https://gannet.fish.washington.edu/kdurkin1/SIFP_2025/Group1_MinION/Library4/20250819_1337_MD-101223_FBD09922_51407a5d/pod5_pass/"
+export dorado_models_dir=${nanopore_dir}/dorado-models
+export genome_dir=${nanopore_dir}/data/GCA_965233905.1_jaEunKnig1.1/
+# Paths to programs
+export modkit=/home/shared/dist_modkit_v0.5.1_8fa79e3/modkit
+export samtools=/srlab/programs/samtools-1.20/samtools
+export dorado=/home/shared/dorado-1.2.0-linux-x64/bin/dorado
+
+# Set pod5 filename patterns
+export pod5_pattern='*.pod5'
+
+# Set number of CPUs to use
+export threads=20
+
+# Input/output files
+export raw_checksums=checksums.md5
+export trimmed_checksums=trimmed_fastq_checksums.md5
+

@@ -20,6 +20,8 @@ output:
 
 ```{r setup, include=FALSE}
 library(knitr)
+library(tidytable)
+library(tidyverse)
 knitr::opts_chunk$set(
   echo = TRUE,         # Display code chunks
   eval = FALSE,        # Evaluate code chunks
@@ -52,7 +54,7 @@ echo 'export genome_dir=${nanopore_dir}/data/GCA_965233905.1_jaEunKnig1.1/'
 
 echo "# Paths to programs"
 echo 'export modkit=/home/shared/dist_modkit_v0.5.1_8fa79e3/modkit'
-echo 'export samtools=/home/shared/samtools-1.12/samtools'
+echo 'export samtools=/srlab/programs/samtools-1.20/samtools'
 echo 'export dorado=/home/shared/dorado-1.2.0-linux-x64/bin/dorado'
 echo ""
 
@@ -142,8 +144,221 @@ done
 I've taken the SLURM script Sam made to run Guppy using `ckpt` GPU resources and modified it to use the dorado basecaller (available on Klone in the contatiner `/gscratch/srlab/containers/srlab-R4.4-bioinformatics-container-3886a1c.sif`). The modified script is saved in this directory under the name `06.01_G1L4_MinION_Dorado.sh`.
 
 To run the script, run the below command from Klone terminal:
-```{bash}
+```{r, engine='bash', eval=FALSE}
 sbatch 06.01_G1L4_MinION_Dorado.sh
 ```
 
 Job ID 30552584
+
+Job kept getting bumped from `ckpt` before finishing, requed, and restarted. Tring again with a more powerful GPU specified (`p100`, instead of a `2080ti`).
+
+Job ID 30587784 finished in 06:56:29
+
+
+
+# BAM processing
+
+Separate out mapped reads, and separate by barcode
+```{r, engine='bash', eval=FALSE}
+source .bashvars
+
+cd ${output_dir_top}
+
+# Alignment summary
+$samtools flagstat -O tsv FBD09922_pass_recalled.bam > FBD09922_pass_recalled_summary.tsv
+```
+
+```{r, engine='bash', eval=TRUE}
+source .bashvars
+cd ${output_dir_top}
+cat FBD09922_pass_recalled_summary.tsv
+```
+
+From the samtools `flagstat` summary we see a high alignment rate of primary reads (77.11%), which is great! The vast majority of reads confidently come from *Eunicea*. There are, however, a lot of "secondary" and "supplementary" reads. "Secondary" indicates secondary alignments, i.e. alternative mapping locations of the same read. "Supplementary" indicates supplementary alignments, or parts of a read that align *discontinuously* (possibly chimeric, split, large structural variants, etc.). The true number of reads present in my sample is just the *primary* alignments (total - secondary - supplementary = 25840322-15377255-1507150 = 8,955,917 reads). This is a rather annoying artifact of Dorado using a multimapper under the hood, where a single read can be mapped to multiple possible loci (one primary and 0 or more secondary). For downstream work, we only want to be using the "real" reads, not duplicate records of secondary/supplementary alignments, so we need to filter those out of the BAM. We also need to sort them
+
+```{r, engine='bash', eval=FALSE}
+source .bashvars
+
+cd ${output_dir_top}
+
+# Remove unmapped reads (bit decimal 4), secondary alignments (bit decimal 256) and supplementary alignments (bit decimal 2048)
+$samtools view -b -F 2308 FBD09922_pass_recalled.bam |\
+$samtools sort -o FBD09922_pass_recalled_mapped.bam
+
+# Separate by barcode
+$samtools view -h FBD09922_pass_recalled_mapped.bam |\
+awk '/^@/ || /BC:Z:SQK-NBD114-96_barcode12/' |\
+$samtools view -b |\
+$samtools sort -o FBD09922_pass_recalled_mapped_barcode12.bam
+
+$samtools view -h FBD09922_pass_recalled_mapped.bam |\
+awk '/^@/ || /BC:Z:SQK-NBD114-96_barcode13/' |\
+$samtools view -b |\
+$samtools sort -o FBD09922_pass_recalled_mapped_barcode13.bam
+
+$samtools view -h FBD09922_pass_recalled_mapped.bam |\
+awk '/^@/ || /BC:Z:SQK-NBD114-96_barcode14/' |\
+$samtools view -b |\
+$samtools sort -o FBD09922_pass_recalled_mapped_barcode14.bam
+```
+
+Index
+```{r, engine='bash', eval=FALSE}
+source .bashvars
+cd ${output_dir_top}
+
+$samtools index FBD09922_pass_recalled_mapped.bam
+$samtools index FBD09922_pass_recalled_mapped_barcode12.bam
+$samtools index FBD09922_pass_recalled_mapped_barcode13.bam
+$samtools index FBD09922_pass_recalled_mapped_barcode14.bam
+
+```
+
+
+# Summary stats
+
+```{r, engine='bash', eval=TRUE}
+source .bashvars
+
+cd ${output_dir_top}
+
+# Alignment summary
+$samtools flagstat -O tsv FBD09922_pass_recalled_mapped.bam > flagstat_summary_FBD09922_pass_recalled_mapped.tsv
+cat flagstat_summary_FBD09922_pass_recalled_mapped.tsv
+
+echo ""
+
+# Summarize by barcode
+$samtools view FBD09922_pass_recalled_mapped.bam | \
+awk '{for(i=12;i<=NF;i++) if($i ~ /^BC:Z:/) {print substr($i,6)}}' | \
+sort | uniq -c | sort -nr
+```
+
+There's a bit of a discrepancy among the barcodes. Barcodes 12 and 13 each have ~1.5M reads, while Barcode 14 has more than 3M.
+
+## modkit modification summaries
+
+Summarize modifications
+```{r, engine='bash', eval=FALSE}
+source .bashvars
+
+$modkit summary ${output_dir_top}/FBD09922_pass_recalled_mapped.bam
+```
+
+OR, if doing this from Klone, need to use conda (run from terminal)
+
+```{r, engine='bash', eval=FALSE}
+source .bashvars
+
+conda create -n modkit_env -c bioconda -c conda-forge ont-modkit
+conda activate modkit_env
+
+modkit summary -n 100000 ${output_dir_top}/FBD09922_pass_recalled_mapped.bam
+```
+
+```{}
+> sampling 100000 reads from BAM
+> calculating threshold at 10(th) percentile
+> calculated thresholds: C: 0.84765625 A: 0.9472656
+# bases             A,C 
+# total_reads_used  77572 
+# count_reads_C     75732 
+# count_reads_A     77572 
+# pass_threshold_C  0.84765625 
+# pass_threshold_A  0.9472656 
+ base  code  pass_count  pass_frac     all_count  all_frac 
+ C     -     1104262     0.9510825     1196376    0.9286514 
+ C     h     6679        0.005752512   27498      0.021344507 
+ C     m     50117       0.043164942   64420      0.050004113 
+ A     -     12843854    0.99865013    14058145   0.9854987 
+ A     a     17361       0.0013498724  206861     0.01450129 
+```
+
+We're primarily interested in the passed read stats (though comparing to the "all" read stats can be useful). Even though only reads that passed the Nanopore quality filter were included in the modkit summary, there is still additional filtering happening in the summary process. That's because Nanopore quality filtering is read-level, and the modkit quality filtering is base-level. 
+In mapped, primary-alignment reads, we observe negligible 6mA (~0.1%), low/negligible 5hmCG (~0.6%), and moderately-low 5mCG (~4%).
+
+Now let's check by barcode (individual)
+
+```{r, engine='bash', eval=FALSE}
+source .bashvars
+
+cd ${output_dir_top}
+
+$modkit summary -n 100000 --tsv FBD09922_pass_recalled_mapped_barcode12.bam > modkit_summary_FBD09922_barcode12.tsv
+
+echo ""
+
+$modkit summary -n 100000 --tsv FBD09922_pass_recalled_mapped_barcode13.bam > modkit_summary_FBD09922_barcode13.tsv
+
+echo ""
+
+$modkit summary -n 100000 --tsv FBD09922_pass_recalled_mapped_barcode14.bam > modkit_summary_FBD09922_barcode14.tsv
+```
+
+OR, again, run using a conda environment if on Klone
+
+Barplot of above modkit summaries
+```{r, eval=TRUE}
+files <- c(
+  "../output/06.01-G1-Library4-MinION-Dorado-recall-GPU/modkit_summary_FBD09922_barcode12.tsv",
+  "../output/06.01-G1-Library4-MinION-Dorado-recall-GPU/modkit_summary_FBD09922_barcode13.tsv",
+  "../output/06.01-G1-Library4-MinION-Dorado-recall-GPU/modkit_summary_FBD09922_barcode14.tsv"
+)
+
+# Assign sample names (in same order as files)
+sample_names <- c("barcode12", "barcode13", "barcode14")
+
+# parse summaries
+parse_modkit_summary <- function(file, sample_name) {
+  df <- read.table(file, sep = "\t", header = FALSE, stringsAsFactors = FALSE)
+  
+  # Extract values (use pattern matching on the first column)
+  get_val <- function(pattern) {
+    as.numeric(df$V2[grep(pattern, df$V1)])
+  }
+  
+  tibble(
+    Sample = sample_name,
+    `5mC`  = get_val("^C_pass_frac_modified_m") * 100,
+    `5hmC` = get_val("^C_pass_frac_modified_h") * 100,
+    `6mA`  = get_val("^A_pass_frac_modified_a") * 100
+  )
+}
+
+# combine and convert to long format (for ggplotting)
+mod_data <- map2_dfr(files, sample_names, parse_modkit_summary)
+
+mod_long <- mod_data %>%
+  pivot_longer(cols = c(`5mC`, `5hmC`, `6mA`),
+               names_to = "Modification",
+               values_to = "Percent")
+
+# plot
+ggplot(mod_long, aes(x = Sample, y = Percent, fill = Modification)) +
+  geom_bar(stat = "identity", width=0.5, position = position_dodge(width = 0.5)) +
+  geom_text(aes(label = sprintf("%.1f", Percent)),     # format to one decimal place
+            position = position_dodge(width = 0.5), 
+            vjust = -0.5, size = 4) +                  # adjust spacing & text size
+  labs(
+    title = "Modified Base Composition per Sample (trimmed, mapped reads)",
+    y = "% Modified Bases (Pass Fraction)",
+    x = NULL
+  )
+
+```
+
+## genome coverage summaries
+
+```{r, engine='bash', eval=FALSE}
+source .bashvars
+cd ${output_dir_top}
+
+# conda create -n myenv
+conda activate mosdepth_env
+conda config --add channels bioconda
+conda config --add channels conda-forge
+conda config --add channels defaults
+conda install -c bioconda mosdepth
+mosdepth --version
+
+```

@@ -6,7 +6,7 @@
 #SBATCH --partition=ckpt
 ## Resources
 ## GPU
-#SBATCH --gres=gpu:2080ti:1
+#SBATCH --gres=gpu:a40:1
 ## Nodes
 #SBATCH --nodes=1
 ## Walltime (days-hours:minutes:seconds format)

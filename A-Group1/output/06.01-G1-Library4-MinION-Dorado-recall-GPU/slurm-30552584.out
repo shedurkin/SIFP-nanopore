@@ -1,10 +1,11 @@
-[2025-10-30 09:02:05.886] [info] Running: "basecaller" "hac" "-r" "/gscratch/srlab/kdurkin1/SIFP-nanopore/A-Group1/data/06.01-G1-Library4-MinION-Dorado-recall-GPU//" "--kit-name" "SQK-NBD114-96" "--trim" "all" "--reference" "/gscratch/srlab/kdurkin1/SIFP-nanopore/data/GCA_965233905.1_jaEunKnig1.1/GCA_965233905.1_jaEunKnig1.1_genomic.fna" "--modified-bases" "5mCG_5hmCG" "6mA" "--device" "auto"
-[2025-10-30 09:03:06.953] [info]  - downloading dna_r10.4.1_e8.2_400bps_hac@v5.2.0 with httplib
-[2025-10-30 09:03:07.789] [info]  - downloading dna_r10.4.1_e8.2_400bps_hac@v5.2.0_5mCG_5hmCG@v2 with httplib
-[2025-10-30 09:03:08.561] [info]  - downloading dna_r10.4.1_e8.2_400bps_hac@v5.2.0_6mA@v1 with httplib
-[2025-10-30 09:03:09.327] [info] > Creating basecall pipeline
-[2025-10-30 09:03:13.308] [info] Using CUDA devices:
-[2025-10-30 09:03:13.308] [info] cuda:0 - NVIDIA GeForce RTX 2080 Ti
-[2025-10-30 09:03:16.873] [info] Calculating optimized batch size for GPU "NVIDIA GeForce RTX 2080 Ti" and model dna_r10.4.1_e8.2_400bps_hac@v5.2.0. Full benchmarking will run for this device, which may take some time.
-[2025-10-30 09:03:21.532] [info] cuda:0 using chunk size 9996, batch size 512
-[2025-10-30 09:03:22.520] [info] cuda:0 using chunk size 4998, batch size 1088
+[2025-10-31 01:33:37.616] [info] Running: "basecaller" "hac" "-r" "/gscratch/srlab/kdurkin1/SIFP-nanopore/A-Group1/data/06.01-G1-Library4-MinION-Dorado-recall-GPU//" "--kit-name" "SQK-NBD114-96" "--trim" "all" "--reference" "/gscratch/srlab/kdurkin1/SIFP-nanopore/data/GCA_965233905.1_jaEunKnig1.1/GCA_965233905.1_jaEunKnig1.1_genomic.fna" "--modified-bases" "5mCG_5hmCG" "6mA" "--device" "auto"
+[2025-10-31 01:34:26.096] [info]  - downloading dna_r10.4.1_e8.2_400bps_hac@v5.2.0 with httplib
+[2025-10-31 01:34:26.933] [info]  - downloading dna_r10.4.1_e8.2_400bps_hac@v5.2.0_5mCG_5hmCG@v2 with httplib
+[2025-10-31 01:34:27.677] [info]  - downloading dna_r10.4.1_e8.2_400bps_hac@v5.2.0_6mA@v1 with httplib
+[2025-10-31 01:34:28.587] [info] > Creating basecall pipeline
+[2025-10-31 01:34:32.862] [info] Using CUDA devices:
+[2025-10-31 01:34:32.862] [info] cuda:0 - NVIDIA GeForce RTX 2080 Ti
+[2025-10-31 01:34:35.032] [info] Calculating optimized batch size for GPU "NVIDIA GeForce RTX 2080 Ti" and model dna_r10.4.1_e8.2_400bps_hac@v5.2.0. Full benchmarking will run for this device, which may take some time.
+[2025-10-31 01:34:39.483] [info] cuda:0 using chunk size 9996, batch size 512
+[2025-10-31 01:34:40.243] [info] cuda:0 using chunk size 4998, batch size 1088
+[2025-10-30T18:40:38.696] error: *** JOB 30552584 ON g3016 CANCELLED AT 2025-10-30T18:40:38 DUE to SIGNAL Terminated ***
