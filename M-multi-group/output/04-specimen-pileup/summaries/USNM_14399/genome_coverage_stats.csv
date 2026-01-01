@@ -1,0 +1,2 @@
+specimen_id,total_positions_called,unique_positions,genome_size_bp,estimated_CpG_coverage_breadth,positions_with_5x,positions_with_10x
+USNM_14399,46754475,43148858,593000000,7.276367284991569,465970,66988

@@ -152,7 +152,7 @@ done
 I've taken the SLURM script Sam made to run Guppy using `ckpt` GPU resources and modified it to use the dorado basecaller (available on Klone in the contatiner `/gscratch/srlab/containers/srlab-R4.4-bioinformatics-container-3886a1c.sif`). The modified script is saved in this directory under the name `04.01_G4L2_MinION_Dorado.sh`.
 
 To run the script, run the below command from Klone terminal:
-```{bash}
+```{r, engine='bash', eval=FALSE}
 sbatch 04.01_G4L2_MinION_Dorado.sh
 ```
 

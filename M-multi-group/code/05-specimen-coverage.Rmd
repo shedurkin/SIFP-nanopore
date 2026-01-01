@@ -1,0 +1,485 @@
+---
+title: "05-specimen-coverage"
+author: "Kathleen Durkin"
+date: "2025-12-15"
+always_allow_html: true
+output: 
+  github_document:
+    toc: true
+    toc_depth: 3
+    number_sections: true
+    html_preview: true 
+  bookdown::html_document2:
+    theme: cosmo
+    toc: true
+    toc_float: true
+    number_sections: true
+    code_folding: show
+    code_download: true
+---
+
+```{r setup, include=FALSE}
+library(knitr)
+knitr::opts_chunk$set(
+  echo = TRUE,         # Display code chunks
+  eval = FALSE,        # Evaluate code chunks
+  warning = FALSE,     # Hide warnings
+  message = FALSE,     # Hide messages
+  comment = ""         # Prevents appending '##' to beginning of lines in code output
+)
+```
+
+# Create a Bash variables file
+
+This allows usage of Bash variables across R Markdown chunks.
+
+```{r save-bash-variables-to-rvars-file, engine='bash', eval=TRUE}
+{
+echo "#### Assign Variables ####"
+echo ""
+echo "# Data directories"
+echo 'export nanopore_dir=/gscratch/srlab/kdurkin1/SIFP-nanopore'
+echo 'export genome_dir=${nanopore_dir}/data/GCA_965233905.1_jaEunKnig1.1'
+echo 'export reference=${genome_dir}/GCA_965233905.1_jaEunKnig1.1_genomic.fna'
+echo 'export gff=${genome_dir}/GCA_965233905.1_jaEunKnig1.1_genomic.gff'
+echo 'export output_dir_top=${nanopore_dir}/M-multi-group/output/05-specimen-coverage'
+echo 'export merged_bam_dir=${nanopore_dir}/M-multi-group/output/04-specimen-pileup/merged_bams'
+echo 'export coverage_dir=${output_dir_top}/coverage'
+echo 'export metadata_csv=${nanopore_dir}/data/E_tourneforti_sequencing_composition.csv'
+echo ""
+echo "# Input BAM directories (one per sequencing run)"
+echo 'export G1L4_bam_dir=${nanopore_dir}/A-Group1/output/06.01-G1-Library4-MinION-Dorado-recall-GPU'
+echo 'export G2L2_bam_dir=${nanopore_dir}/B-Group2/output/04.01-G2-Library2-MinION-Dorado-recall-GPU'
+echo 'export G2L3_bam_dir=${nanopore_dir}/B-Group2/output/05.01-G2-Library3-MinION-Dorado-recall-GPU'
+echo 'export G4L1_bam_dir=${nanopore_dir}/D-Group4/output/03.01-G4-Library1-MinION-Dorado-recall-GPU'
+echo 'export G4L2_bam_dir=${nanopore_dir}/D-Group4/output/04.01-G4-Library2-MinION-Dorado-recall-GPU'
+echo ""
+echo "# Programs"
+echo 'export samtools=/srlab/programs/samtools-1.20/samtools'
+echo 'export bedtools=/srlab/programs/bedtools'
+echo ""
+echo "# Reference genome size (E. knighti)"
+echo 'export GENOME_SIZE=965233905'
+echo ""
+echo "# Set number of CPUs to use"
+echo 'export threads=20'
+echo ""
+} > .bashvars
+cat .bashvars
+```
+
+# Setup directories
+
+```{r create-dirs, engine='bash', eval=TRUE}
+source .bashvars
+
+mkdir -p ${output_dir_top}
+mkdir -p ${coverage_dir}
+```
+
+# View metadata
+
+Load and display the specimen-barcode mapping metadata.
+
+```{r view-metadata, engine='bash', eval=TRUE}
+source .bashvars
+
+echo "=== Metadata file contents ==="
+cat ${metadata_csv}
+```
+
+# Calculate Coverage Statistics
+
+Using the pre-merged specimen BAMs from `04-specimen-pileup/merged_bams/`.
+
+## List available merged BAMs
+
+```{r list-merged-bams, engine='bash', eval=TRUE}
+source .bashvars
+
+echo "=== Available merged BAM files ==="
+ls -lh ${merged_bam_dir}/*.bam 2>/dev/null || echo "No BAM files found in ${merged_bam_dir}"
+
+echo ""
+echo "=== Index files ==="
+ls -lh ${merged_bam_dir}/*.bai 2>/dev/null || echo "No index files found"
+```
+
+## Generate flagstat summaries for each specimen
+
+`samtools flagstat` provides basic alignment statistics including total reads, mapped reads, etc.
+
+```{r flagstat-all, engine='bash', eval=TRUE}
+source .bashvars
+
+echo "=== Generating flagstat summaries for all specimen BAMs ==="
+
+# Create output file with header
+flagstat_output="${coverage_dir}/specimen_flagstat_summary.tsv"
+echo -e "specimen_id\ttotal_reads\tmapped_reads\tmapped_percent\tproperly_paired\tsingletons" > ${flagstat_output}
+
+# Process each merged BAM
+for bam in ${merged_bam_dir}/*.bam; do
+    if [ -f "$bam" ]; then
+        # Extract specimen ID from filename (assumes format: specimen_XXXXX_merged.bam or similar)
+        specimen_id=$(basename "$bam" | sed 's/_merged.bam//' | sed 's/.bam//')
+        
+        echo "Processing: ${specimen_id}"
+        
+        # Run flagstat and parse output
+        flagstat_result=$($samtools flagstat -@ ${threads} "$bam")
+        
+        # Parse key metrics
+        total=$(echo "$flagstat_result" | grep "in total" | awk '{print $1}')
+        mapped=$(echo "$flagstat_result" | grep "mapped (" | head -1 | awk '{print $1}')
+        mapped_pct=$(echo "$flagstat_result" | grep "mapped (" | head -1 | grep -oP '\(\K[0-9.]+')
+        paired=$(echo "$flagstat_result" | grep "properly paired" | awk '{print $1}')
+        singletons=$(echo "$flagstat_result" | grep "singletons" | awk '{print $1}')
+        
+        # Handle missing values
+        paired=${paired:-0}
+        singletons=${singletons:-0}
+        
+        # Append to output
+        echo -e "${specimen_id}\t${total}\t${mapped}\t${mapped_pct}\t${paired}\t${singletons}" >> ${flagstat_output}
+    fi
+done
+
+echo ""
+echo "=== Flagstat Summary ==="
+column -t -s$'\t' ${flagstat_output}
+```
+
+Keep in mind, these BAM files have already been filtered for mapped reads
+
+## Generate detailed stats with samtools stats
+
+`samtools stats` provides more detailed statistics including bases, read lengths, etc.
+
+```{r samtools-stats, engine='bash', eval=TRUE}
+source .bashvars
+
+echo "=== Generating detailed stats for all specimen BAMs ==="
+
+# Create output file with header
+stats_output="${coverage_dir}/specimen_stats_summary.tsv"
+echo -e "specimen_id\ttotal_reads\ttotal_bases\tmapped_reads\tmapped_bases\tavg_read_length\tmax_read_length\tavg_quality" > ${stats_output}
+
+# Process each merged BAM
+for bam in ${merged_bam_dir}/*.bam; do
+    if [ -f "$bam" ]; then
+        specimen_id=$(basename "$bam" | sed 's/_merged.bam//' | sed 's/.bam//')
+        
+        echo "Processing: ${specimen_id}"
+        
+        # Run samtools stats and extract key metrics
+        stats_result=$($samtools stats -@ ${threads} "$bam" | grep "^SN")
+        
+        # Parse metrics (field 3 contains the value)
+        total_reads=$(echo "$stats_result" | grep "raw total sequences:" | awk '{print $4}')
+        total_bases=$(echo "$stats_result" | grep "total length:" | awk '{print $4}')
+        mapped_reads=$(echo "$stats_result" | grep "reads mapped:" | awk '{print $4}')
+        mapped_bases=$(echo "$stats_result" | grep "bases mapped:" | awk '{print $4}')
+        avg_length=$(echo "$stats_result" | grep "average length:" | awk '{print $4}')
+        max_length=$(echo "$stats_result" | grep "maximum length:" | awk '{print $4}')
+        avg_qual=$(echo "$stats_result" | grep "average quality:" | awk '{print $4}')
+        
+        # Append to output
+        echo -e "${specimen_id}\t${total_reads}\t${total_bases}\t${mapped_reads}\t${mapped_bases}\t${avg_length}\t${max_length}\t${avg_qual}" >> ${stats_output}
+    fi
+done
+
+echo ""
+echo "=== Detailed Stats Summary ==="
+column -t -s$'\t' ${stats_output}
+```
+
+```
+=== Detailed Stats Summary ===
+specimen_id   total_reads  total_bases  mapped_reads  mapped_bases  avg_read_length  max_read_length  avg_quality
+USNM_14399    sequences:   253380552    980586        253380552     258              292176           27.9
+USNM_1606826  sequences:   816444871    1579542       816444871     517              405812           30.2
+USNM_1740336  sequences:   835964905    1856788       835964905     450              635194           29.9
+USNM_1740363  sequences:   1806427349   3244592       1806427349    557              1350671          30.3
+USNM_42137    sequences:   81899916     345250        81899916      237              501909           26.3
+USNM_50368    sequences:   75603529     312720        75603529      242              351578           26.3
+USNM_51732    sequences:   437353191    1311434       437353191     333              781018           32.0
+USNM_51861    sequences:   373493752    1267539       373493752     295              604368           29.1
+USNM_51892    sequences:   485476690    1687554       485476690     288              772559           29.4
+```
+
+## Calculate coverage per specimen
+
+Calculate genome-wide coverage using the mapped bases and genome size.
+
+```{r calculate-coverage, engine='bash', eval=TRUE}
+source .bashvars
+
+echo "=== Calculating coverage statistics ==="
+
+# Create comprehensive coverage output
+coverage_output="${coverage_dir}/specimen_coverage_summary.tsv"
+echo -e "specimen_id\ttotal_reads\tmapped_reads\tmapping_rate\ttotal_bases\tmapped_bases\tmean_read_length\testimated_coverage_X" > ${coverage_output}
+
+# Process each merged BAM
+for bam in ${merged_bam_dir}/*.bam; do
+    if [ -f "$bam" ]; then
+        specimen_id=$(basename "$bam" | sed 's/_merged.bam//' | sed 's/.bam//')
+        
+        echo "Processing: ${specimen_id}"
+        
+        # Get stats
+        stats_result=$($samtools stats -@ ${threads} "$bam" | grep "^SN")
+        
+        total_reads=$(echo "$stats_result" | grep "raw total sequences:" | awk '{print $4}')
+        mapped_bases=$(echo "$stats_result" | grep "bases mapped (cigar):" | awk '{print $5}')
+        total_bases=$(echo "$stats_result" | grep "total length:" | awk '{print $4}')
+        mapped_bases=$(echo "$stats_result" | grep "bases mapped:" | awk '{print $4}')
+        avg_length=$(echo "$stats_result" | grep "average length:" | awk '{print $4}')
+        
+        # Calculate mapping rate
+        if [ "$total_reads" -gt 0 ]; then
+            mapping_rate=$(echo "scale=4; $mapped_reads / $total_reads * 100" | bc)
+        else
+            mapping_rate=0
+        fi
+        
+        # Calculate coverage (mapped bases / genome size)
+        if [ "$GENOME_SIZE" -gt 0 ]; then
+            coverage=$(echo "scale=4; $mapped_bases / $GENOME_SIZE" | bc)
+        else
+            coverage=0
+        fi
+        
+        # Append to output
+        echo -e "${specimen_id}\t${total_reads}\t${mapped_reads}\t${mapping_rate}\t${total_bases}\t${mapped_bases}\t${avg_length}\t${coverage}" >> ${coverage_output}
+    fi
+done
+
+echo ""
+echo "=== Coverage Summary (Reference genome: ${GENOME_SIZE} bp) ==="
+column -t -s$'\t' ${coverage_output}
+```
+
+```
+=== Coverage Summary (Reference genome: 965233905 bp) ===
+specimen_id   total_reads  mapped_reads  mapping_rate  total_bases  mapped_bases  mean_read_length  estimated_coverage_X
+USNM_14399    sequences:   980586        0             253380552    253380552     258               
+USNM_1606826  sequences:   1579542       0             816444871    816444871     517               
+USNM_1740336  sequences:   1856788       0             835964905    835964905     450               
+USNM_1740363  sequences:   3244592       0             1806427349   1806427349    557
+```
+
+## Generate per-chromosome coverage (optional)
+
+Use `samtools coverage` for per-chromosome/contig coverage statistics.
+
+```{r samtools-coverage, engine='bash', eval=TRUE}
+source .bashvars
+
+echo "=== Generating per-chromosome coverage ==="
+
+# Create output directory for per-specimen coverage files
+mkdir -p ${coverage_dir}/per_chromosome
+
+for bam in ${merged_bam_dir}/*.bam; do
+    if [ -f "$bam" ]; then
+        specimen_id=$(basename "$bam" | sed 's/_merged.bam//' | sed 's/.bam//')
+        
+        echo "Processing: ${specimen_id}"
+        
+        # Generate coverage per chromosome/contig
+        $samtools coverage "$bam" > "${coverage_dir}/per_chromosome/${specimen_id}_coverage.tsv"
+        
+        # Show summary (top 10 contigs by coverage)
+        echo "Top 10 contigs by coverage for ${specimen_id}:"
+        head -1 "${coverage_dir}/per_chromosome/${specimen_id}_coverage.tsv"
+        tail -n +2 "${coverage_dir}/per_chromosome/${specimen_id}_coverage.tsv" | sort -t$'\t' -k6 -rn | head -10
+        echo ""
+    fi
+done
+```
+
+## Generate depth histogram (optional)
+
+Calculate depth distribution across the genome.
+
+```{r depth-histogram, engine='bash', eval=TRUE}
+source .bashvars
+
+echo "=== Generating depth histograms ==="
+
+mkdir -p ${coverage_dir}/depth_histograms
+
+for bam in ${merged_bam_dir}/*.bam; do
+    if [ -f "$bam" ]; then
+        specimen_id=$(basename "$bam" | sed 's/_merged.bam//' | sed 's/.bam//')
+        
+        echo "Processing: ${specimen_id}"
+        
+        # Generate depth histogram using samtools depth
+        # This can be slow for large files, so we'll sample
+        $samtools depth -a "$bam" | \
+            awk '{depth[$3]++} END {for (d in depth) print d, depth[d]}' | \
+            sort -n > "${coverage_dir}/depth_histograms/${specimen_id}_depth_hist.tsv"
+        
+        # Summary statistics
+        echo "Depth distribution summary for ${specimen_id}:"
+        $samtools depth "$bam" | \
+            awk '{sum+=$3; if($3>0) covered++; total++} 
+                 END {
+                     print "Total positions:", total; 
+                     print "Covered positions:", covered; 
+                     print "Mean depth:", sum/total;
+                     print "Breadth of coverage:", covered/total*100, "%"
+                 }'
+        echo ""
+    fi
+done
+```
+
+# Combine with Metadata
+
+Merge coverage statistics with specimen metadata for downstream analysis.
+
+```{r merge-with-metadata, eval=TRUE}
+library(tidyverse)
+
+# Read metadata
+metadata <- read_csv("../data/E_tourneforti_sequencing_composition.csv")
+
+# Read coverage summary (adjust path as needed)
+coverage <- read_tsv("../output/05-specimen-coverage/coverage/specimen_coverage_summary.tsv")
+
+# Extract catalog number from specimen_id (assuming format includes catalog number)
+coverage <- coverage %>%
+  mutate(
+    # Adjust this regex based on your actual specimen_id format
+    Catalog.Number = as.numeric(str_extract(specimen_id, "\\d+"))
+  )
+
+# Join with metadata
+coverage_with_metadata <- coverage %>%
+  left_join(
+    metadata %>% 
+      select(Catalog.Number, Year.Collected, Precise.Locality, Group, Library) %>%
+      distinct(),
+    by = "Catalog.Number"
+  ) %>%
+  # Add age group classification
+
+  mutate(
+    age_group = case_when(
+      Year.Collected >= 2000 ~ "Modern (2000s)",
+      Year.Collected >= 1950 ~ "Mid-age (1960s)",
+      TRUE ~ "Old (1880s-1910s)"
+    )
+  )
+
+# Display summary
+coverage_with_metadata %>%
+  select(specimen_id, Catalog.Number, Year.Collected, age_group, 
+         mapped_reads, mapping_rate, estimated_coverage_X) %>%
+  arrange(desc(estimated_coverage_X)) %>%
+  knitr::kable(caption = "Coverage Summary by Specimen")
+```
+
+# Summary Visualizations
+
+```{r coverage-plots, eval=TRUE, fig.width=10, fig.height=6}
+library(ggplot2)
+
+# Coverage by specimen
+p1 <- ggplot(coverage_with_metadata, 
+             aes(x = reorder(specimen_id, estimated_coverage_X), 
+                 y = estimated_coverage_X,
+                 fill = age_group)) +
+  geom_col() +
+  coord_flip() +
+  labs(
+    title = "Sequencing Coverage by Specimen",
+    subtitle = "E. tourneforti - Mapped reads aligned to E. knighti reference",
+    x = "Specimen ID",
+    y = "Coverage (X)",
+    fill = "Age Group"
+  ) +
+  scale_fill_manual(values = c(
+    "Modern (2000s)" = "#27ae60",
+    "Mid-age (1960s)" = "#3498db",
+    "Old (1880s-1910s)" = "#e74c3c"
+  )) +
+  theme_minimal() +
+  theme(axis.text.y = element_text(size = 9))
+
+print(p1)
+
+# Save plot
+ggsave("../output/05-specimen-coverage/coverage_by_specimen.png", 
+       p1, width = 10, height = 8, dpi = 150)
+```
+
+```{r mapping-rate-plot, eval=TRUE, fig.width=10, fig.height=6}
+# Mapping rate by specimen
+p2 <- ggplot(coverage_with_metadata, 
+             aes(x = reorder(specimen_id, mapping_rate), 
+                 y = mapping_rate,
+                 fill = age_group)) +
+  geom_col() +
+  coord_flip() +
+  geom_hline(yintercept = 50, linetype = "dashed", color = "gray40") +
+  labs(
+    title = "Mapping Rate by Specimen",
+    x = "Specimen ID",
+    y = "Mapping Rate (%)",
+    fill = "Age Group"
+  ) +
+  scale_fill_manual(values = c(
+    "Modern (2000s)" = "#27ae60",
+    "Mid-age (1960s)" = "#3498db",
+    "Old (1880s-1910s)" = "#e74c3c"
+  )) +
+  theme_minimal() +
+  theme(axis.text.y = element_text(size = 9))
+
+print(p2)
+
+ggsave("../output/05-specimen-coverage/mapping_rate_by_specimen.png", 
+       p2, width = 10, height = 6, dpi = 150)
+```
+
+```{r summary-by-age-group, eval=TRUE}
+# Summary statistics by age group
+age_summary <- coverage_with_metadata %>%
+  group_by(age_group) %>%
+  summarise(
+    n_specimens = n(),
+    mean_coverage = mean(estimated_coverage_X, na.rm = TRUE),
+    sd_coverage = sd(estimated_coverage_X, na.rm = TRUE),
+    median_coverage = median(estimated_coverage_X, na.rm = TRUE),
+    mean_mapping_rate = mean(mapping_rate, na.rm = TRUE),
+    total_mapped_reads = sum(mapped_reads, na.rm = TRUE),
+    .groups = "drop"
+  )
+
+age_summary %>%
+  knitr::kable(caption = "Coverage Summary by Age Group", digits = 2)
+```
+
+# Save Final Outputs
+
+```{r save-outputs, engine='bash', eval=TRUE}
+source .bashvars
+
+echo "=== Output files ==="
+ls -lh ${coverage_dir}/
+
+echo ""
+echo "=== Coverage summary file ==="
+cat ${coverage_dir}/specimen_coverage_summary.tsv
+```
+
+# Session Info
+
+```{r session-info, eval=TRUE}
+sessionInfo()
+```

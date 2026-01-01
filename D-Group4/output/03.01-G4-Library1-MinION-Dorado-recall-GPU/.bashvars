@@ -5,25 +5,23 @@ export nanopore_dir=/gscratch/srlab/kdurkin1/SIFP-nanopore
 export genome_dir=${nanopore_dir}/data/GCA_965233905.1_jaEunKnig1.1
 export reference=${genome_dir}/GCA_965233905.1_jaEunKnig1.1_genomic.fna
 export gff=${genome_dir}/GCA_965233905.1_jaEunKnig1.1_genomic.gff
-export output_dir_top=${nanopore_dir}/M-multi-group/output/05-specimen-coverage
-export merged_bam_dir=${nanopore_dir}/M-multi-group/output/04-specimen-pileup/merged_bams
-export coverage_dir=${output_dir_top}/coverage
+export output_dir_top=${nanopore_dir}/D-Group4/output/05-G4-MinION-pileup
+export input_bam_dir=${nanopore_dir}/D-Group4/output/03.01-G4-Library1-MinION-Dorado-recall-GPU
+export merged_bam_dir=${output_dir_top}/merged_bams
+export pileup_dir=${output_dir_top}/pileup
 export metadata_csv=${nanopore_dir}/data/E_tourneforti_sequencing_composition.csv
 
 # Input BAM directories (one per sequencing run)
+# Adjust these paths to match your actual recalled BAM locations
 export G1L4_bam_dir=${nanopore_dir}/A-Group1/output/06.01-G1-Library4-MinION-Dorado-recall-GPU
 export G2L2_bam_dir=${nanopore_dir}/B-Group2/output/04.01-G2-Library2-MinION-Dorado-recall-GPU
 export G2L3_bam_dir=${nanopore_dir}/B-Group2/output/05.01-G2-Library3-MinION-Dorado-recall-GPU
 export G4L1_bam_dir=${nanopore_dir}/D-Group4/output/03.01-G4-Library1-MinION-Dorado-recall-GPU
 export G4L2_bam_dir=${nanopore_dir}/D-Group4/output/04.01-G4-Library2-MinION-Dorado-recall-GPU
 
-# Programs
 export samtools=/srlab/programs/samtools-1.20/samtools
 export bedtools=/srlab/programs/bedtools
-
-# Reference genome size (E. knighti)
-export GENOME_SIZE=965233905
-
+export flowcell_id=FBD08455
 # Set number of CPUs to use
 export threads=20
 

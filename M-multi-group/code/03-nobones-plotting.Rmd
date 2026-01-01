@@ -18,8 +18,535 @@ output:
     code_download: true
 ---
 
+# Sequencing runs plots
 
-Plot modifications by specimen age
+
+# Setup and Data Loading
+
+
+```{r load-sequencing-summary, eval=TRUE, message=FALSE, warning=FALSE}
+library(tidyverse)
+library(scales)
+library(patchwork)  # for combining plots
+library(viridis)    # for color palettes
+
+# Define color scheme
+age_colors <- c(
+  "Modern (2019)" = "#27ae60",
+  "Mid-age (1960)" = "#3498db",
+  "Old (1880s)" = "#e74c3c"
+)
+
+# Load sequencing summary data
+seq_summary <- read_csv("../../data/E_tourneforti_sequencing_summaries.csv")
+
+# Clean up and add derived columns
+seq_summary <- seq_summary %>%
+  mutate(
+    # Create cleaner run labels
+    Run_Label = paste0("G", Group, "L", Library),
+    
+    # Combine pre/post runs for the same library
+    Library_ID = paste0("Group", Group, "_Library", Library),
+    
+    # Calculate pass rate
+    Pass_Rate = Reads.Called.Pass.M / Reads.Generated.M * 100,
+    
+    # Calculate bases pass rate
+    Bases_Pass_Rate = Bases.Called.Pass.Gb / Estimated.Bases.Gb * 100,
+    
+    # Throughput rate (Gb per hour)
+    Throughput_Rate = Estimated.Bases.Gb / Run.time.hr,
+    
+    # Standardize sequencer names
+    Sequencer = case_when(
+      Sequencer %in% c("MK1D", "Mk1D") ~ "MinION Mk1D",
+      Sequencer %in% c("Mk1B", "MK1B") ~ "MinION Mk1B",
+      TRUE ~ Sequencer
+    ),
+    
+    # Add age group based on Group number
+    Age_Group = case_when(
+      Group == 1 ~ "Modern (2019)",
+      Group == 2 ~ "Mid-age (1960)",
+      Group %in% c(3, 4) ~ "Old (1880s)",
+      TRUE ~ "Unknown"
+    ),
+    Age_Group = factor(
+      Age_Group,
+      levels = c("Old (1880s)", "Mid-age (1960)", "Modern (2019)")
+    )
+  )
+
+# ---- Aggregate by Group + Library ----
+seq_summary_agg <- seq_summary_clean %>%
+  select(-Estimated.N50.b) %>%
+  group_by(Group, Library) %>%
+  summarise(
+    # IDs
+    Library_ID = paste0("Group", Group, "_Lib", Library),
+    Age_Group = first(Age_Group),
+    Sequencer = first(Sequencer),
+    
+    # Accumulating quantities → SUM
+    Estimated.Bases.Gb = sum(Estimated.Bases.Gb, na.rm = TRUE),
+    Reads.Generated.M  = sum(Reads.Generated.M, na.rm = TRUE),
+    Reads.Called.Pass.M = sum(Reads.Called.Pass.M, na.rm = TRUE),
+    Bases.Called.Pass.Gb = sum(Bases.Called.Pass.Gb, na.rm = TRUE),
+    Run.time.hr = sum(Run.time.hr, na.rm = TRUE),
+    
+    .groups = "drop"
+  ) %>%
+  mutate(
+    # Recalculate rates AFTER aggregation
+    Pass_Rate = Reads.Called.Pass.M / Reads.Generated.M * 100,
+    Bases_Pass_Rate = Bases.Called.Pass.Gb / Estimated.Bases.Gb * 100,
+    Throughput_Rate = Estimated.Bases.Gb / Run.time.hr,
+    Age_Group = factor(
+      Age_Group,
+      levels = c("Old (1880s)", "Mid-age (1960)", "Modern (2019)"))
+  ) %>%
+  distinct()
+
+# Display the cleaned data
+seq_summary %>%
+  select(Sequencing.Run, Group, Library, Library_ID, Estimated.Bases.Gb, Reads.Generated.M, 
+         Estimated.N50.b, Pass_Rate, Sequencer) %>%
+  knitr::kable(caption = "Sequencing Run Summary", digits = 2)
+```
+
+
+# Figure 1: Total Output by Sequencing Run
+
+
+```{r fig-total-output, eval=TRUE, fig.width=10, fig.height=6}
+# Bar plot of total bases by run
+p1 <- ggplot(seq_summary_agg, aes(x = reorder(Library_ID, Estimated.Bases.Gb), 
+                               y = Estimated.Bases.Gb,
+                               fill = Age_Group)) +
+geom_col() +
+  coord_flip() +
+  labs(
+    title = "Total Sequencing Output by Run",
+    subtitle = "E. tourneforti Nanopore sequencing",
+    x = "Sequencing Run",
+    y = "Estimated Bases (Gb)",
+    fill = "Age Group"
+  ) +
+  scale_fill_manual(values = c(
+    "Modern (2019)" = "#27ae60",
+    "Mid-age (1960)" = "#3498db",
+    "Old (1880s)" = "#e74c3c"
+  )) +
+  theme_minimal() +
+  theme(
+    axis.text.y = element_text(size = 9),
+    legend.position = "bottom"
+  )
+
+print(p1)
+
+ggsave("../output/03-nobones-plotting/fig_total_output_by_run.png", 
+       p1, width = 10, height = 6, dpi = 150)
+```
+
+
+# Figure 2: Reads Generated vs Bases (Quality Assessment)
+
+
+```{r fig-reads-vs-bases, eval=TRUE, fig.width=8, fig.height=6}
+p2 <- ggplot(seq_summary, aes(x = Reads.Generated.M, y = Estimated.Bases.Gb)) +
+  geom_point(aes(color = Age_Group, size = Estimated.N50.b), alpha = 0.8) +
+  geom_smooth(method = "lm", se = TRUE, color = "gray40", linetype = "dashed") +
+  geom_text(aes(label = Run_Label), vjust = -1, hjust = 0.5, size = 3) +
+  labs(
+    title = "Reads vs Total Bases Output",
+    subtitle = "Point size indicates N50 read length",
+    x = "Reads Generated (millions)",
+    y = "Estimated Bases (Gb)",
+    color = "Age Group",
+    size = "N50 (bp)"
+  ) +
+  scale_color_manual(values = c(
+    "Modern (2019)" = "#27ae60",
+    "Mid-age (1960)" = "#3498db",
+    "Old (1880s)" = "#e74c3c"
+  )) +
+  theme_minimal() +
+  theme(legend.position = "right")
+
+print(p2)
+
+ggsave("../output/03-nobones-plotting/fig_reads_vs_bases.png", 
+       p2, width = 8, height = 6, dpi = 150)
+```
+
+
+# Figure 3: N50 Read Length by Run
+
+
+```{r fig-n50, eval=TRUE, fig.width=10, fig.height=5}
+p3 <- ggplot(seq_summary, aes(x = reorder(Sequencing.Run, Estimated.N50.b), 
+                               y = Estimated.N50.b,
+                               fill = Age_Group)) +
+  geom_col() +
+  coord_flip() +
+  geom_hline(yintercept = 500, linetype = "dashed", color = "gray50") +
+  annotate("text", x = 0.5, y = 520, label = "500 bp", size = 3, hjust = 0) +
+  labs(
+    title = "N50 Read Length by Sequencing Run",
+    subtitle = "Higher N50 indicates longer reads",
+    x = "Sequencing Run",
+    y = "Estimated N50 (bp)",
+    fill = "Age Group"
+  ) +
+  scale_fill_manual(values = c(
+    "Modern (2019)" = "#27ae60",
+    "Mid-age (1960)" = "#3498db",
+    "Old (1880s)" = "#e74c3c"
+  )) +
+  theme_minimal() +
+  theme(legend.position = "bottom")
+
+print(p3)
+
+ggsave("../output/03-nobones-plotting/fig_n50_by_run.png", 
+       p3, width = 10, height = 5, dpi = 150)
+```
+
+
+# Figure 4: Pass vs Fail Reads
+
+
+```{r fig-pass-fail, eval=TRUE, fig.width=10, fig.height=6}
+# Reshape data for stacked bar
+pass_fail_data <- seq_summary %>%
+  select(Sequencing.Run, Age_Group, Reads.Called.Pass.M, Reads.Called.Fail.M) %>%
+  pivot_longer(
+    cols = c(Reads.Called.Pass.M, Reads.Called.Fail.M),
+    names_to = "Read_Type",
+    values_to = "Reads_M"
+  ) %>%
+  mutate(
+    Read_Type = ifelse(Read_Type == "Reads.Called.Pass.M", "Pass", "Fail")
+  )
+
+p4 <- ggplot(pass_fail_data, aes(x = reorder(Sequencing.Run, Reads_M), 
+                                  y = Reads_M,
+                                  fill = Read_Type)) +
+  geom_col(position = "stack") +
+  coord_flip() +
+  labs(
+    title = "Pass vs Fail Reads by Sequencing Run",
+    x = "Sequencing Run",
+    y = "Reads (millions)",
+    fill = "Read Quality"
+  ) +
+  scale_fill_manual(values = c("Pass" = "#2ecc71", "Fail" = "#e74c3c")) +
+  theme_minimal() +
+  theme(legend.position = "bottom")
+
+print(p4)
+
+ggsave("../output/03-nobones-plotting/fig_pass_fail_reads.png", 
+       p4, width = 10, height = 6, dpi = 150)
+```
+
+
+# Figure 5: Pass Rate Comparison
+
+
+```{r fig-pass-rate, eval=TRUE, fig.width=10, fig.height=5}
+p5 <- ggplot(seq_summary, aes(x = reorder(Sequencing.Run, Pass_Rate), 
+                               y = Pass_Rate,
+                               fill = Age_Group)) +
+  geom_col() +
+  coord_flip() +
+  geom_hline(yintercept = 90, linetype = "dashed", color = "gray50") +
+  labs(
+    title = "Read Pass Rate by Sequencing Run",
+    subtitle = "Percentage of reads passing quality filters",
+    x = "Sequencing Run",
+    y = "Pass Rate (%)",
+    fill = "Age Group"
+  ) +
+  scale_fill_manual(values = c(
+    "Modern (2019)" = "#27ae60",
+    "Mid-age (1960)" = "#3498db",
+    "Old (1880s)" = "#e74c3c"
+  )) +
+  scale_y_continuous(limits = c(0, 100)) +
+  theme_minimal() +
+  theme(legend.position = "bottom")
+
+print(p5)
+
+ggsave("../output/03-nobones-plotting/fig_pass_rate.png", 
+       p5, width = 10, height = 5, dpi = 150)
+```
+
+
+# Figure 6: Throughput Rate (Gb/hr)
+
+
+```{r fig-throughput, eval=TRUE, fig.width=10, fig.height=5}
+p6 <- ggplot(seq_summary, aes(x = reorder(Sequencing.Run, Throughput_Rate), 
+                               y = Throughput_Rate,
+                               fill = Sequencer)) +
+  geom_col() +
+  coord_flip() +
+  labs(
+    title = "Sequencing Throughput Rate",
+    subtitle = "Output normalized by run time",
+    x = "Sequencing Run",
+    y = "Throughput (Gb/hr)",
+    fill = "Sequencer"
+  ) +
+  scale_fill_brewer(palette = "Set2") +
+  theme_minimal() +
+  theme(legend.position = "bottom")
+
+print(p6)
+
+ggsave("../output/03-nobones-plotting/fig_throughput_rate.png", 
+       p6, width = 10, height = 5, dpi = 150)
+```
+
+
+# Figure 7: Summary by Age Group (Aggregated)
+
+
+```{r fig-age-group-summary, eval=TRUE, fig.width=12, fig.height=8}
+# Calculate totals for age group labels
+age_totals <- seq_summary %>%
+  group_by(Age_Group) %>%
+  summarise(
+    Total_Reads_M = sum(Reads.Generated.M),
+    Total_Bases_Gb = sum(Estimated.Bases.Gb),
+    .groups = "drop"
+  )
+
+# Panel A: Total reads by age group (STACKED by Library_ID)
+p7a <- ggplot(seq_summary, aes(x = Age_Group, y = Reads.Generated.M, fill = Age_Group)) +
+  geom_col(aes(alpha = Library_ID), color = "white", linewidth = 0.3) +
+  geom_text(data = age_totals, 
+            aes(x = Age_Group, y = Total_Reads_M, label = sprintf("%.1f M", Total_Reads_M)),
+            vjust = -0.5, inherit.aes = FALSE, size = 3.5) +
+  # Add library labels inside bars
+  geom_text(aes(label = Library_ID), 
+            position = position_stack(vjust = 0.5), 
+            size = 3, color = "white", fontface = "bold") +
+  labs(title = "A) Total Reads", x = "", y = "Total Reads (millions)") +
+  scale_fill_manual(values = age_colors) +
+  scale_alpha_manual(values = seq(0.6, 1, length.out = 5), guide = "none") +
+  scale_y_continuous(expand = expansion(mult = c(0, 0.12))) +
+  theme_minimal() +
+  theme(legend.position = "none",
+        axis.text.x = element_text(angle = 15, hjust = 1))
+
+# Panel B: Total bases by age group (STACKED by Library_ID)
+p7b <- ggplot(seq_summary, aes(x = Age_Group, y = Estimated.Bases.Gb, fill = Age_Group)) +
+  geom_col(aes(alpha = Library_ID), color = "white", linewidth = 0.3) +
+  geom_text(data = age_totals, 
+            aes(x = Age_Group, y = Total_Bases_Gb, label = sprintf("%.2f Gb", Total_Bases_Gb)),
+            vjust = -0.5, inherit.aes = FALSE, size = 3.5) +
+  # Add library labels inside bars
+  geom_text(aes(label = Library_ID), 
+            position = position_stack(vjust = 0.5), 
+            size = 3, color = "white", fontface = "bold") +
+  labs(title = "B) Total Bases", x = "", y = "Total Bases (Gb)") +
+  scale_fill_manual(values = age_colors) +
+  scale_alpha_manual(values = seq(0.6, 1, length.out = 5), guide = "none") +
+  scale_y_continuous(expand = expansion(mult = c(0, 0.12))) +
+  theme_minimal() +
+  theme(legend.position = "none",
+        axis.text.x = element_text(angle = 15, hjust = 1))
+
+# Panel C: N50 by Library (individual bars, colored by Age Group)
+p7c <- ggplot(seq_summary, aes(x = Library_ID, y = Estimated.N50.b, fill = Age_Group)) +
+  geom_col() +
+  geom_text(aes(label = sprintf("%.0f", Estimated.N50.b)), vjust = -0.5, size = 3) +
+  labs(title = "C) N50 Read Length", x = "", y = "N50 (bp)") +
+  scale_fill_manual(values = age_colors) +
+  scale_y_continuous(expand = expansion(mult = c(0, 0.12))) +
+  theme_minimal() +
+  theme(legend.position = "none",
+        axis.text.x = element_text(angle = 45, hjust = 1))
+
+# Panel D: Pass rate by Library (individual bars, colored by Age Group)
+p7d <- ggplot(seq_summary, aes(x = Library_ID, y = Pass_Rate, fill = Age_Group)) +
+  geom_col() +
+  geom_text(aes(label = sprintf("%.1f%%", Pass_Rate)), vjust = -0.5, size = 3) +
+  geom_hline(yintercept = 90, linetype = "dashed", color = "gray50", alpha = 0.7) +
+  labs(title = "D) Read Pass Rate", x = "", y = "Pass Rate (%)") +
+  scale_fill_manual(values = age_colors) +
+  scale_y_continuous(limits = c(0, 105), expand = expansion(mult = c(0, 0))) +
+  theme_minimal() +
+  theme(legend.position = "none",
+        axis.text.x = element_text(angle = 45, hjust = 1))
+
+# Create a shared legend
+legend_plot <- ggplot(seq_summary, aes(x = Library_ID, y = Pass_Rate, fill = Age_Group)) +
+  geom_col() +
+  scale_fill_manual(values = age_colors) +
+  theme_minimal() +
+  theme(legend.position = "bottom",
+        legend.title = element_blank())
+
+# Extract legend
+library(cowplot)
+shared_legend <- get_legend(legend_plot)
+
+# Combine panels
+p7_combined <- (p7a | p7b) / (p7c | p7d) +
+  plot_annotation(
+    title = "Sequencing Summary by Specimen Age Group",
+    subtitle = "E. tourneforti archival coral specimens"
+  )
+
+print(p7_combined)
+
+ggsave("../output/05-specimen-coverage/fig_age_group_summary.png", 
+       p7_combined, width = 12, height = 8, dpi = 150)
+```
+
+
+# Figure 8: Run Time vs Output
+
+
+```{r fig-runtime-output, eval=TRUE, fig.width=8, fig.height=6}
+p8 <- ggplot(seq_summary, aes(x = Run.time.hr, y = Estimated.Bases.Gb)) +
+  geom_point(aes(color = Age_Group, shape = Sequencer), size = 4, alpha = 0.8) +
+  geom_text(aes(label = Run_Label), vjust = -1, size = 3) +
+  labs(
+    title = "Run Time vs Sequencing Output",
+    x = "Run Time (hours)",
+    y = "Estimated Bases (Gb)",
+    color = "Age Group",
+    shape = "Sequencer"
+  ) +
+  scale_color_manual(values = c(
+    "Modern (2019)" = "#27ae60",
+    "Mid-age (1960)" = "#3498db",
+    "Old (1880s)" = "#e74c3c"
+  )) +
+  theme_minimal() +
+  theme(legend.position = "right")
+
+print(p8)
+
+ggsave("../output/03-nobones-plotting/fig_runtime_vs_output.png", 
+       p8, width = 8, height = 6, dpi = 150)
+```
+
+
+# Figure 9: Bases Pass vs Fail (Stacked)
+
+
+```{r fig-bases-pass-fail, eval=TRUE, fig.width=10, fig.height=6}
+# Reshape for bases
+bases_data <- seq_summary %>%
+  select(Sequencing.Run, Age_Group, Bases.Called.Pass.Gb, Bases.Called.Fail.Gb) %>%
+  pivot_longer(
+    cols = c(Bases.Called.Pass.Gb, Bases.Called.Fail.Gb),
+    names_to = "Base_Type",
+    values_to = "Bases_Gb"
+  ) %>%
+  mutate(
+    Base_Type = ifelse(Base_Type == "Bases.Called.Pass.Gb", "Pass", "Fail")
+  )
+
+p9 <- ggplot(bases_data, aes(x = reorder(Sequencing.Run, Bases_Gb), 
+                              y = Bases_Gb,
+                              fill = Base_Type)) +
+  geom_col(position = "stack") +
+  coord_flip() +
+  labs(
+    title = "Pass vs Fail Bases by Sequencing Run",
+    x = "Sequencing Run",
+    y = "Bases (Gb)",
+    fill = "Base Quality"
+  ) +
+  scale_fill_manual(values = c("Pass" = "#2ecc71", "Fail" = "#e74c3c")) +
+  theme_minimal() +
+  theme(legend.position = "bottom")
+
+print(p9)
+
+ggsave("../output/03-nobones-plotting/fig_bases_pass_fail.png", 
+       p9, width = 10, height = 6, dpi = 150)
+```
+
+
+# Summary Table
+
+
+```{r summary-table, eval=TRUE}
+# Create a nice summary table
+summary_table <- seq_summary %>%
+  select(
+    Run = Sequencing.Run,
+    Group = Age_Group,
+    `Bases (Gb)` = Estimated.Bases.Gb,
+    `Reads (M)` = Reads.Generated.M,
+    `N50 (bp)` = Estimated.N50.b,
+    `Pass Rate (%)` = Pass_Rate,
+    `Run Time (hr)` = Run.time.hr,
+    Sequencer
+  ) %>%
+  arrange(desc(`Bases (Gb)`))
+
+knitr::kable(summary_table, 
+             caption = "Sequencing Run Summary Statistics",
+             digits = 2)
+
+# Age group summary table
+age_summary %>%
+  mutate(
+    `Bases (Gb)` = round(Total_Bases_Gb, 2),
+    `Reads (M)` = round(Total_Reads_M, 2),
+    `Mean N50 (bp)` = round(Mean_N50, 0),
+    `Mean Pass Rate (%)` = round(Mean_Pass_Rate, 1),
+    `Total Run Time (hr)` = round(Total_Run_Time_hr, 1)
+  ) %>%
+  select(Age_Group, n_runs, `Bases (Gb)`, `Reads (M)`, 
+         `Mean N50 (bp)`, `Mean Pass Rate (%)`, `Total Run Time (hr)`) %>%
+  knitr::kable(caption = "Summary Statistics by Age Group")
+```
+
+
+# Statistical Comparisons (Optional)
+
+
+```{r stats-comparison, eval=TRUE}
+# Compare N50 between age groups
+cat("=== N50 Comparison by Age Group ===\n")
+seq_summary %>%
+  group_by(Age_Group) %>%
+  summarise(
+    mean_N50 = mean(Estimated.N50.b),
+    sd_N50 = sd(Estimated.N50.b),
+    n = n(),
+    .groups = "drop"
+  ) %>%
+  print()
+
+# Simple correlation between bases and reads
+cat("\n=== Correlation: Bases vs Reads ===\n")
+cor_test <- cor.test(seq_summary$Estimated.Bases.Gb, seq_summary$Reads.Generated.M)
+cat("Pearson r =", round(cor_test$estimate, 3), "\n")
+cat("p-value =", format(cor_test$p.value, scientific = TRUE), "\n")
+```
+
+
+
+
+
+
+
+
+
+# Plot modifications by specimen age
 
 ```{r}
 library(tidyverse)
@@ -151,6 +678,86 @@ plot_data_long <- plot_data %>%
 ```
 
 # Modifications vs. Sample Age
+
+```{r}
+plot_mod_data <- plot_data %>%
+  filter(mod_type %in% c("5mC", "5hmC", "6mA")) %>%
+  group_by(Catalog.Number, mod_type) %>%
+  summarise(
+    percentage = mean(percentage, na.rm = TRUE),
+    Year.Collected = first(Year.Collected),
+    age_category = first(age_category),
+    .groups = "drop"
+  ) %>%
+  mutate(
+    # order specimens by collection year
+    Catalog.Number = fct_reorder(
+      as.factor(Catalog.Number),
+      Year.Collected
+    )
+  )
+
+age_colors <- c(
+  "Historic (>100 years)" = "#e74c3c",
+  "Mid-age (1960s)" = "#3498db",
+  "Modern (<25 years)" = "#27ae60"
+)
+
+plot_mod_bar <- function(mod) {
+  
+  ggplot(
+    plot_mod_data %>% filter(mod_type == mod),
+    aes(
+      x = Catalog.Number,
+      y = percentage,
+      fill = age_category
+    )
+  ) +
+    geom_col(width = 0.8) +
+    geom_text(
+      aes(label = Year.Collected),
+      vjust = -0.4,
+      size = 3
+    ) +
+    scale_fill_manual(values = age_colors) +
+    labs(
+      title = paste0(mod, " Modification per Specimen"),
+      x = "Specimen (Catalog Number)",
+      y = "% Modified"
+    ) +
+    theme_minimal() +
+    theme(
+      axis.text.x = element_text(angle = 45, hjust = 1),
+      legend.title = element_blank()
+    )
+}
+
+
+p_5mC  <- plot_mod_bar("5mC")
+p_5hmC <- plot_mod_bar("5hmC")
+p_6mA  <- plot_mod_bar("6mA")
+
+p_5mC
+p_5hmC
+p_6mA
+
+p_combined <- (p_5mC | p_5hmC | p_6mA) +
+  plot_annotation(
+    title = "DNA Modification Levels Across Specimens",
+    subtitle = "Bars colored by specimen age category; labels indicate year collected"
+  ) &
+  theme(legend.position = "bottom")
+
+ggsave(
+  filename = "../output/03-nobones-plotting/DNA_modification_levels_by_specimen.png",
+  plot = p_combined,
+  width = 14,
+  height = 5,
+  dpi = 300
+)
+
+```
+
 
 ```{r plot-by-age, fig.height=9}
 p_age <- plot_data_long %>%
