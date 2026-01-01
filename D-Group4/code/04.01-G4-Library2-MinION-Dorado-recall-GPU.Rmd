@@ -18,23 +18,15 @@ output:
     code_download: true
 ---
 
-```{r setup, include=FALSE}
-library(knitr)
-knitr::opts_chunk$set(
-  echo = TRUE,         # Display code chunks
-  eval = FALSE,        # Evaluate code chunks
-  warning = FALSE,     # Hide warnings
-  message = FALSE,     # Hide messages
-  comment = ""         # Prevents appending '##' to beginning of lines in code output
-)
-```
-
 I've been trialing Dorado basecalling to get my raw pod5 files to basecalled, demultiplexed, trimmed, and aligned BAM files, However, this is very computationally intensive and is taking hours to process 50-200Mb of output using CPUs along. `Dorado` is, however, optemized to run on GPUs, which would significantly cut run time!
 
 I'm going to try using a Hyak GPU to run Dorado basecalling, using [Sam's previous work](https://robertslab.github.io/sams-notebook/posts/2020/2020-09-04-Data-Wrangling---NanoPore-Fast5-Conversion-to-FastQ-of-C.bairdi-6129_403_26-on-Mox-with-GPU-Node/index.html) and the [Dorado basecaller documentation](https://software-docs.nanoporetech.com/dorado/latest/basecaller/basecall_overview/) as reference. 
 
 ```{r setup, include=FALSE}
 library(knitr)
+library(tidytable)
+library(tibble)
+library(ggplot2)
 knitr::opts_chunk$set(
   echo = TRUE,         # Display code chunks
   eval = FALSE,        # Evaluate code chunks
