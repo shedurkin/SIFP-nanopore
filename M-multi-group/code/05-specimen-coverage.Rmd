@@ -156,7 +156,7 @@ Keep in mind, these BAM files have already been filtered for mapped reads
 
 `samtools stats` provides more detailed statistics including bases, read lengths, etc.
 
-```{r samtools-stats, engine='bash', eval=TRUE}
+```{r samtools-stats, engine='bash', eval=FALSE}
 source .bashvars
 
 echo "=== Generating detailed stats for all specimen BAMs ==="
@@ -212,7 +212,7 @@ USNM_51892    sequences:   485476690    1687554       485476690     288         
 
 Calculate genome-wide coverage using the mapped bases and genome size.
 
-```{r calculate-coverage, engine='bash', eval=TRUE}
+```{r calculate-coverage, engine='bash', eval=FALSE}
 source .bashvars
 
 echo "=== Calculating coverage statistics ==="
@@ -274,7 +274,7 @@ USNM_1740363  sequences:   3244592       0             1806427349   1806427349  
 
 Use `samtools coverage` for per-chromosome/contig coverage statistics.
 
-```{r samtools-coverage, engine='bash', eval=TRUE}
+```{r samtools-coverage, engine='bash', eval=FALSE}
 source .bashvars
 
 echo "=== Generating per-chromosome coverage ==="
@@ -300,11 +300,159 @@ for bam in ${merged_bam_dir}/*.bam; do
 done
 ```
 
+```
+=== Generating per-chromosome coverage ===
+Processing: USNM_14399
+Top 10 contigs by coverage for USNM_14399:
+#rname	startpos	endpos	numreads	covbases	coverage	meandepth	meanbaseq	meanmapq
+OZ247669.1	1	18777	1882	18776	99.9947	17.5299	29.1	48.8
+CBDDTY010004786.1	1	1000	40	989	98.9	7.537	31.3	13.8
+CBDDTY010005318.1	1	1000	30	987	98.7	4.52	28.5	35.8
+CBDDTY010005488.1	1	1000	8	962	96.2	1.479	28.8	36.5
+CBDDTY010004002.1	1	3000	54	2838	94.6	3.37533	30.3	38.5
+CBDDTY010004064.1	1	3000	55	2818	93.9333	3.005	28.6	37.9
+CBDDTY010005385.1	1	1000	20	938	93.8	4.177	31.2	34.3
+CBDDTY010004794.1	1	1000	7	924	92.4	1.518	31.7	55
+CBDDTY010000990.1	1	31579	452	28861	91.393	2.59568	29.9	42
+CBDDTY010004866.1	1	1000	20	910	91	3.76	28.8	36
+
+Processing: USNM_1606826
+sort: write failed: 'standard output': Broken pipe
+sort: write error
+Top 10 contigs by coverage for USNM_1606826:
+#rname	startpos	endpos	numreads	covbases	coverage	meandepth	meanbaseq	meanmapq
+OZ247669.1	1	18777	3132	18777	100	73.2275	28.8	57.5
+CBDDTY010005476.1	1	1000	13	1000	100	4.194	30.2	57.6
+CBDDTY010005385.1	1	1000	35	1000	100	13.858	33.2	40.7
+CBDDTY010005382.1	1	1000	6	1000	100	2.157	31.2	50
+CBDDTY010005318.1	1	1000	37	1000	100	13.83	27.7	55.8
+CBDDTY010004903.1	1	1000	21	1000	100	6.607	29.6	45.4
+CBDDTY010004886.1	1	1000	9	1000	100	4.549	31	60
+CBDDTY010004376.1	1	2000	23	2000	100	3.4845	28.1	50.3
+CBDDTY010004064.1	1	3000	85	3000	100	11.3437	31.7	56.1
+CBDDTY010004002.1	1	3000	57	2999	99.9667	7.85367	29.1	53.7
+
+Processing: USNM_1740336
+sort: write failed: 'standard output': Broken pipe
+sort: write error
+Top 10 contigs by coverage for USNM_1740336:
+#rname	startpos	endpos	numreads	covbases	coverage	meandepth	meanbaseq	meanmapq
+OZ247669.1	1	18777	3710	18777	100	79.7232	28.5	57.5
+CBDDTY010005543.1	1	1000	23	1000	100	8.127	28.5	52.2
+CBDDTY010005476.1	1	1000	10	1000	100	3.861	28.5	52.4
+CBDDTY010005385.1	1	1000	39	1000	100	15.033	31.9	39.8
+CBDDTY010005329.1	1	1000	15	1000	100	4.628	29	49.7
+CBDDTY010005318.1	1	1000	31	1000	100	8.916	28.7	46.5
+CBDDTY010005193.1	1	1000	28	1000	100	8.153	30.4	52.8
+CBDDTY010004952.1	1	1000	7	1000	100	3.089	31.4	60
+CBDDTY010004903.1	1	1000	37	1000	100	13.74	31.3	53
+CBDDTY010004071.1	1	3000	32	2999	99.9667	4.29633	29.3	44.4
+
+Processing: USNM_1740363
+sort: write failed: 'standard output': Broken pipe
+sort: write error
+Top 10 contigs by coverage for USNM_1740363:
+#rname	startpos	endpos	numreads	covbases	coverage	meandepth	meanbaseq	meanmapq
+OZ247669.1	1	18777	6046	18777	100	150.743	28.6	57.7
+CBDDTY010005546.1	1	1000	20	1000	100	9.165	29.7	47.6
+CBDDTY010005543.1	1	1000	21	1000	100	5.293	29.9	48.8
+CBDDTY010005479.1	1	1000	25	1000	100	9.663	32.7	57.7
+CBDDTY010005476.1	1	1000	19	1000	100	7.769	29.9	45.7
+CBDDTY010005475.1	1	1000	14	1000	100	6.908	31.4	55.2
+CBDDTY010005422.1	1	1000	11	1000	100	5.407	31.1	46.5
+CBDDTY010005385.1	1	1000	66	1000	100	27.554	32.3	41.4
+CBDDTY010005342.1	1	1000	8	1000	100	3.216	31.9	51.1
+CBDDTY010005318.1	1	1000	85	1000	100	33.566	27.9	48.6
+
+Processing: USNM_42137
+sort: write failed: 'standard output': Broken pipe
+sort: write error
+Top 10 contigs by coverage for USNM_42137:
+#rname	startpos	endpos	numreads	covbases	coverage	meandepth	meanbaseq	meanmapq
+OZ247669.1	1	18777	1297	18776	99.9947	11.3749	28.5	46.6
+CBDDTY010005318.1	1	1000	15	977	97.7	2.66	28.9	43.1
+CBDDTY010005385.1	1	1000	8	834	83.4	1.356	29.7	26.6
+CBDDTY010001809.1	1	25000	442	18642	74.568	2.65616	24.4	0.486
+CBDDTY010004903.1	1	1000	8	743	74.3	1.372	31.3	24.8
+CBDDTY010004745.1	1	1000	10	728	72.8	1.678	32.2	39.1
+CBDDTY010004227.1	1	2000	38	1412	70.6	2.7025	30.2	38.6
+CBDDTY010005488.1	1	1000	4	682	68.2	0.691	29.9	37.2
+CBDDTY010005426.1	1	1000	6	677	67.7	1.163	29.5	44.8
+CBDDTY010005172.1	1	1000	3	676	67.6	0.742	33.8	60
+
+Processing: USNM_50368
+sort: write failed: 'standard output': Broken pipe
+sort: write error
+Top 10 contigs by coverage for USNM_50368:
+#rname	startpos	endpos	numreads	covbases	coverage	meandepth	meanbaseq	meanmapq
+OZ247669.1	1	18777	775	18632	99.2278	6.6615	29.9	48
+CBDDTY010004903.1	1	1000	8	839	83.9	1.233	30.1	25.9
+CBDDTY010001809.1	1	25000	621	19946	79.784	3.7164	26.4	0.892
+CBDDTY010004227.1	1	2000	53	1578	78.9	3.8765	31.4	41.1
+CBDDTY010004629.1	1	1000	7	685	68.5	1.069	28	21
+CBDDTY010004734.1	1	1000	7	658	65.8	0.879	27	27.9
+CBDDTY010004593.1	1	2000	6	1311	65.55	0.702	30.2	49
+CBDDTY010005426.1	1	1000	5	634	63.4	1.024	31	46.2
+CBDDTY010004179.1	1	2000	10	1264	63.2	0.7695	31.4	10.6
+CBDDTY010004002.1	1	3000	17	1832	61.0667	0.880333	29	38
+
+Processing: USNM_51732
+sort: write failed: 'standard output': Broken pipe
+sort: write error
+Top 10 contigs by coverage for USNM_51732:
+#rname	startpos	endpos	numreads	covbases	coverage	meandepth	meanbaseq	meanmapq
+OZ247669.1	1	18777	5542	18777	100	93.9034	31.9	56.5
+CBDDTY010005318.1	1	1000	29	1000	100	6.948	32.4	49.6
+CBDDTY010005060.1	1	1000	5	1000	100	1.559	34.9	50.8
+CBDDTY010004585.1	1	2000	19	1988	99.4	2.8335	33.9	52.4
+CBDDTY010004934.1	1	1000	12	990	99	3.473	32.1	15.5
+CBDDTY010004903.1	1	1000	35	990	99	8.325	32.6	43.7
+CBDDTY010004002.1	1	3000	39	2967	98.9	3.48067	32.8	43.6
+CBDDTY010004762.1	1	1000	3	988	98.8	1.645	37.6	40.3
+CBDDTY010004064.1	1	3000	50	2953	98.4333	4.80067	32.2	49.4
+CBDDTY010005219.1	1	1000	21	982	98.2	5.694	33.2	52.7
+
+Processing: USNM_51861
+sort: write failed: 'standard output': Broken pipe
+sort: write error
+Top 10 contigs by coverage for USNM_51861:
+#rname	startpos	endpos	numreads	covbases	coverage	meandepth	meanbaseq	meanmapq
+OZ247669.1	1	18777	3760	18777	100	50.9761	29.8	54.5
+CBDDTY010005385.1	1	1000	20	1000	100	4.926	30.3	36.2
+CBDDTY010005318.1	1	1000	38	1000	100	7.917	29.9	43
+CBDDTY010004709.1	1	1000	6	999	99.9	1.778	30	32.2
+CBDDTY010004002.1	1	3000	44	2989	99.6333	3.16867	29.6	44.3
+CBDDTY010004957.1	1	1000	8	994	99.4	2.265	29.1	49.9
+CBDDTY010004650.1	1	1000	8	984	98.4	1.796	30.4	37.5
+CBDDTY010004531.1	1	2000	20	1967	98.35	3.1505	29.3	29.4
+CBDDTY010005382.1	1	1000	6	974	97.4	1.6	27.7	44.8
+CBDDTY010004903.1	1	1000	30	973	97.3	6.59	31.1	35.8
+
+Processing: USNM_51892
+sort: write failed: 'standard output': Broken pipe
+sort: write error
+Top 10 contigs by coverage for USNM_51892:
+#rname	startpos	endpos	numreads	covbases	coverage	meandepth	meanbaseq	meanmapq
+OZ247669.1	1	18777	4465	18777	100	59.2005	30.2	54.4
+CBDDTY010005476.1	1	1000	23	1000	100	4.339	31.2	47.5
+CBDDTY010005329.1	1	1000	24	1000	100	5.979	29.5	51
+CBDDTY010004002.1	1	3000	90	3000	100	6.43267	29.5	41.9
+CBDDTY010004903.1	1	1000	23	999	99.9	5.423	32.1	40.8
+CBDDTY010004227.1	1	2000	184	1995	99.75	18.826	30.5	47.3
+CBDDTY010004643.1	1	1000	12	997	99.7	3.219	29	41.2
+CBDDTY010004794.1	1	1000	10	992	99.2	2.196	28	48.5
+CBDDTY010004685.1	1	1000	17	990	99	4.165	30.1	17.7
+CBDDTY010005544.1	1	1000	5	988	98.8	1.277	28.3	44.2
+
+sort: write failed: 'standard output': Broken pipe
+sort: write error
+```
+
 ## Generate depth histogram (optional)
 
 Calculate depth distribution across the genome.
 
-```{r depth-histogram, engine='bash', eval=TRUE}
+```{r depth-histogram, engine='bash', eval=FALSE}
 source .bashvars
 
 echo "=== Generating depth histograms ==="
@@ -338,6 +486,72 @@ for bam in ${merged_bam_dir}/*.bam; do
 done
 ```
 
+```
+=== Generating depth histograms ===
+Processing: USNM_14399
+Depth distribution summary for USNM_14399:
+Total positions: 120633469
+Covered positions: 118267515
+Mean depth: 1.49006
+Breadth of coverage: 98.0387 %
+
+Processing: USNM_1606826
+Depth distribution summary for USNM_1606826:
+Total positions: 265040785
+Covered positions: 258488461
+Mean depth: 2.39429
+Breadth of coverage: 97.5278 %
+
+Processing: USNM_1740336
+Depth distribution summary for USNM_1740336:
+Total positions: 272241091
+Covered positions: 266048898
+Mean depth: 2.44964
+Breadth of coverage: 97.7255 %
+
+Processing: USNM_1740363
+Depth distribution summary for USNM_1740363:
+Total positions: 354877451
+Covered positions: 346630140
+Mean depth: 3.95357
+Breadth of coverage: 97.676 %
+
+Processing: USNM_42137
+Depth distribution summary for USNM_42137:
+Total positions: 46719664
+Covered positions: 45722668
+Mean depth: 1.17663
+Breadth of coverage: 97.866 %
+
+Processing: USNM_50368
+Depth distribution summary for USNM_50368:
+Total positions: 43075741
+Covered positions: 42181265
+Mean depth: 1.15905
+Breadth of coverage: 97.9235 %
+
+Processing: USNM_51732
+Depth distribution summary for USNM_51732:
+Total positions: 189801761
+Covered positions: 186004542
+Mean depth: 1.84855
+Breadth of coverage: 97.9994 %
+
+Processing: USNM_51861
+Depth distribution summary for USNM_51861:
+Total positions: 172031946
+Covered positions: 168451705
+Mean depth: 1.69004
+Breadth of coverage: 97.9189 %
+
+Processing: USNM_51892
+Depth distribution summary for USNM_51892:
+Total positions: 198433457
+Covered positions: 194618619
+Mean depth: 1.86695
+Breadth of coverage: 98.0775 %
+```
+
 # Combine with Metadata
 
 Merge coverage statistics with specimen metadata for downstream analysis.
@@ -346,7 +560,7 @@ Merge coverage statistics with specimen metadata for downstream analysis.
 library(tidyverse)
 
 # Read metadata
-metadata <- read_csv("../data/E_tourneforti_sequencing_composition.csv")
+metadata <- read_csv("../../data/E_tourneforti_sequencing_composition.csv")
 
 # Read coverage summary (adjust path as needed)
 coverage <- read_tsv("../output/05-specimen-coverage/coverage/specimen_coverage_summary.tsv")
