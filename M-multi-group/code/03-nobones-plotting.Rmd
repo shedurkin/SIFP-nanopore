@@ -79,7 +79,7 @@ seq_summary <- seq_summary %>%
   )
 
 # ---- Aggregate by Group + Library ----
-seq_summary_agg <- seq_summary_clean %>%
+seq_summary_agg <- seq_summary %>%
   select(-Estimated.N50.b) %>%
   group_by(Group, Library) %>%
   summarise(
@@ -501,17 +501,17 @@ knitr::kable(summary_table,
              digits = 2)
 
 # Age group summary table
-age_summary %>%
-  mutate(
-    `Bases (Gb)` = round(Total_Bases_Gb, 2),
-    `Reads (M)` = round(Total_Reads_M, 2),
-    `Mean N50 (bp)` = round(Mean_N50, 0),
-    `Mean Pass Rate (%)` = round(Mean_Pass_Rate, 1),
-    `Total Run Time (hr)` = round(Total_Run_Time_hr, 1)
-  ) %>%
-  select(Age_Group, n_runs, `Bases (Gb)`, `Reads (M)`, 
-         `Mean N50 (bp)`, `Mean Pass Rate (%)`, `Total Run Time (hr)`) %>%
-  knitr::kable(caption = "Summary Statistics by Age Group")
+# age_summary %>%
+#   mutate(
+#     `Bases (Gb)` = round(Total_Bases_Gb, 2),
+#     `Reads (M)` = round(Total_Reads_M, 2),
+#     `Mean N50 (bp)` = round(Mean_N50, 0),
+#     `Mean Pass Rate (%)` = round(Mean_Pass_Rate, 1),
+#     `Total Run Time (hr)` = round(Total_Run_Time_hr, 1)
+#   ) %>%
+#   select(Age_Group, n_runs, `Bases (Gb)`, `Reads (M)`, 
+#          `Mean N50 (bp)`, `Mean Pass Rate (%)`, `Total Run Time (hr)`) %>%
+#   knitr::kable(caption = "Summary Statistics by Age Group")
 ```
 
 
@@ -680,7 +680,7 @@ plot_data_long <- plot_data %>%
 # Modifications vs. Sample Age
 
 ```{r}
-plot_mod_data <- plot_data %>%
+plot_mod_data <- plot_data_long %>%
   filter(mod_type %in% c("5mC", "5hmC", "6mA")) %>%
   group_by(Catalog.Number, mod_type) %>%
   summarise(
